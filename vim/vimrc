@@ -70,6 +70,10 @@ au InsertLeave * match ExtraWhitespace /\s\+$/
 set t_Co=256
 color wombat256mod
 
+" If using a dark background within the editing area and syntax highlighting
+" turn on this option as well
+set background=dark
+
 " Enable syntax highlighting
 " You need to reload this file for the change to apply
 filetype off
@@ -183,10 +187,6 @@ call pathogen#infect()
 " mkdir -p ~/.vim/ftplugin
 " wget -O ~/.vim/ftplugin/python_editing.vim http://www.vim.org/scripts/download_script.php?src_id=5492
 "" set nofoldenable
-
-" If using a dark background within the editing area and syntax highlighting
-" turn on this option as well
-"set background=dark
 
 " The following are commented out as they cause vim to behave a lot
 " differently from regular Vi. They are highly recommended though.
