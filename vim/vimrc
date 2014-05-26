@@ -11,7 +11,7 @@ autocmd! bufwritepost .vimrc source %
 " When you want to paste large blocks of code into vim, press F2 before you
 " paste. At the bottom you should see ``-- INSERT (paste) --``.
 set pastetoggle=<F2>
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 " Mouse and backspace
 set mouse=a  " on OSX press ALT and click
@@ -28,7 +28,6 @@ let mapleader = ","
 noremap <C-n> :nohl<CR>
 vnoremap <C-n> :nohl<CR>
 inoremap <C-n> :nohl<CR>
-
 
 " Quicksave command (not using it)
 "" noremap <C-Z> :update<CR>
@@ -68,11 +67,12 @@ au InsertLeave * match ExtraWhitespace /\s\+$/
 " mkdir -p ~/.vim/colors && cd ~/.vim/colors
 " wget -O wombat256mod.vim http://www.vim.org/scripts/download_script.php?src_id=13400
 set t_Co=256
-color wombat256mod
+let g:zenburn_high_Contrast=1
+colorscheme zenburn
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
-set background=dark
+"set background=dark
 
 " Enable syntax highlighting
 " You need to reload this file for the change to apply
@@ -115,9 +115,26 @@ set nobackup
 set nowritebackup
 set noswapfile
 
+" The following are commented out as they cause vim to behave a lot
+" differently from regular Vi. They are highly recommended though.
+"set showcmd		" Show (partial) command in status line.
+"set showmatch		" Show matching brackets.
+"set autowrite		" Automatically save before commands like :next and :make
+"set hidden		" Hide buffers when they are abandoned
+
 " Setup Pathogen to manage your plugins
 " mkdir -p ~/.vim/autoload ~/.vim/bundle
 " curl -so ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/HEAD/autoload/pathogen.vim
 " Now you can install any plugin into a .vim/bundle/plugin-name/ folder
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
+
+"Setting up vim-airline
+set laststatus=2
+
+" cd ~/.vim/bundle
+" git clone https://github.com/kien/ctrlp.vim.git
+let g:ctrlp_max_height = 30
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=*/coverage/*

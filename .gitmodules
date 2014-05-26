@@ -7,6 +7,6 @@
 [submodule "vim/bundle/jedi-vim"]
 	path = vim/bundle/jedi-vim
 	url = https://github.com/davidhalter/jedi-vim.git
-[submodule "vim/bundle/powerline"]
-	path = vim/bundle/powerline
-	url = https://github.com/Lokaltog/powerline.git
+[submodule "vim/bundle/vim-airline"]
+	path = vim/bundle/vim-airline
+	url = https://github.com/bling/vim-airline
