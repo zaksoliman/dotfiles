@@ -64,15 +64,13 @@ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 au InsertLeave * match ExtraWhitespace /\s\+$/
 
 " Color scheme
-" mkdir -p ~/.vim/colors && cd ~/.vim/colors
-" wget -O wombat256mod.vim http://www.vim.org/scripts/download_script.php?src_id=13400
 set t_Co=256
-let g:zenburn_high_Contrast=1
-colorscheme zenburn
+"let g:zenburn_high_Contrast=1
+colorscheme xoria256 
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
-"set background=dark
+set background=dark
 
 " Enable syntax highlighting
 " You need to reload this file for the change to apply
