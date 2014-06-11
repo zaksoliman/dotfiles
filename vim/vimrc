@@ -24,7 +24,6 @@ let mapleader = ","
 
 " Folding 
 map <buffer> f za
-map <buffer> F :call ToggleFold()<CR>
 
 " Bind nohl
 " Removes highlight of your last search
