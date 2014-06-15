@@ -23,7 +23,7 @@ set bs=2     " make backspace behave like normal again
 let mapleader = ","
 
 " Folding 
-map <buffer> f za
+map f za
 
 " Bind nohl
 " Removes highlight of your last search
