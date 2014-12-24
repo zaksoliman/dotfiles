@@ -8,6 +8,16 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'kien/ctrlp.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'bling/vim-airline'
+
+call vundle#end()
+
 "Automatic reloading of .vimrc
 "autocmd! bufwritepost .vimrc source %
 
@@ -81,7 +91,7 @@ colorscheme jellybeans
 
 " Enable syntax highlighting
 " You need to reload this file for the change to apply
-filetype off
+" filetype on
 filetype plugin indent on
 syntax on
 
