@@ -1,11 +1,15 @@
 " This line should not be removed as it ensures that various options are
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
-
 set nocompatible
+filetype off
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 "Automatic reloading of .vimrc
-autocmd! bufwritepost .vimrc source %
+"autocmd! bufwritepost .vimrc source %
 
 " Better copy & paste
 " When you want to paste large blocks of code into vim, press F2 before you
@@ -22,7 +26,7 @@ set bs=2     " make backspace behave like normal again
 " it is next to ``m`` and ``n`` which I use for navigating between tabs.
 let mapleader = ","
 
-" Folding 
+" Folding
 map f za
 
 " Bind nohl
@@ -122,13 +126,6 @@ set noswapfile
 "set showmatch		" Show matching brackets.
 "set autowrite		" Automatically save before commands like :next and :make
 "set hidden		" Hide buffers when they are abandoned
-
-" Setup Pathogen to manage your plugins
-" mkdir -p ~/.vim/autoload ~/.vim/bundle
-" curl -so ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/HEAD/autoload/pathogen.vim
-" Now you can install any plugin into a .vim/bundle/plugin-name/ folder
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
 
 "Setting up vim-airline
 set laststatus=2
