@@ -15,6 +15,7 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'kien/ctrlp.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'bling/vim-airline'
+Plugin 'nvie/vim-flake8'
 
 call vundle#end()
 
