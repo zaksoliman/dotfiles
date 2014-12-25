@@ -1,0 +1,7 @@
+[user]
+	name = Zakaria Soliman
+	email = zakaria.soliman1@gmail.com
+[credential]
+	helper = cache
+[core]
+	excludesfile = ~/.cvsignore
