@@ -112,4 +112,4 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/android-studio/sdk/tools:/opt/android-studio/sdk/platform-tools:/opt/android-studio/bin
+PATH=$PATH/usr/lib/lightdm/lightdm:/opt/android-studio/bin
