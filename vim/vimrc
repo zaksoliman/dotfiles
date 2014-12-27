@@ -15,6 +15,8 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'kien/ctrlp.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'bling/vim-airline'
+Plugin 'rstacruz/sparkup'
+Plugin 'tpope/vim-surround'
 Plugin 'nvie/vim-flake8'
 
 call vundle#end()
@@ -84,7 +86,8 @@ au InsertLeave * match ExtraWhitespace /\s\+$/
 " Color scheme
 set t_Co=256
 "let g:zenburn_high_Contrast=1
-colorscheme jellybeans
+let g:hybrid_use_Xresources = 1
+colorscheme hybrid
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
