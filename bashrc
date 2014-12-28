@@ -113,3 +113,13 @@ if ! shopt -oq posix; then
   fi
 fi
 PATH=$PATH/usr/lib/lightdm/lightdm:/opt/android-studio/bin:$HOME/.local/bin
+
+#Setup virtual envwrapper for python in case default doesn't work
+VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.4
+export VIRTUALENVWRAPPER_PYTHON
+
+#Needed for virtual env wrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Development/Python
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+source $HOME/.local/bin/virtualenvwrapper.sh
