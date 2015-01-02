@@ -5,31 +5,53 @@ set nocompatible
 filetype off
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'
-Plugin 'taglist.vim'
+"Plugin 'gmarik/Vundle.vim'
+"Plugin 'taglist.vim'
+"
+"" ========== PYTHON ==========
+"
+"Plugin 'tmhedberg/SimpylFold'
+"Plugin 'davidhalter/jedi-vim'
+"Plugin 'jmcantrell/vim-virtualenv'
+"Plugin 'nvie/vim-flake8'
+"
+"" ========== HTML ==========
+"
+"Plugin 'rstacruz/sparkup'
+"
+"" ========== MISC  ==========
+"
+"Plugin 'bling/vim-airline'
+"Plugin 'kien/ctrlp.vim'
+"Plugin 'tpope/vim-surround'
+"
+"call vundle#end()
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'taglist.vim'
 
 " ========== PYTHON ==========
 
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'jmcantrell/vim-virtualenv'
-Plugin 'nvie/vim-flake8'
+Plug 'tmhedberg/SimpylFold', {'for': 'python'}
+Plug 'davidhalter/jedi-vim', {'for': 'python'}
+Plug 'jmcantrell/vim-virtualenv', {'for': 'python'}
+Plug 'nvie/vim-flake8', {'for': 'python'}
 
 " ========== HTML ==========
 
-Plugin 'rstacruz/sparkup'
+Plug 'rstacruz/sparkup', {'for': 'html'}
 
 " ========== MISC  ==========
 
-Plugin 'bling/vim-airline'
-Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-surround'
+Plug 'bling/vim-airline'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-surround'
 
-call vundle#end()
-
+call plug#end()
 
 "Setting up vim-airline
 set laststatus=2
