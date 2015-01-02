@@ -2,37 +2,52 @@
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
 set nocompatible
-let file_ext = get(split(bufname("%"), "\\."),1)
 filetype off
-
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
+Plugin 'taglist.vim'
 
-" Pyhton Plugins
+" ========== PYTHON ==========
 
-if file_ext  == "py"
-    Plugin 'tmhedberg/SimpylFold'
-    Plugin 'davidhalter/jedi-vim'
-    Plugin 'nvie/vim-flake8'
-endif
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'jmcantrell/vim-virtualenv'
+Plugin 'nvie/vim-flake8'
 
-" HTML Plugins
-if file_ext == "html"
-    Plugin 'rstacruz/sparkup'
-endif
+" ========== HTML ==========
+
+Plugin 'rstacruz/sparkup'
+
+" ========== MISC  ==========
+
 Plugin 'bling/vim-airline'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-surround'
 
 call vundle#end()
 
-"Automatic reloading of .vimrc
-"autocmd! bufwritepost .vimrc source %
+
+"Setting up vim-airline
+set laststatus=2
+
+" cd ~/.vim/bundle
+" git clone https://github.com/kien/ctrlp.vim.git
+let g:ctrlp_max_height = 30
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=*/coverage/*
+
+" Virtualenv.vim
+let g:virtual_env_auto_activate = 1
+let g:airline#extensions#virtualenv#enabled = 1
+
+" Ctags
+map <F12> :!ctags -R --languages=python -f ./tags $VIRTUAL_ENV<CR>
+set tags=./tags
 
 " Better copy & paste
 " When you want to paste large blocks of code into vim, press F2 before you
@@ -151,12 +166,3 @@ set noswapfile
 "set autowrite		" Automatically save before commands like :next and :make
 "set hidden		" Hide buffers when they are abandoned
 
-"Setting up vim-airline
-set laststatus=2
-
-" cd ~/.vim/bundle
-" git clone https://github.com/kien/ctrlp.vim.git
-let g:ctrlp_max_height = 30
-set wildignore+=*.pyc
-set wildignore+=*_build/*
-set wildignore+=*/coverage/*

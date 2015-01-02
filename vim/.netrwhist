@@ -1,3 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/home/danglewaggle/Development/Kendall-Tau-Distance/scripts/tst'
+let g:netrw_dirhist_2='/home/danglewaggle/.virtualenvs/django_tut/lib/python3.4/site-packages/django/db/models'
+let g:netrw_dirhist_3='/home/danglewaggle/.virtualenvs/django_tut/lib/python3.4/site-packages/django/db/models/sql'
+let g:netrw_dirhist_4='/home/danglewaggle/.virtualenvs/django_tut/lib/python3.4/site-packages/django/db/models'
