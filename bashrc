@@ -114,6 +114,21 @@ if ! shopt -oq posix; then
 fi
 PATH=$PATH/usr/lib/lightdm/lightdm:/opt/android-studio/bin:$HOME/.local/bin
 
+#***********************#
+#      Pyenv Setup      #
+#***********************#
+
+export PYENV_ROOT="${HOME}/.pyenv"
+
+if [ -d "${PYENV_ROOT}" ]; then
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
+
+#***********************#
+#   Virtualenv Setup    #
+#***********************#
+
 #Setup virtual envwrapper for python in case default doesn't work
 VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.4
 export VIRTUALENVWRAPPER_PYTHON
