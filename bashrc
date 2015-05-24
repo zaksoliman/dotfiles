@@ -112,7 +112,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-PATH=$PATH/usr/lib/lightdm/lightdm:/opt/android-studio/bin:$HOME/.local/bin
+PATH=$PATH:/usr/lib/lightdm/lightdm:$HOME/.local/bin
 
 #***********************#
 #      Pyenv Setup      #
