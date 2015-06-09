@@ -129,12 +129,16 @@ fi
 #   Virtualenv Setup    #
 #***********************#
 
-#Setup virtual envwrapper for python in case default doesn't work
-VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.4
-export VIRTUALENVWRAPPER_PYTHON
+##Setup virtual envwrapper for python in case default doesn't work
+#VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.4
+#export VIRTUALENVWRAPPER_PYTHON
+#
+##Needed for virtual env wrapper
+#export WORKON_HOME=$HOME/.virtualenvs
+#export PROJECT_HOME=$HOME/Development/Python
+#export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+#source $HOME/.local/bin/virtualenvwrapper.sh
 
-#Needed for virtual env wrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Development/Python
-export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
-source $HOME/.local/bin/virtualenvwrapper.sh
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+eval "$(pyenv virtualenv-init -)"
