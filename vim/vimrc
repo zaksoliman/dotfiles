@@ -11,18 +11,29 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 Plug 'taglist.vim'
+Plug 'Valloric/YouCompleteMe'
+Plug 'jiangmiao/auto-pairs'
 
 " ========== PYTHON ==========
 
 Plug 'tmhedberg/SimpylFold', {'for': 'python'}
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
-Plug 'jmcantrell/vim-virtualenv', {'for': 'python'}
+"Plug 'jmcantrell/vim-virtualenv', {'for': 'python'}
+Plug 'lambdalisue/vim-pyenv', {'for': 'python'}
 Plug 'nvie/vim-flake8', {'for': 'python'}
 
 " ========== HTML ==========
 
 Plug 'rstacruz/sparkup', {'for': 'html'}
 Plug 'othree/html5.vim', {'for': 'html'}
+
+" ========== JavaScript  ==========
+
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+Plug 'ternjs/tern_for_vim', {'for': 'javascript'}
+Plug 'moll/vim-node', {'for': 'javascript'}
+Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
+Plug 'crusoexia/vim-javascript-lib', {'for': 'javascript'}
 
 " ========== MISC  ==========
 
@@ -116,9 +127,7 @@ au InsertLeave * match ExtraWhitespace /\s\+$/
 
 " Color scheme
 set t_Co=256
-let g:zenburn_high_Contrast=1
-"let g:hybrid_use_Xresources = 1
-colorscheme zenburn
+colorscheme dracula
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
