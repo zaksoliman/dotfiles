@@ -1,7 +1,15 @@
 [user]
-	name = Zakaria Soliman
-	email = zakaria.soliman1@gmail.com
+	name = Zack Soliman
+	email = zack.soliman@gmail.com
 [credential]
-	helper = cache
+	helper = cache --timeout 14400
 [core]
-	excludesfile = ~/.cvsignore
+    excludesfile = ~/.cvsignore
+[alias]
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  type = cat-file -t
+  dump = cat-file -p

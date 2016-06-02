@@ -3,6 +3,7 @@
 runtime! debian.vim
 set nocompatible
 filetype off
+set cursorline
 
 "=============================
 "   Start loading plugins
