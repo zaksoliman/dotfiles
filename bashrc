@@ -142,3 +142,6 @@ fi
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 eval "$(pyenv virtualenv-init -)"
+
+export NVM_DIR="/home/danglewaggle/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
