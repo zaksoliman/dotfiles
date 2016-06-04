@@ -148,3 +148,9 @@ export NVM_DIR="/home/danglewaggle/.nvm"
 ### GOPATH setup
 export GOPATH="$HOME/development/gocode"
 export PATH="$GOPATH/bin:$PATH"
+
+#-------------------
+# Personnal Aliases
+#-------------------
+
+alias cats='highlight -O ansi'
