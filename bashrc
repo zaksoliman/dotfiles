@@ -149,6 +149,10 @@ export NVM_DIR="/home/danglewaggle/.nvm"
 export GOPATH="$HOME/development/gocode"
 export PATH="$GOPATH/bin:$PATH"
 
+### MongoDB path
+
+export PATH="$HOME/development/mongodb/bin:$PATH"
+
 #-------------------
 # Personnal Aliases
 #-------------------
