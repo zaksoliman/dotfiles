@@ -153,4 +153,4 @@ export PATH="$GOPATH/bin:$PATH"
 # Personnal Aliases
 #-------------------
 
-alias cats='highlight -O ansi'
+alias cats='highlight -O xterm256 -s bipolar'
