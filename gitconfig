@@ -5,6 +5,7 @@
 	helper = cache --timeout 14400
 [core]
     excludesfile = ~/.cvsignore
+	editor = vim
 [alias]
   co = checkout
   ci = commit
