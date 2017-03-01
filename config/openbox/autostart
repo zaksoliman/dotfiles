@@ -17,6 +17,8 @@
 #xfce-mcs-manager &
 
 (sleep 3 && nm-applet --sm-disable) &
+sh ~/.fehbg &
 tint2 &
 volumeicon &
 volnoti &
+dropbox &
