@@ -1,0 +1,14 @@
+{
+  "files": {},
+  "program": {
+    "x86-64": {
+      "url": "bin/git_salt_x86_64.nexe"
+    },
+    "arm": {
+      "url": "bin/git_salt_arm.nexe"
+    },
+    "x86-32": {
+      "url": "bin/git_salt_x86_32.nexe"
+    }
+  }
+}

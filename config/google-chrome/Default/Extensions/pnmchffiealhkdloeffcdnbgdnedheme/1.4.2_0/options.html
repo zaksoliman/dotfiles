@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>History Trends Unlimited: Options</title>
+        <link rel="stylesheet" type="text/css" href="css/navigation.css" />
+        <link rel="stylesheet" type="text/css" href="css/options.css" />
+        <script type="text/javascript" src="jquery/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/preferences.js"></script>
+        <script type="text/javascript" src="js/public_suffix.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/calcTrendsWebSql.js"></script>
+        <script type="text/javascript" src="filesaver/FileSaver.js"></script>
+        <script type="text/javascript" src="js/navigation.js"></script>
+        <script type="text/javascript" src="js/options.js"></script>
+        <script type="text/javascript" src="js/import.js"></script>
+        <script type="text/javascript" src="js/export.js"></script>
+        <script type="text/javascript" src="js/analytics.js"></script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="sidebar"></div>
+            <div id="header">
+                <h2>History Trends Unlimited: Options</h2>
+            </div>
+            <div class="label">
+                Start Page: 
+                <select id="start_page">
+                    <option value="trends">Trends</option>
+                    <option value="search">Search</option>
+                </select>
+            </div>
+            <div style="font-weight: bold; padding-top: 5px;">
+                Time Display: 
+                <select id="time_display">
+                    <option value="24">24-hour</option>
+                    <option value="12">12-hour</option>
+                </select>
+            </div>
+            <hr />
+            <div class="label">Chart Options</div>
+            <div class="option">
+                <div class="chart">Visits Per Day</div>
+                <div>
+                    <input type="checkbox" id="enable_rolling_average" /> Enable Rolling Average:
+                    <input type="text" id="rolling_average_period" maxlength="3" size="1" value="30" /> days
+                </div>
+            </div>
+            <hr />
+            <div class="label">Transfer History</div>
+            <p>
+                Use this feature to transfer your history to a new computer: 
+                <ol>
+                    <li>
+                        On the old computer, click this button: <input type="submit" id="export_history" value="Export History" />
+                    </li>
+                    <li>
+                        Transfer the file created in Step 1 to the new computer.
+                    </li>
+                    <li>
+                        On the new computer, click the "Choose File" button below and select your exported file.
+                    </li>
+                </ol>
+            </p>
+            <div id="import_container">
+                <div><input id="import_file" type="file"></div>
+                <div style="display: none" id="import_progress">
+                    <span id="import_percent"></span>
+                    <img id="import_spinner" src="images/spinner-small.gif" height="24" width="24" />
+                </div>
+                <div style="display: none" id="import_complete">
+                    <div id="import_success_stats"></div>
+                    <div id="import_ignored_stats"></div>
+                    <div id="import_error_stats"></div>
+                </div>
+            </div>
+            <hr />
+            <div class="label">Auto Backup</div>
+            <div id="autobackup_container">
+                <input type="checkbox" id="enable_autobackup" />
+                Enable Auto Backup
+                <table id="autobackup_suboptions">
+                    <tr>
+                        <td>Backup Type:&nbsp;</td>
+                        <td>
+                            <select id="autobackup_type" name="autobackup_type">
+                                <option value="full">Full</option>
+                                <option value="incremental">Incremental</option>
+                            </select>
+                            <span id="autobackup_type_desc" class="smaller"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Interval:&nbsp;</td>
+                        <td>
+                            <input type="text" id="autobackup_interval" name="autobackup_interval" size="1" maxlength="3" /> 
+                            days
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Compress file:&nbsp;</td>
+                        <td>
+                            <input type="checkbox" id="autobackup_compression" /> 
+                            <span class="smaller">(as .zip)</span>
+                        </td>
+                    </tr>
+                </table>
+                <p id="autobackup_desc">
+                    Backups are created shortly after Chrome starts up, if the given number of days 
+                    since the last backup has elapsed.<br/>
+                    All backups are saved to Chrome's download directory.
+                </p>
+            </div>
+            <hr />
+            <div class="label">Feedback</div>
+            <ul>
+                <li><a target="_blank" id="faq">Frequently Asked Questions</a></li>
+                <li><a target="_blank" href="https://chrome.google.com/webstore/detail/history-trends-unlimited/pnmchffiealhkdloeffcdnbgdnedheme/reviews">Review/Rate this extension</a></li>
+                <li>Email: randy.lauen@gmail.com</li>
+                <li><a target="_blank" href="http://www.amazon.com/gp/registry/wishlist/1LPFRTZVP6BEK/">My Amazon Wishlist</a></li>
+            </ul>
+            <hr />
+            <div style="margin-top: 40px"></div>
+        </div>
+    </body>
+</html>

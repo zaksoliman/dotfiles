@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Spreed - the speed reading extension</title>
+	
+	<LINK href="colorbox.css" rel="stylesheet" type="text/css">
+	<LINK href="jquery-ui.min.css" rel="stylesheet" type="text/css">
+	<LINK id="css-style" href="style.css" rel="stylesheet" type="text/css">
+	
+	<script src="jquery.js"></script>
+	<!--<script src="jquery.fittext.js"></script>-->
+	<script src="jquery.colorbox-min.js"></script>
+	<script src="app.js"></script>
+	<script src="jquery-ui.min.js"></script>
+
+
+
+</head>
+
+<body>
+	<div id="container">
+		<div id="status">
+
+			<div id="time-estimate" class="status-div">2 min</div>
+			
+			<div id="quicktips_link">
+				<a class='inline' href="#inline_tips"><img src="question_icon.png"></a>
+			</div>
+
+
+			<div id="wpm" class="status-div"></div>
+			
+			<div id="wpm-buttons" class="status-buttons">
+				
+					<button id="increase_wpm"><b>+</b></button>
+					<button id="decrease_wpm"><b>-</b></button>
+				
+				<!--&nbsp;<span class="small">[ - ]/[+]</span>-->
+			</div>
+			
+			
+			<div id="chunkSize" class="status-div"></div>
+			<div id="chunkSize-buttons" class="status-buttons">
+				<button id="increase-chunkSize"><b>+</b></button>
+				<button id="decrease-chunkSize"><b>-</b></button>
+			</div>
+
+
+
+			<div id="font-size-div" class="status-div"></div>
+			
+			<div id="font-size-buttons" class="status-buttons">
+				<button id="increase-font-size"><b>+</b></button>
+				<button id="decrease-font-size"><b>-</b></button>
+			</div>
+
+			<button id="highlight-center" class="mode-button"><small><b>Highlight</b></small></button>
+			<button id="toggle-colors" class="mode-button"><small><b>Colors</b></small></button>
+
+
+		</div>
+
+
+		
+		<div id="word-container">
+			<h1><div id="word"></div></h1>
+		</div>
+
+		<div id="word-container-timer"></div>
+
+		<div id="slider"></div>
+
+		<div id="slider-checkbox-div"><span>Show:</span><input id="slider-checkbox" type="checkbox" checked="true"></div>
+
+		<div id="controls">
+			<div id="hotkey-info">
+				<b>space</b>: play/pause&nbsp;&nbsp;&nbsp;<b>k</b>: quick rewind&nbsp;&nbsp;&nbsp;<b>q</b>: close window
+			</div>
+
+			
+			<button id="play">Play</button>
+			<button id="pause">Pause</button>
+			<button id="replay">&lt;</button>
+			<button id="rewind">&lt;&lt;&lt;</button>
+			
+
+		</div>
+		
+
+		<div id="bottom-right-boxes">
+			<div id="info">
+				<a href="#" id="small-signup-link">Sign up here to get updates and new launches!</a>
+			</div>
+
+			<div id="donate">
+				<span id="donate-text">Like using Spreed?<br>
+				<a href="#" id="small-review-link">Write us a review! :)</a> or <a href="#" id="small-donate-link">Donate</a></span>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- This contains the hidden content for inline calls -->
+	<div style='display:none'>
+		<div id='inline_tips' style=''>
+		<p><strong>Hotkeys</strong></p>
+		<ul>
+			<li><span class="hotkey">k</span>: rewind</li>
+			<li><span class="hotkey">h</span>: hide controls</li>
+			<li><span class="hotkey">Space</span>: play/pause</li>
+			<li><span class="hotkey">1,2,3..9,0</span>: seek to position in text</li>
+			<li><span class="hotkey">q</span>: close Spreed window</li>
+			<li><span class="hotkey">l</span>: reset</li>
+			<li><span class="hotkey">f</span>: change font</li>
+			<li><span class="hotkey">"[" or "]"</span>: decrease/increase WPM</li>
+
+		</ul>
+
+		<p><strong>Buttons</strong></p>
+		<ul>
+			<li><span class="hotkey">Invert</span>: invert Spreed colors</li>
+			<li><span class="hotkey">Highlight</span>: highlight/unhighlight center letter</li>
+		</ul>
+
+
+		</div>
+	</div>
+
+
+
+</body>
+
+</html>

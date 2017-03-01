@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>History Trends Unlimited: Search</title>
+        <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.10.2.min.css">
+        <link rel="stylesheet" type="text/css" href="css/navigation.css" />
+        <link rel="stylesheet" type="text/css" href="css/search.css" />
+        <script type="text/javascript" src="jquery/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="jquery/jquery-ui-1.10.2.min.js"></script>
+        <script type="text/javascript" src="external/jsrender.min.js"></script>
+        <script type="text/javascript" src="js/calcTrendsWebSql.js"></script>
+        <script type="text/javascript" src="js/preferences.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/public_suffix.js"></script>
+        <script type="text/javascript" src="js/navigation.js"></script>
+        <script type="text/javascript" src="js/search.js"></script>
+        <script type="text/javascript" src="js/analytics.js"></script>
+        <script type="text/x-jsrender" id="template-button">
+            <button id="{{:id}}">{{:text}}</button>
+        </script>
+        <script type="text/x-jsrender" id="template-result-row">
+            <tr>
+                <td class="timeColumn">
+                    <input type="checkbox" id="histvisit{{:index}}" name="visits" value="{{:visitId}}" />
+                    <label for="histvisit{{:index}}">{{:visitTime}}</label>
+                </td>
+                <td class="urlColumn">
+                    <a id="histlink{{:index}}" href="{{>url}}" target="_blank">{{:title_encoded}}</a>
+                    {{if title != url}}
+                        <span id="histdomain{{:index}}" class="histdomain">{{>host}}</span>
+                    {{/if}}
+                </td>
+            </tr>
+        </script>
+        <script type="text/x-jsrender" id="template-browse-divider">
+            <tr>
+                <td colspan="3" class="new_day">
+                    <a id="datelink{{:index}}" href="javascript:void(0);" data-datesearch="{{:dateSearch}}">{{:newDate}}</a>
+                </td>
+            </tr>
+        </script>
+        <script type="text/x-jsrender" id="template-no-results-row">
+            <tr>
+                <td id="no_results_text">No results found for '{{>keywords}}'</td>
+            </tr>
+        </script>
+        <script type="text/x-jsrender" id="template-search-desc">
+            <span id="search_desc_text">Showing results for '{{>text}}'</span>
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="sidebar"></div>
+            <div id="header">
+                <h2>History Trends Unlimited: Search</h2>
+            </div>
+            <div id="search_container">
+                <div id="search_controls">
+                    <a id="show_search_tips" href="javascript:void(0);">Search Tips</a>
+                    Search for:&nbsp;
+                    <input type="text" id="keywords" size="30" maxlength="100" />
+                    <input type="submit" id="search" value="Go" />
+                </div>
+                <div id="search_result_controls_top">
+                    <div id="pager_top" class="pager_row">
+                    </div>
+                    <div id="search_desc">
+                    </div>
+                </div>
+                <table id="results" style="display: none">
+                </table>
+                <div id="search_result_controls_bottom">
+                    <div id="pager_bottom" class="pager_row">
+                    </div>
+                </div>
+            </div>
+            <div id="waiting_container">
+                <span id="waiting_progress"></span>
+                <img id="syncing_spinner" src="images/spinner-small.gif" width="24" height="24" />
+            </div>
+            <div id="search_tips" title="Search Tips">
+                <p>
+                    <strong>Wildcard</strong><br>
+                    Use a wildcard (*) at the end of a word to broaden your search. Example: <span class="search_example">hack*</span>
+                </p>
+                <p>
+                    <strong>Phrases</strong><br>
+                    Use quotes for phrase searching. Example: <span class="search_example">"hacker news"</span>
+                </p>
+                <p>
+                    <strong>Boolean</strong><br>
+                    Multiple words are AND-ed by default. Use "OR" to change this behavior. Example: <span class="search_example">hacker OR news</span>
+                </p>
+                <p>
+                    <strong>Negation</strong><br>
+                    Use a dash (-) to exclude words. Example: <span class="search_example">hacker -news</span>
+                </p>
+                <p>
+                    <strong>Date</strong><br>
+                    View a specific date using the format "date:YYYY-MM-DD". Example: <span class="search_example">date:2014-11-01</span>
+                </p>
+            </div>
+            <div id="confirm_delete" title="Remove Selected Items?">
+                <p>Deleting items cannot be undone. Are you sure?</p>
+            </div>
+    </body>
+</html>

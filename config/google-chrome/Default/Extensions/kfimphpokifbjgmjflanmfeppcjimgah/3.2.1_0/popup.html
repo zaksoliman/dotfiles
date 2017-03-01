@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta  http-equiv="Expires" content="-1">
+
+<link type="text/css" href="icons.css" rel="stylesheet" />
+<link type="text/css" href="icons_chrome_fix.css" rel="stylesheet" />
+
+<title>Inoreader RSS</title>
+	
+	<style>
+		html, body
+		{
+			font-family:arial,tahoma,verdana,helvetica;
+			font-size:12px;
+			margin:0;
+			background: url(gradient.png) repeat-x;
+			color:#31415d;
+		}
+
+		.top{
+			background: url(gradient.png) repeat-x;
+			width:100%;
+			height:40px;
+			margin-top:-5px;
+			vertical-align:middle;
+		}
+
+		.logo{
+			width:40px;
+			height:40px;
+			cursor:pointer;
+			float:left;
+		}
+
+		.loading_img{
+			float:left;
+			margin-top:12px;
+			margin-left:10px;
+		}
+
+		.logo_login{
+			width:40px;
+			height:40px;
+			float:left;
+		}
+
+		.login_text{
+			float:left;
+			color:#fff;
+			margin-left:20px;
+			margin-top:12px;
+		}
+
+		.login_text a{
+			color:#fff;
+		}
+
+		.logo:hover{
+			background-color:#2e415c;
+		}
+
+	
+		#feed_searcher {
+			display:block;
+			float:left;
+			width:285px;
+			font-size: 12px;
+			height: 24px;
+			margin: 8px 0 0 5px;
+			padding: 0 0 0 5px;
+			border: 1px solid #314C71;
+			border: 0 none;
+			border-radius: 3px;
+			background-color: #2E415C;
+			color: #F2F6FA;
+			box-shadow: inset 0px 1px 0px 0px #000, inset 0px -1px 0px 0px #667180;
+		}
+
+		.icon_search{
+			display:block;
+			float:left;
+			font-size:16px;
+			color:#f1f5fa;
+			margin-left:10px;
+			cursor:pointer;
+			vertical-align:middle;
+			text-align:center;	
+			padding-top:12px;
+			width:40px;
+			height:28px;
+		}
+
+		.icon_search:hover{
+			background-color:#2e415c;
+		}
+
+		.feed_add{
+			min-height:80px;
+			background-color:#f1f5fa;
+		}
+
+		.feed_add .txt{
+			color:#31415d;
+			font-weight:bold;
+			font-size:14px;
+			padding-left:50px;
+			padding-top:10px;
+		}
+
+		.feed_add .txt_1{
+			color:#31415d;
+			font-weight:bold;
+			font-size:14px;
+			padding-left:50px;
+			padding-top:10px;
+		}
+
+		.feed_add .title{ 
+			float:left;
+			width:280px;
+			font-size: 14px;
+			height: 24px;
+			padding-top:5px;
+			overflow:hidden;
+			padding-left:50px;
+		}
+		.save_web{
+			margin-top:5px;
+			cursor:pointer;
+		}
+
+		.save_web:hover{
+			background-color:#d8dde6;
+		}
+
+		.book_button{
+			float:left;
+			display:block;
+			margin-top:3px;
+			margin-left:25px;
+			font-size:20px;
+			color:#31415d;
+			cursor:pointer;
+		}
+
+		.book_button_save{
+			float:left;
+			display:block;
+			margin-top:3px;
+			margin-left:25px;
+			font-size:20px;
+			color:#31415d;
+			cursor:pointer;
+		}
+
+
+
+
+		#feed_input {
+			float:left;
+			width:283px;
+			font-size: 14px;
+			height: 24px;
+			padding: 0 0 0 5px;
+			margin-left:45px;
+			margin-top:5px;
+			border: 1px solid #c4ccda;
+			background-color: #d8dde6;
+			color: #31415d;
+		}
+
+		#subscribe_links{
+			border-bottom:1px solid #c4ccda;
+			background-color: #ffffff;
+			color:#31415d;
+			font-weight:bold;
+			font-size:16px;
+		}
+
+
+
+		.plus_button{
+			float:left;
+			display:block;
+			margin-top:10px;
+			margin-left:23px;
+			font-size:16px;
+			color:#31415d;
+			cursor:pointer;
+		}
+
+		.loading{
+			float:left;
+			display:block;
+			margin-top:8px;
+			margin-left:23px;
+			font-size:16px;
+			color:#31415d;
+		}
+
+		.info{
+			padding-top:20px;
+			padding-bottom:20px;
+			text-align:center;
+		}
+
+		.no_new_articles{
+			padding-top:5px;
+			padding-bottom:20px;
+			text-align:center;
+			font-weight:bold;
+			font-size:14px;
+			color:#31415d;
+		}
+
+		#new_articles{
+			background-color:#f1f5fa;
+		}
+
+		.new_articles_top{
+			font-style:italic;
+			font-size:13px;
+			padding-left:15px;
+			padding-top:10px;
+			padding-bottom:5px;
+			color:#31415d;
+		}
+
+		.icon16{
+			display:block;
+			float:left;
+			width:16px;
+			height:16px;
+			font-size:16px;
+			color:#31415d;
+			padding-top:4px;
+			padding-left:25px;
+			padding-right:10px;
+		}
+
+		.i_icon16{
+			width:16px;
+			height:16px;
+		}
+
+		.feed_title{
+			display:block;
+			float:left;
+			padding-top:4px;
+			color:#31415d;
+			font-weight:bold;
+			font-size:13px;
+			width:300px;
+			overflow:hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			height:18px;
+		}
+
+		.feed_title_1{
+			display:block;
+			float:left;
+			padding-top:4px;
+			color:#31415d;
+			font-weight:bold;
+			font-size:13px;
+			width:300px;
+			overflow:hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			height:18px;
+		}
+
+		.feed_title_child{
+			width:270px;
+		}
+
+		.feed{
+			height:24px;
+			cursor:pointer;
+			background-color:#f1f5fa;
+		}
+
+		.feed:hover{
+			background-color: #d8dde6;
+		}
+
+		.folder{
+			height:24px;
+			cursor:pointer;
+			background-color:#f1f5fa;
+		}
+
+		.folder:hover{
+			background-color: #d8dde6;
+		}
+	
+		.child{
+			display:none;
+		}
+
+		.child_feed{
+			padding-left:30px;
+		}
+
+		.unread{
+			display:block;
+			float:left;
+			width:30px;
+			height:14px;
+			margin-left:10px;
+			padding-top:5px;
+			font-size: 11px;
+			text-align:right;
+		}
+
+
+		.add_feed{
+			cursor:pointer;
+			width:405px;
+			padding-top:10px;
+			height:50px;
+		}
+
+		.added_feed{
+			width:405px;
+			padding-top:10px;
+			height:50px;
+		}
+
+		.add_feed:hover{
+			background-color:#ebeef2;
+		}
+
+		.add_feed .title{
+			display:block;
+			float:left;
+			margin-left:50px;
+			width:295px;
+		}
+
+		.added_feed .title{
+			display:block;
+			float:left;
+			margin-left:50px;
+			width:295px;
+			color:rgba(49, 65, 93, 0.6);
+		}
+
+		.add_feed .title .name, .added_feed .title .name{
+			font-size:14px;
+		}
+
+		.add_feed .title .link, .added_feed .title .link{
+			font-size:14px;
+			font-weight:normal;
+			height:23px;
+			overflow:hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			color:rgba(49, 65, 93, 0.6);
+		}
+
+		.add_feed .icon, .added_feed .icon{
+			display:block;
+			float:left;
+			margin-left:20px;
+		}
+
+		.center_icon{
+			float:left;
+			width:40px;
+			height:18px;
+			margin-left:3px;
+			margin-top:10px;
+			text-align:center;
+			
+		}
+
+		.add_icon{
+			font-size:16px;
+			color:#31415d;
+		}
+
+		.checked_icon{
+			font-size:16px;
+			color:#31415d;
+			text-align:right;
+			display:block;
+		}
+
+		.clear-both{
+			clear:both;
+		}
+
+		#bootom{
+			display:none;
+			height:1px;
+			background-color:#F1F5FA;
+		}
+
+		#tree{
+			text-align: left;
+			width:400px;
+			margin-top:5px;
+		}
+
+	</style>
+	 <script src="jquery.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div id="tree"></div>
+	<div id="bootom"></div>
+	<script src="popup.js"  type="text/javascript"></script>
+</body>
+
+</html>

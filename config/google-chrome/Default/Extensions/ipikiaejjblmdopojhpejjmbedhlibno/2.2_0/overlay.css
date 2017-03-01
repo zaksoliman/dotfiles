@@ -1,0 +1,25 @@
+#spreed-overlay {
+  padding: 10px 0px 10px 0px; 
+  font-family: "Trebuchet MS", Trebuchet, sans-serif;
+  font-size: 11px; 
+  position: absolute; 
+  right: 0px; 
+  bottom: 0px; 
+  z-index: 2147483647; 
+  width: auto; 
+  height: auto; 
+  background-color: #272727; 
+  color: black; 
+  clear: both;  
+  border:2px solid #ffedb0; 
+  border-radius:5px;
+}
+
+#spreed-overlay a{
+  color: #ccc;
+  padding: 10px 20px 10px 20px; 
+}
+
+#spreed-overlay a:hover{
+  color: white; 
+}

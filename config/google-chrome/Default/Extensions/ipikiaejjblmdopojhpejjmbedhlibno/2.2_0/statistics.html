@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Spreed - the speed reading extension - Statistics</title>
+
+		<script src="jquery.js"></script>
+		<script src="jquery-ui.min.js"></script>
+		<script src="statistics.js"></script>
+
+		<LINK id="css-style" href="popup.css" rel="stylesheet" type="text/css">
+		<LINK href="jquery-ui.min.css" rel="stylesheet" type="text/css">
+
+
+	</head>
+
+	<body class="statistics">
+
+		<!-- Google Tag Manager -->
+		<script src="gtm.js"></script>
+		<!-- End Google Tag Manager -->
+
+		<div id="donate-container">
+
+
+			<form id="recurring-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					
+					<input id='donation-type' type="hidden" name="cmd" value="_xclick-subscriptions"> 
+					<input type="hidden" name="business" value="RKTU5ZFAVHRLG">
+					<input type="hidden" name="lc" value="US">
+					<input type="hidden" name="item_name" value="Donation to Troy and Eric, creators of Spreed!">
+					
+					<input type="hidden" name="no_note" value="1">
+					<input type="hidden" name="no_shipping" value="2">
+					<input type="hidden" name="src" value="1">
+					<input type="hidden" name="p3" value="1">
+					<input type="hidden" name="t3" value="M">
+					<input type="hidden" name="currency_code" value="USD">
+					<input type="hidden" name="bn" value="PP-SubscriptionsBF:btn_subscribeCC_LG.gif:NonHosted">
+					<table>
+
+						<tr><th colspan="2">Like Spreed? Buy Troy and Eric a coffee :)</th></tr>
+						<tr><td>When would you like the donation to recur?</td></tr><tr><td>
+							<select id="donation-recurrence">
+								<option value="M">Monthly</option>
+								<option value="O">One-time</option>
+							</select> 
+						</td></tr>
+						
+						<tr id="monthly-donation-amount-row"><td>Monthly Donation Amount</td><td>$ <input id="donation-amount" type="text" name="a3" maxlength="10" value="2"></td></tr>
+					</table>
+					<input id="donate-button" type="image" src="donate.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+					<p>Our BTC address: 1Amth3u2FXtPs6erGsLAP4fpRq1pFGL8L3</p>
+			</form>
+
+		</div>
+		
+
+		<h1>Spreed - Statistics</h1>
+		<p>
+			Your Spreed statistics:
+
+			<div id="statistics-container">
+				<table id="statistics-table">
+					
+				</table>
+
+			</div>
+			
+
+		</p>
+		<br>
+		
+		<p>
+			
+
+			How much is your time worth? 
+
+			<div id="worth-container">
+
+				<div id="hourlyrate"></div>
+				<div id="hourlyrate-container">
+					<div id="hourlyrate-slider"></div>
+				</div>
+
+				<table id="timeworth-table">
+					
+				</table>
+
+
+			</div>
+				
+			
+		</p>
+
+		<p>
+			<!--<div id="pwyw-container">
+				Spreed is "pay what you want" software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7BDUJ9WFCEPLG" target="_blank" class="white-link">You can support us with a recurring monthly donation.</a> Thank you! :)
+			</div>-->
+		</p>
+	
+	</body>
+</html>

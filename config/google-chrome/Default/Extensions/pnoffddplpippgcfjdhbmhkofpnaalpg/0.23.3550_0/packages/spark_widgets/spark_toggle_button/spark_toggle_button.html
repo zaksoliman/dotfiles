@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<!-- Copyright (c) 2013, Google Inc. Please see the AUTHORS file for details.
+     All rights reserved. Use of this source code is governed by a BSD-style
+     license that can be found in the LICENSE file. -->
+
+<!--
+/**
+ * spark-toggle-button is a button that has one of two states (ON/OFF).
+ * You can tap or drag the button to switch state.
+ *
+ * Example:
+ *
+ *     <spark-toggle-button value="true"></spark-toggle-button>
+ */
+-->
+
+<link rel="import" href="../../../packages/spark_widgets/common/spark_widget.html"/>
+
+<polymer-element name="spark-toggle-button" extends="spark-widget"
+    attributes="value">
+  <template>
+    <link rel="stylesheet" href="spark_toggle_button.css">
+
+    <div id="toggle">
+      <span id="onLabel">ON</span>
+      <span id="thumb"></span>
+      <span id="offLabel">OFF</span>
+    </div>
+  </template>
+
+  <script type="application/dart" src="spark_toggle_button.dart"></script>
+</polymer-element>

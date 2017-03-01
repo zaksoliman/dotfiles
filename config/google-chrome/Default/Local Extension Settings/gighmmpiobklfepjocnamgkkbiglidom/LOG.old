@@ -1,0 +1,19 @@
+2017/02/28-19:08:58.643 796 Reusing MANIFEST /home/danglewaggle/.config/google-chrome/Default/Local Extension Settings/gighmmpiobklfepjocnamgkkbiglidom/MANIFEST-000001
+2017/02/28-19:08:58.643 796 Recovering log #131
+2017/02/28-19:08:58.667 796 Level-0 table #134: started
+2017/02/28-19:08:58.731 796 Level-0 table #134: 2322041 bytes OK
+2017/02/28-19:08:58.733 796 Delete type=0 #131
+2017/02/28-19:08:58.742 1036 Compacting 4@0 + 2@1 files
+2017/02/28-19:08:58.926 1036 Generated table #136@0: 1 keys, 2322041 bytes
+2017/02/28-19:08:58.929 1036 Generated table #137@0: 4 keys, 392 bytes
+2017/02/28-19:08:58.929 1036 Compacted 4@0 + 2@1 files => 2322433 bytes
+2017/02/28-19:08:58.930 1036 compacted to: files[ 0 2 1 0 0 0 0 ]
+2017/02/28-19:08:58.930 1036 Delete type=2 #126
+2017/02/28-19:08:58.930 1036 Delete type=2 #128
+2017/02/28-19:08:58.931 1036 Delete type=2 #134
+2017/02/28-19:08:58.931 1036 Delete type=2 #130
+2017/02/28-19:08:58.932 1036 Delete type=2 #132
+2017/02/28-19:08:58.932 1036 Delete type=2 #125
+2017/02/28-19:10:00.017 1036 Level-0 table #139: started
+2017/02/28-19:10:00.053 1036 Level-0 table #139: 2322280 bytes OK
+2017/02/28-19:10:00.055 1036 Delete type=0 #135

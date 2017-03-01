@@ -1,0 +1,18 @@
+{
+   "api_console_project_id": "768101752375",
+   "app": {
+      "launch": {
+         "web_url": "http://html.editey.com"
+      }
+   },
+   "container": "GOOGLE_DRIVE",
+   "description": "HTML Editor for Google Drive",
+   "icons": {
+      "128": "128.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCYZysNnNsQ8L8LLtCSkOCduDh+4W1669iOPWMC7AWahlFM2z8TyzxWwr0csZbOLITkj4+v+S8x/Vr+TPWMEtmq37X2sNjU7is/TjVN6hiMloSbSPSpminKOW+rKPMd2ArqLY0F7IO5RVlCiGPdhq8yG+K2Z5bys/nW11f2Q2Ca2QIDAQAB",
+   "manifest_version": 2,
+   "name": "HTML Editey",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.37"
+}

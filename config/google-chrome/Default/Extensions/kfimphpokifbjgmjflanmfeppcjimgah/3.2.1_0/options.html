@@ -1,0 +1,163 @@
+<html>
+<head>
+<title>Inoreader Notifier settings</title>
+	<style>
+
+		html, body
+		{
+			font-family: Arial, Helvetica, sans-serif;
+			color: #2E415C;
+			background-color: hsl(216, 23%, 87%);
+		}
+		img
+		{
+			border:0 none;
+		}
+		td
+		{
+			font-size:12px;
+		}
+		.settings_fieldset
+		{
+			width:630px;
+			margin:50px auto 20px auto;
+			background-color: #FEFEFE;
+			padding:40px 30px 30px 30px;
+			border: 1px solid #c3ccd9;
+		}
+		.about
+		{
+			font-size: 13px;
+			text-align: center;
+			line-height: 150%;
+			margin-bottom: 30px;
+		}
+		select
+		{
+			width:170px;
+		}
+		input[type="text"]
+		{
+			width:169px;
+		}
+		td
+		{
+			padding-top:5px;
+		}
+	</style>
+</head>
+
+<body>
+
+<div class="smallradius settings_fieldset">
+	<table>
+		<tr>
+			<td align="center" style="vertical-align:top;width:128px;">
+				<img src="512_x_512_pixels.png" style="width:128px;position:relative;top:-14px;">
+			</td>
+			<td style="padding-left:20px">
+				<table>
+					<tr>
+						<td nowrap>
+							<b>HTTPS</b>
+						</td>
+						<td>
+							<input type="checkbox" id="use_ssl" value="1" class="options"> <label for="use_ssl">Open Inoreader via HTTPS</label>
+						</td>
+					</tr>
+
+					<tr>
+						<td nowrap>
+							<b>Feed icons</b>
+						</td>
+						<td>
+							<input type="checkbox" id="original_fav" name="original_fav" value="1" class="options"> <label for="original_fav">Show original feed favicons</label>
+						</td>
+					</tr>
+
+					<tr>
+						<td nowrap>
+							<b>Icon style:</b>
+						</td>
+						<td>
+							<input type="radio" name="icon" id="icon_1" value="1" class="options"> <label for="icon_1" id="i_1"></label>
+							<input type="radio" name="icon" id="icon_3" value="3" class="options"> <label for="icon_3" id="i_2"></label>
+							<input type="radio" name="icon" id="icon_2" value="2" class="options"> <label for="icon_2" id="i_3"></label>
+							<input type="radio" name="icon" id="icon_4" value="4" class="options"> <label for="icon_4" id="i_4"></label>
+						</td>
+					</tr>
+					<tr>
+						<td nowrap>
+							<b>Counter type</b>
+						</td>
+						<td>
+							<select name="badge_type" id="badge_type" class="options">
+								<option value="1">Show the number of unread articles</option>
+								<option value="2">Show the number of unseen articles</option>
+								<option value="3">Without counter</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td nowrap>
+							<b>Counter color:</b>
+						</td>
+						<td>
+							<select name="badge_bgcolor" id="badge_bgcolor" class="options">
+								<option value="#296BCC">Aqua</option>
+								<option value="#00008B">Indigo Blue</option>
+								<option value="#FF0000">Red</option>
+								<option value="#D00018">Dark Red</option>
+								<option value="#006400">Green</option>
+								<option value="#808080">Gray</option>
+								<option value="#000000">Black</option>
+								<option value="#9400d3">Dark Violet</option>
+								<option value="#008080">Teal</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td nowrap>
+							<b>Icon action:</b>
+						</td>
+						<td>
+							<select name="redirect" id="redirect">
+								<option value="1">Open full popup</option>
+								<option value="3">Open search and subscribe</option>
+								<option value="2">Open Inoreader</option>
+							</select>
+						</td>
+					</tr>
+
+<!--
+					<tr>
+						<td nowrap>
+							<b>Session key:</b>
+						</td>
+						<td>
+							<input type="text" name="session_key" id="session_key"> (optional)
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="color:#0069D6;">
+							The session key will allow the extension to work even if you are logged out of Inoreader. You can get it from <a style="color:#0069D6;" target="_blank" href="https://www.inoreader.com/?show_dialog=preferences_dialog&params={focus_tab:6}">Preferences -> Apps and Extensions</a>.
+							<p>
+								Please note that only the unread badge can be fetched using the session key!
+							</p>
+						</td>
+					</tr>
+-->
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="about">
+	<a href="http://www.inoreader.com">Inoreader homepage</a><br>
+	<a href="http://innologica.com">©2015 Innologica</a> - <a href="http://www.inoreader.com/privacy_policy">Privacy Policy</a>
+</div>	
+
+</body>
+<script src="options.js"></script>
+</html>

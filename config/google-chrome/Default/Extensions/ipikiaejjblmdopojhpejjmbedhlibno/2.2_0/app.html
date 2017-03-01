@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Spreed - the speed reading extension</title>
+	
+	<LINK href="colorbox.css" rel="stylesheet" type="text/css">
+	<LINK href="jquery-ui.min.css" rel="stylesheet" type="text/css">
+	<LINK id="css-style" href="style.css" rel="stylesheet" type="text/css">
+	<LINK href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
+	<script src="jquery.js"></script>
+	<!--<script src="jquery.fittext.js"></script>-->
+	<script src="mixpanel.js"></script>
+	<script src="identify.js"></script>
+	<script src="jquery.colorbox-min.js"></script>
+	<script src="app.js"></script>
+	<script src="jquery-ui.min.js"></script>
+
+</head>
+
+
+<!-- This contains the hidden content for inline calls -->
+<div style="display:none">
+	<div id="inline_tips" style="">
+	<h1>Hotkeys</h1>
+	<dl class="hotkeys-dd">
+		<dt>k</dt>
+		<dd>rewind</dd>
+		<dt>h</dt>
+		<dd>hide controls</dd>
+		<dt>Space</dt>
+		<dd>play/pause</dd>
+		<dt>1,2...9,0</dt>
+		<dd>seek to position in text</dd>
+		<dt>q</dt>
+		<dd>close Spreed window</dd>
+		<dt>l</dt>
+		<dd>reset</dd>
+		<dt>f</dt>
+		<dd>change font</dd>
+		<dt>[ </dt><dt> ]</dt>
+		<dd>decrease/increase WPM</dd>
+	</dl>
+
+	<h1>Buttons</h1>
+	<p><span class="button-name">Colors</span>: change Spreed color theme<br/>
+	<span class="button-name">Highlight</span>: highlight/unhighlight center letter</p>
+
+	</div>
+</div>
+
+<body class="black">
+
+	<!-- Google Tag Manager -->
+	<script src="gtm.js"></script>
+	<!-- End Google Tag Manager -->
+
+	<div id="container">
+		<div id="status">
+			<div class="status-group-left">
+				<!-- Time Estimate -->
+				<div id="time-estimate-group" class="config-group">
+					<div id="time-estimate" class="config-title time-title">X min</div>
+				</div>
+
+				<!-- WPM Control -->
+				<div id="wpm-group" class="config-group">
+					<div id="wpm-title" class="config-title">WPM</div>
+					<div id="wpm-display" class="config-display config-buttons">
+						<div id="wpm" class="config-display-text">400</div>
+						<div id="increase-wpm" class="config-button-up">
+							<svg class="svg-arrow" width="24px" height="18px">
+								<path class="svg-path" d="M12,10l5.3,4.2c0.1,0.1,0.3,0.2,0.5,0.2c0.4,0,0.7-0.3,0.7-0.7c0-0.2-0.2-0.4-0.4-0.5l-5.7-4.3c-0.1-0.1-0.3-0.2-0.5-0.2h0
+								c-0.2,0-0.4,0.1-0.5,0.2l-5.7,4.3c-0.2,0.1-0.4,0.3-0.4,0.5c0,0.4,0.3,0.7,0.7,0.7c0.2,0,0.4-0.1,0.5-0.2L12,10z"/>
+							</svg>
+						</div>
+						<div id="decrease-wpm" class="config-button-down">
+							<svg class="svg-arrow" width="24px" height="18px">
+								<path class="svg-path" d="M12,8L6.7,3.8C6.6,3.7,6.4,3.6,6.2,3.6c-0.4,0-0.7,0.3-0.7,0.7c0,0.2,0.2,0.4,0.4,0.5l5.7,4.3c0.1,0.1,0.3,0.2,0.5,0.2h0
+								c0.2,0,0.4-0.1,0.5-0.2l5.7-4.3c0.2-0.1,0.4-0.3,0.4-0.5c0-0.4-0.3-0.7-0.7-0.7c-0.2,0-0.4,0.1-0.5,0.2L12,8z"/>
+							</svg>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- Chunk Size -->
+				<div id="chunk-size-group" class="config-group">
+					<div id="chunk-size-title" class="config-title">Words at a time</div>
+					<div id="chunk-size-display" class="config-display config-buttons">
+						<div id="chunk-size" class="config-display-text">1</div>
+						<div id="increase-chunk-size" class="config-button-up">
+							<svg class="svg-arrow" width="24px" height="18px">
+								<path class="svg-path" d="M12,10l5.3,4.2c0.1,0.1,0.3,0.2,0.5,0.2c0.4,0,0.7-0.3,0.7-0.7c0-0.2-0.2-0.4-0.4-0.5l-5.7-4.3c-0.1-0.1-0.3-0.2-0.5-0.2h0
+								c-0.2,0-0.4,0.1-0.5,0.2l-5.7,4.3c-0.2,0.1-0.4,0.3-0.4,0.5c0,0.4,0.3,0.7,0.7,0.7c0.2,0,0.4-0.1,0.5-0.2L12,10z"/>
+							</svg>
+						</div>
+						<div id="decrease-chunk-size" class="config-button-down">
+							<svg class="svg-arrow" width="24px" height="18px">
+								<path class="svg-path" d="M12,8L6.7,3.8C6.6,3.7,6.4,3.6,6.2,3.6c-0.4,0-0.7,0.3-0.7,0.7c0,0.2,0.2,0.4,0.4,0.5l5.7,4.3c0.1,0.1,0.3,0.2,0.5,0.2h0
+								c0.2,0,0.4-0.1,0.5-0.2l5.7-4.3c0.2-0.1,0.4-0.3,0.4-0.5c0-0.4-0.3-0.7-0.7-0.7c-0.2,0-0.4,0.1-0.5,0.2L12,8z"/>
+							</svg>
+						</div>
+					</div>
+				</div>
+				
+
+				<!-- Font Size -->
+				<div id="font-size-group" class="config-group">
+					<div id="font-size-title" class="config-title">Font size</div>
+					<div id="font-size-display" class="config-display config-buttons">
+						<div id="font-size" class="config-display-text">25</div>
+						<div id="increase-font-size" class="config-button-up">
+							<svg class="svg-arrow" width="24px" height="18px">
+								<path class="svg-path" d="M12,10l5.3,4.2c0.1,0.1,0.3,0.2,0.5,0.2c0.4,0,0.7-0.3,0.7-0.7c0-0.2-0.2-0.4-0.4-0.5l-5.7-4.3c-0.1-0.1-0.3-0.2-0.5-0.2h0
+								c-0.2,0-0.4,0.1-0.5,0.2l-5.7,4.3c-0.2,0.1-0.4,0.3-0.4,0.5c0,0.4,0.3,0.7,0.7,0.7c0.2,0,0.4-0.1,0.5-0.2L12,10z"/>
+							</svg>
+						</div>
+						<div id="decrease-font-size" class="config-button-down">
+							<svg class="svg-arrow" width="24px" height="18px">
+								<path class="svg-path" d="M12,8L6.7,3.8C6.6,3.7,6.4,3.6,6.2,3.6c-0.4,0-0.7,0.3-0.7,0.7c0,0.2,0.2,0.4,0.4,0.5l5.7,4.3c0.1,0.1,0.3,0.2,0.5,0.2h0
+								c0.2,0,0.4-0.1,0.5-0.2l5.7-4.3c0.2-0.1,0.4-0.3,0.4-0.5c0-0.4-0.3-0.7-0.7-0.7c-0.2,0-0.4,0.1-0.5,0.2L12,8z"/>
+							</svg>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+
+			<div class="status-group-right">
+
+
+				<!-- Color Toggle -->
+				<div id="color-group" class="config-group">
+					<div id="toggle-colors" class="config-title color-title">Colors</div>
+				</div>
+
+				<!-- Highlight -->
+				<div id="highlight-group" class="config-group">
+					<div id="highlight-center" class="config-title highlight-title">Highlight</div>
+				</div>
+				
+
+				<!-- Statistics -->
+				<div id="statistics-group" class="config-group">
+					<div id="statistics-open" class="config-title">
+						<a class="statistics-title circle yellow">
+							$
+						</a>
+					</div>
+				</div>
+
+				<!-- Quicktips -->
+				<div id="quicktips-group" class="config-group">
+					<div id="quicktips-toggle" class="config-title">
+						<a class="quicktips-title inline circle" href="#inline_tips">
+							?
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix">&nbsp;</div>
+		</div>
+
+
+		
+		<div id="word-container">
+			<h1>
+				<div id="loading-container">
+					<div id="loading">
+
+					</div>
+					<div id="loading-stats">
+						
+					</div>
+				</div>
+				<div id="word">
+				</div>
+			</h1>
+		</div>
+
+		<div id="word-container-timer"></div>
+
+		<div id="share-article-div">
+			<div id="share-article-label">Share article:</div><iframe id="share-article-fb" src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fgoogle.com&amp;width&amp;layout=standard&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=35&amp;appId=1420577901545273&amp;colorscheme=dark" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:35px;" allowTransparency="true"></iframe>
+		</div>
+
+		<div id="congrats">
+		</div>
+
+		<div id="slider-container">
+			<div id="slider"></div>
+		</div>
+
+		
+
+		<div id="controls">
+
+			<div id="controls-message">
+				<a href="#"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Interesting? Save it</a>
+			</div>
+			<iframe id="share-spreed-fb" src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fspreed-speed-read-the-web%2Fipikiaejjblmdopojhpejjmbedhlibno&amp;width&amp;layout=standard&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=35&amp;appId=1420577901545273&amp;colorscheme=dark" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:35px;" allowTransparency="true"></iframe>
+
+			
+			<ul class="controls-ul">
+				<li id="play" class="controls-ul-play"><span>Play</span></li>
+				<li id="pause" class="controls-ul-pause"><span>Pause</span></li>
+				<li id="replay" class="controls-ul-rewind"><span>Replay</span></li>
+				<li id="rewind" class="controls-ul-replay"><span>Rewind</span></li>
+			</ul>
+
+			
+
+		</div>
+
+		<div class="clearfix">&nbsp;</div>
+
+	</div>
+
+	
+
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<!-- Copyright (c) 2013, Google Inc. Please see the AUTHORS file for details.
+     All rights reserved. Use of this source code is governed by a BSD-style
+     license that can be found in the LICENSE file. -->
+
+<!--
+/**
+ * spark-menu-item is intended to be used as a selectable element of a
+ * spark-menu and its derivatives (e.g. spark-menu-button).
+ */
+-->
+
+<link rel="import" href="../../../packages/spark_widgets/common/spark_widget.html"/>
+<link rel="import" href="../../../packages/spark_widgets/spark_icon/spark_icon.html">
+
+<polymer-element name="spark-menu-item" extends="spark-widget"
+    attributes="icon
+                iconSize
+                label
+                description
+                checkmark">
+  <template>
+    <link rel="stylesheet" href="spark_menu_item.css">
+
+    <span id="main">
+      <template if="{{icon.isNotEmpty}}">
+        <spark-icon id="icon" src="{{icon}}" size="{{iconSize}}"></spark-icon>
+      </template>
+      <span id="label">{{label}}</span>
+      <content></content>
+      <div id="checkmark">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <g>
+            <polygon points="9,16.2 4.8,12 3.4,13.4 9,19 21,7 19.6,5.6">
+            </polygon>
+          </g>
+        </svg>
+      </div>
+    </span>
+    <span id="description">{{description}}</span>
+  </template>
+
+  <script type="application/dart" src="spark_menu_item.dart"></script>
+</polymer-element>

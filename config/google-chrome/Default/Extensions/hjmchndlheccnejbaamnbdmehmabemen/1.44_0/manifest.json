@@ -1,0 +1,26 @@
+{
+   "api_console_project_id": "834369361793",
+   "app": {
+      "launch": {
+         "web_url": "http://www.editey.com"
+      }
+   },
+   "container": [ "DOMAIN_INSTALLABLE", "GOOGLE_DRIVE" ],
+   "description": "Website Editor for Google Drive",
+   "gdrive_mime_types": {
+      "http://drive.google.com/intents/opendrivedoc": [ {
+         "disposition": "window",
+         "href": "http://www.editey.com",
+         "title": "Open",
+         "type": [ "application/editey", "application/vnd.google-apps.folder", "text/javascript", "application/javascript", "application/vnd.google.drive.ext-type.js", "text/html", "application/vnd.google.drive.ext-type.html", "application/vnd.google.drive.ext-type.htm", "application/xml", "application/xhtml+xml", "text/xml", "application/vnd.google.drive.ext-type.xml", "application/x-php", "text/x-php", "text/php", "application/php", "application/x-httpd-php", "application/x-httpd-php-source", "application/vnd.google.drive.ext-type.php", "text/css", "application/vnd.google.drive.ext-type.css", "text/less", "application/vnd.google.drive.ext-type.less", "text/x.typescript", "application/vnd.google.drive.ext-type.ts" ]
+      } ]
+   },
+   "icons": {
+      "128": "128.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCyOGj0SIiVldlPvLg748Mc+xdBoUpxS5wMCK8HrqmoVeWSGcUXmClKy/X8fnKtMKBCekm15sVnvg2sflVcj8BHsg36H8mw/6t9HzvcYZ52s3PPM6ixvebOtCwcfmTSPbX0+iiX4SktSweDCT4WYqNniB7gltpqThxquHpQVYk7GQIDAQAB",
+   "manifest_version": 2,
+   "name": "Editey",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.44"
+}

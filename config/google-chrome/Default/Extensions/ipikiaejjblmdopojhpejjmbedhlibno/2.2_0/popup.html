@@ -1,0 +1,92 @@
+<html>
+<head>
+	<title>Spreed - the speed reading extension</title>
+	<script src="popup.js"></script>
+	<LINK href="popup.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+	<!-- Google Tag Manager -->
+	<script src="gtm.js"></script>
+	<!-- End Google Tag Manager -->
+	
+	<div id="popup-container" class="container">
+
+	<img src="spreed_book.png" width="" height="50%"/>
+	<h3>Welcome, and thank you for installing!</h3>
+	
+	<p>Sign-up for updates and launches <a href="http://signup.spreedit.com">here!</a></p>
+	<h3>There are five ways you can use Spreed:</h3>
+	<p>
+		<ol>
+			<li>Access the Spreed menu by clicking on the Spreed icon to the right of the address bar</li>
+			<li>Select "Spreed current website"</li>
+			<li>OR "Paste text into Spreed" to speed read text copy-pasted in from non-Chrome sources</li>
+			<br>
+			<img src="spreed-menu-screenshot.png"/>
+		</ol>
+		OR
+		<ol>
+			<li>Alt+V to automatically extract main content of webpage</li>
+		</ol>
+		OR
+		<ol>
+			<li>Alt+Shift+V to start text selector</li>
+			<li>Click on body of text that you want to read</li>
+		</ol>
+		OR
+		<ol>
+			<li>Select text on webpage</li>
+			<li>Alt+V to open Spreed with selected text</li>
+		</ol>
+		OR
+		<ol>
+			<li>Select text on webpage</li>
+			<li>Right click</li>
+			<li>Select "Spreed selected text"</li>
+		</ol>
+	</p>
+	
+	<div id="donate-container">
+
+
+			<form id="recurring-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					
+					<input id='donation-type' type="hidden" name="cmd" value="_xclick-subscriptions"> 
+					<input type="hidden" name="business" value="RKTU5ZFAVHRLG">
+					<input type="hidden" name="lc" value="US">
+					<input type="hidden" name="item_name" value="Donation to Troy and Eric, creators of Spreed!">
+					
+					<input type="hidden" name="no_note" value="1">
+					<input type="hidden" name="no_shipping" value="2">
+					<input type="hidden" name="src" value="1">
+					<input type="hidden" name="p3" value="1">
+					<input type="hidden" name="t3" value="M">
+					<input type="hidden" name="currency_code" value="USD">
+					<input type="hidden" name="bn" value="PP-SubscriptionsBF:btn_subscribeCC_LG.gif:NonHosted">
+					<table>
+
+						<tr><th colspan="2">Like Spreed? Buy Troy and Eric a coffee :)</th></tr>
+						<tr><td>When would you like the donation to recur?</td></tr><tr><td>
+							<select id="donation-recurrence">
+								<option value="M">Monthly</option>
+								<option value="O">One-time</option>
+							</select> 
+						</td></tr>
+						
+						<tr id="monthly-donation-amount-row"><td>Monthly Donation Amount</td><td>$ <input id="donation-amount" type="text" name="a3" maxlength="10" value="2"></td></tr>
+					</table>
+					<input id="donate-button" type="image" src="donate.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+					<p>Our BTC address: 1Amth3u2FXtPs6erGsLAP4fpRq1pFGL8L3</p>
+			</form>
+
+		</div>
+
+
+	</div>
+	
+</body>
+
+</html>

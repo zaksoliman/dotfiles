@@ -1,0 +1,29 @@
+{
+   "background": {
+      "scripts": [ "background.js" ]
+   },
+   "browser_action": {
+      "default_icon": {
+         "19": "icon1.png",
+         "38": "icon1_r.png"
+      },
+      "default_popup": "popup.html"
+   },
+   "content_scripts": [ {
+      "js": [ "page.js" ],
+      "matches": [ "*://*.inoreader.com/*" ]
+   } ],
+   "description": "Quickly view your updated feeds, subscribe to your currently opened site and more...",
+   "icons": {
+      "128": "128_x_128_pixels.png",
+      "16": "16_x_16_pixels.png",
+      "48": "48_x_48_pixels.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJZ12UDTRm0hIgOaiMzovc2gCb6W5ymlpUA/+TC+3PgKgJuu3hWKiYw23u7reSXN0A+51mcGaIDhrEiiIVkYkGg2FURIzQ0srYvwqNDgYG+2su9+QLUVxwqwnWVAtntSbPYU4PMP4+9YnisM6wPT2AvClulwc0Ax5MgMTZFeOl8QIDAQAB",
+   "manifest_version": 2,
+   "name": "Inoreader Companion",
+   "options_page": "options.html",
+   "permissions": [ "tabs", "storage", "*://*.inoreader.com/*" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "3.2.1"
+}

@@ -1,0 +1,17 @@
+{
+   "app": {
+      "launch": {
+         "web_url": "http://www.typingweb.com/tutor/"
+      },
+      "urls": [ "http://www.typingweb.com/" ]
+   },
+   "description": "TypingWeb is a free online typing tutor for typists of all skill levels. Lessons, games, tests, & certifications are included.",
+   "icons": {
+      "128": "128x128.png",
+      "16": "16x16.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDDf5MDlmXvmFINx7o5jTr/BQiQe658ogpul7TOp7OYbSZG6SvAWBVCgaoUYiBITzST8lOk6oOfDHZQSj7mrgHqTo2VNSM8iNR5yxLpVAFRr0XdQM1vWpn7or34yUroHLApKzgULrMRZ6J4Rn0qgSLThAGU36lTFU1RUHlOtB/zwIDAQAB",
+   "name": "TypingWeb Typing Tutor",
+   "update_url": "http://clients2.google.com/service/update2/crx",
+   "version": "1.0.0.3"
+}

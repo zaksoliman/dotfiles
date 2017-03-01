@@ -1,0 +1,161 @@
+{
+   "app": {
+      "background": {
+         "persistent": false,
+         "scripts": [ "background.js" ]
+      }
+   },
+   "default_locale": "en",
+   "description": "__MSG_app_description__",
+   "file_handlers": {
+      "text": {
+         "types": [ "application/dart", "application/javascript", "text/css", "text/dart", "text/html", "text/javascript", "text/json", "text/xml", "text/yaml" ]
+      }
+   },
+   "icons": {
+      "128": "images/icon_128.png",
+      "16": "images/icon_16.png",
+      "256": "images/icon_256.png",
+      "32": "images/icon_32.png",
+      "48": "images/icon_48.png",
+      "512": "images/icon_512.png",
+      "64": "images/icon_64.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2OvldPjAqgEboHyyZM7GpCMmGMSQ8aExOlQyOhN3C9fDRXqnAN/Ie20TEwD9Eb2CciV3Ru4Gm7PmDnkHzsljD84qLgBdN39FzPGDyViXTS442xTElWRZMZQfJYQpbMpiePL720kTHgLLAcwTgdP9DnvRPrKukIs/U4Y76NFk7NNbsNOc6FWisLJykw2POTB1RR5ZlZrA4Ax1P7kt7qQdomE6i8wy1TA1jDhG8AhEXKRfpyELvJmzyVIyR9uiSHDHCdihiS5oyjADjmmbklvL7Ns0cSAgEX/lWN8UX8r17zoKZzJ0MkmCQ5Nlfql8qUtn2oZXaHztkkAcXCxkq9/37QIDAQAB",
+   "manifest_version": 2,
+   "minimum_chrome_version": "38",
+   "name": "__MSG_app_name__",
+   "oauth2": {
+      "client_id": "514253219606-raqk01c6bg2m9h9vgvm1gph4ppdpi88r.apps.googleusercontent.com",
+      "scopes": [ "https://www.googleapis.com/auth/chromewebstore" ]
+   },
+   "offline_enabled": true,
+   "permissions": [ "http://*/*", "https://*/*", "clipboardRead", "clipboardWrite", "contextMenus", "developerPrivate", {
+      "fileSystem": [ "write", "retainEntries", "directory" ]
+   }, "identity", "management", "nativeMessaging", {
+      "socket": [ "tcp-connect", "resolve-host" ]
+   }, "storage", "syncFileSystem", "system.network", "unlimitedStorage", "usb", {
+      "usbDevices": [ {
+         "description": "0x22b8/0x2e62 Moto X (XT1053)",
+         "productId": 11874,
+         "vendorId": 8888
+      }, {
+         "description": "0x22b8/0x2e63 Moto X (XT1058)",
+         "productId": 11875,
+         "vendorId": 8888
+      }, {
+         "description": "0x22b8/0x2e76 Moto G (ID1)",
+         "productId": 11906,
+         "vendorId": 8888
+      }, {
+         "description": "0x22b8/0x2e82 Moto G (ID2)",
+         "productId": 11894,
+         "vendorId": 8888
+      }, {
+         "description": "0x18d1/0x4e12 Nexus 1",
+         "productId": 19986,
+         "vendorId": 6353
+      }, {
+         "description": "0x18d1/0x4ee1 Nexus 4 (and 5?)",
+         "productId": 20193,
+         "vendorId": 6353
+      }, {
+         "description": "0x18d1/0x4e22 Nexus S",
+         "productId": 20002,
+         "vendorId": 6353
+      }, {
+         "description": "0x18d1/0x4ee2 Nexus 5 (and 4?)",
+         "productId": 20194,
+         "vendorId": 6353
+      }, {
+         "description": "0x18d1/0x4ee6 Nexus 10",
+         "productId": 20198,
+         "vendorId": 6353
+      }, {
+         "description": "0x18d1/0x4e41 Nexus 7 MTP",
+         "productId": 20033,
+         "vendorId": 6353
+      }, {
+         "description": "0x18d1/0x4e43 Nexus 7 PTP",
+         "productId": 20035,
+         "vendorId": 6353
+      }, {
+         "description": "0x18d1/0xd002 Moto X + some Nexus 5",
+         "productId": 53250,
+         "vendorId": 6353
+      }, {
+         "description": "0x04e8/0x685e Galaxy S II debug mode",
+         "productId": 26718,
+         "vendorId": 1256
+      }, {
+         "description": "0x04e8/0x6866 Galaxy S III debug mode",
+         "productId": 26726,
+         "vendorId": 1256
+      }, {
+         "description": "0x04e8/0x6860 Galaxy Nexus",
+         "productId": 26720,
+         "vendorId": 1256
+      }, {
+         "description": "0x0bb4/0x0f63 HTC One",
+         "productId": 3939,
+         "vendorId": 2996
+      }, {
+         "description": "0x0bb4/0x0c87 HTC Desire",
+         "productId": 3207,
+         "vendorId": 2996
+      }, {
+         "description": "0x0502/0x3203 Acer Liquid",
+         "productId": 12803,
+         "vendorId": 1282
+      }, {
+         "description": "0x0fce/0x5177 Xperia Ion",
+         "productId": 20855,
+         "vendorId": 4046
+      }, {
+         "description": "0x0fce/0x2137 Xperia X10 mini",
+         "productId": 8503,
+         "vendorId": 4046
+      }, {
+         "description": "0x0fce/0x2149 Xperia X8",
+         "productId": 8529,
+         "vendorId": 4046
+      }, {
+         "description": "0x0fce/0x614f Xperia X12",
+         "productId": 24911,
+         "vendorId": 4046
+      }, {
+         "description": "0x0fce/0x5169 Xperia S",
+         "productId": 20841,
+         "vendorId": 4046
+      }, {
+         "description": "0x0fce/0x514f Xperia arc S",
+         "productId": 20815,
+         "vendorId": 4046
+      }, {
+         "description": "0x1004/0x618e LG Ally/Optimus One/Vortex",
+         "productId": 24974,
+         "vendorId": 4100
+      }, {
+         "description": "0x1004/0x61f9 LG Optimus Vu3",
+         "productId": 25081,
+         "vendorId": 4100
+      } ]
+   }, "webview" ],
+   "short_name": "__MSG_app_name__",
+   "sockets": {
+      "tcp": {
+         "connect": "*"
+      },
+      "tcpServer": {
+         "listen": "127.0.0.1:*"
+      }
+   },
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "0.23.3550",
+   "webview": {
+      "partitions": [ {
+         "accessible_resources": [ "*" ],
+         "name": "cde-polymer-designer"
+      } ]
+   }
+}

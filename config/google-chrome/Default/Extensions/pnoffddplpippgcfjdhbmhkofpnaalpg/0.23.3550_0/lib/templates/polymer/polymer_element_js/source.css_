@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+:host *,
+#contentwrapper ::content * {
+  font-family: Helvetica, sans-serif;
+}
+
+#contentwrapper ::content > * {
+  border: 1px solid #aaa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#contentwrapper ::content * {
+  font-size: 16px;
+  padding: 10px;
+}
+
+#title {
+  font-size: 20px;
+  margin: 0 0 20px 0;
+}

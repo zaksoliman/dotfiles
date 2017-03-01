@@ -1,0 +1,28 @@
+body {
+    font-family: "Bitstream Charter", Serif;
+    font-size: 15px;
+    overflow-y: scroll;
+}
+
+#container {
+    margin-right: auto;
+    margin-left: auto;
+    width: 802px;
+}
+
+#header {
+    overflow: hidden;
+}
+
+#header h2 {
+    border-bottom: 1px solid black;
+}
+
+
+.label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 20px;
+    font-size: 105%;
+}
+

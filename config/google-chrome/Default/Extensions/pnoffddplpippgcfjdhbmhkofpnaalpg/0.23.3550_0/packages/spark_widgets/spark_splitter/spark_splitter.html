@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<!-- Copyright (c) 2013, Google Inc. Please see the AUTHORS file for details.
+     All rights reserved. Use of this source code is governed by a BSD-style
+     license that can be found in the LICENSE file. -->
+
+<!--
+/**
+ * spark-splitter provides a split bar, which, when dragged, will resize one
+ * of the sibling elements. Use the property "direction" to indicate
+ * the orientation of the split and which sibling to resize:
+ *   "left":  vertical split,   left sibling
+ *   "right": vertical split,   right sibling
+ *   "up":    horizontal split, upper sibling
+ *   "down":  horizontal split, lower sibling
+ *
+ * Examples:
+ *
+ *     <div style="display: flex">
+ *       <div>left</div>
+ *       <spark-splitter direction="left"></spark-splitter>
+ *       <div flex>right</div>
+ *     </div>
+ *
+ *     <div style="display: flex; flex-flow: column">
+ *       <div>top</div>
+ *       <spark-splitter direction="up"></spark-splitter>
+ *       <div flex>bottom</div>
+ *     </div>
+ */
+-->
+
+<link rel="import" href="../../../packages/spark_widgets/common/spark_widget.html"/>
+
+<polymer-element name="spark-splitter" extends="spark-widget"
+    attributes="direction
+                size
+                handle
+                targetSize
+                minTargetSize
+                maxTargetSize
+                locked">
+  <template>
+    <link rel="stylesheet" href="spark_splitter.css">
+    <div id="draggable"></div>
+  </template>
+
+  <script type="application/dart" src="spark_splitter.dart"></script>
+</polymer-element>

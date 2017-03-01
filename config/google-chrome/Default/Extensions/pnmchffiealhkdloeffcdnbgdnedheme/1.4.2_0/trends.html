@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>History Trends Unlimited</title>
+        <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.10.2.min.css">
+        <link rel="stylesheet" type="text/css" href="css/cssTabs.css" />
+        <link rel="stylesheet" type="text/css" href="colorbox/colorbox.css" />
+        <link rel="stylesheet" type="text/css" href="datatables/css/sorting.css" />
+        <link rel="stylesheet" type="text/css" href="css/navigation.css" />
+        <link rel="stylesheet" type="text/css" href="css/trends.css" />
+        <script type="text/javascript" src="jquery/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="jquery/jquery-ui-1.10.2.min.js"></script>
+        <script type="text/javascript" src="datatables/jquery.dataTables-1.9.4.min.js"></script>
+        <script type="text/javascript" src="datatables/jquery.dataTables-sort.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="colorbox/colorbox.min.js"></script>
+        <script type="text/javascript" src="dygraph/dygraph-combined.js"></script>
+        <script type="text/javascript" src="filesaver/FileSaver.js"></script>
+        <script type="text/javascript" src="js/filters.js"></script>
+        <script type="text/javascript" src="js/preferences.js"></script>
+        <script type="text/javascript" src="js/calcTrendsWebSql.js"></script>
+        <script type="text/javascript" src="js/buildInterface.js"></script>
+        <script type="text/javascript" src="js/drawCharts.js"></script>
+        <script type="text/javascript" src="js/public_suffix.js"></script>
+        <script type="text/javascript" src="js/export.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/navigation.js"></script>
+        <script type="text/javascript" src="js/trends.js"></script>
+        <script type="text/javascript" src="js/analytics.js"></script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="sidebar"></div>
+            <div id="header">
+                <h2>History Trends Unlimited</h2>
+            </div>
+            <div id="trends_container">
+                <div id="overview"></div>
+                <div id="chart_time"></div>
+                <div id="chart_hour"></div>
+                <div id="chart_day"></div>
+                <div id="chart_day_of_month"></div>
+                <div id="chart_month"></div>
+                <div id="chart_year"></div>
+                <div id="chart_transition"></div>
+                <div id="transition_definition"></div>
+                <div id="footer">
+                    <input id="export_button" type="submit" value="" />
+                </div>
+            </div>
+            <div id="waiting_container">
+                <span id="waiting_progress"></span>
+                <img id="syncing_spinner" src="images/spinner-small.gif" width="24" height="24" />
+            </div>
+        </div>
+
+        <div id="export-form" title="Export Raw Data">
+            <form autofocus>
+                <p>This will export a tab-delimited file for the <strong>currently displayed results</strong>.</p>
+                <p>Use this export if you want to further analyze your browsing history. The exported file contains several extra columns that will make analysis easier. <a id="export_more_details" target="_blank">Export Details</a> contains a full description of the file format.</p>
+                <p>If you just want to backup your history, use the <b>Export History</b> button on the Options page for one-time backups, or the <b>Auto Backup</b> feature on the Options page for automatic backups. Both of these export only the essential columns, which results in a much smaller file.</p>
+                <p>Click Export to continue.</p>
+            </form>
+        </div>
+    </body>
+</html>

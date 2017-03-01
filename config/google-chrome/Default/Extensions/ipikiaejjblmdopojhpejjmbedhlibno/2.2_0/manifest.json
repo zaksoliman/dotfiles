@@ -1,0 +1,42 @@
+{
+   "background": {
+      "scripts": [ "jquery.js", "menu.js", "background.js", "mixpanel.js", "identify.js" ]
+   },
+   "browser_action": {
+      "default_icon": "book128.png",
+      "default_popup": "spreedMenu.html"
+   },
+   "commands": {
+      "open-spreed": {
+         "description": "Open Spreed, auto extract content",
+         "suggested_key": {
+            "default": "Alt+V"
+         }
+      },
+      "open-spreed-text-selector": {
+         "description": "Open Spreed text selector mode",
+         "suggested_key": {
+            "default": "Alt+Shift+V"
+         }
+      }
+   },
+   "content_scripts": [ {
+      "js": [ "jquery.js", "jquery-ui.min.js" ],
+      "matches": [ "\u003Call_urls>" ]
+   } ],
+   "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://*.uservoice.com https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js; object-src 'self'",
+   "description": "Train yourself to double or triple your reading speed, without sacrificing comprehension. Absorb knowledge, faster.",
+   "icons": {
+      "128": "book128.png",
+      "16": "book16.png",
+      "48": "book48.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDI508g5V/ruHt4F66x17YaveYSGaaIuYEmLHZgaXlfhzR+zsX7/2MCGjenNj43IGwayMG7fSW39PH3GSuwZpwPipbCWKeJ3qYcAvmF5z0gyLexQ2Ug0ekSg1/0lBYkark0F/C/x8Efugn9fQkJOck7/9o8lgSk/zdtX9YBHtNV7QIDAQAB",
+   "manifest_version": 2,
+   "name": "Spreed - speed read the web",
+   "options_page": "options.html",
+   "permissions": [ "contextMenus", "activeTab", "tabs", "\u003Call_urls>", "storage" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "2.2",
+   "web_accessible_resources": [ "options.html", "close_icon.png", "book24.png" ]
+}

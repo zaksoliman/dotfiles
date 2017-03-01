@@ -1,0 +1,53 @@
+/* Copyright (c) 2013, Google Inc. Please see the AUTHORS file for details. */
+/* All rights reserved.  Use of this source code is governed by a BSD-style */
+/* license that can be found in the LICENSE file. */
+
+@import url("spark_common.css");
+
+body {
+  bottom: 0;
+  display: flex;
+  flex-flow: column;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#topUi {
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+#splashScreen {
+  background: #fff;
+  background-image: url("images/icon_256.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  transition: opacity 300ms;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+#splashScreenProgress {
+  background-image: url("images/progress.gif");
+  height: 48px;
+  left: calc(50% - 24px);
+  position: absolute;
+  top: calc(50% + 150px);
+  width: 48px;
+}
+
+#splashScreen.closeSplash {
+  opacity: 0;
+}

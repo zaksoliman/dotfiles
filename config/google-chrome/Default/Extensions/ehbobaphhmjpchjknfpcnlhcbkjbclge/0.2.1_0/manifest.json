@@ -1,0 +1,16 @@
+{
+   "app": {
+      "launch": {
+         "web_url": "http://emailgame.baydin.com/play"
+      },
+      "urls": [ "http://emailga.me/" ]
+   },
+   "icons": {
+      "128": "128.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDffKAy/ErRNWW+DxrHZ/2Iq2NjcG2mZZeTJDN4hA+RqgZZ0HApjbjTODyODtwT20lpPIfPAEDum/lRYO8r1Fo4pIcyB0rw70Gpjt8H/JnXc8ROsT7WbbI3TPyFb/4nWDi6YXKjlQE2cXXq/Kes8uC1W+GCHAeLWzoG/xfBAWFmMwIDAQAB",
+   "manifest_version": 2,
+   "name": "Email Game",
+   "update_url": "http://clients2.google.com/service/update2/crx",
+   "version": "0.2.1"
+}

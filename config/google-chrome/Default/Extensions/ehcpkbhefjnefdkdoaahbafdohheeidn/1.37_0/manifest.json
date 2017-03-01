@@ -1,0 +1,18 @@
+{
+   "api_console_project_id": "101751011888",
+   "app": {
+      "launch": {
+         "web_url": "http://css.editey.com"
+      }
+   },
+   "container": "GOOGLE_DRIVE",
+   "description": "CSS Editor for Google Drive",
+   "icons": {
+      "128": "128.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDkjtxpi32WmY/sEyD5WV6NmBOCu1De7RqxxSL0HAsrDgvLG5DVdMBVvzNh45WrpcYeCYr0YNoQqXt/SAzacpgVGiAfzKZyO4K0mf5kAjSDUZmyQFe0Z3HJZxyfsrSrxo9/0i2NPl87okc6Qt4i+CeT3frjIxDqUC8cZMs6ZuZe1QIDAQAB",
+   "manifest_version": 2,
+   "name": "CSS Editey",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.37"
+}

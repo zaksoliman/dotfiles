@@ -1,0 +1,68 @@
+body {
+    font-family: "Bitstream Charter", Serif;
+    font-size: 15px;
+}
+
+#container {
+    margin-top: 8px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 800px;
+    overflow: hidden;
+}
+
+.title {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 180%;
+}
+
+hr {
+    margin: 10px 0px 10px -15px;
+    border-top-color: #D3D3D3;
+    border-top-style: solid;
+    border-width: 1px 0px 0px 0px;
+}
+
+.top10 {
+    text-align: left;
+    border-collapse: collapse;
+    font-size: 95%;
+    background: #F1F1F1;
+}
+
+.asterisk {
+    font-size: 95%;
+}
+
+.top10 td {
+    padding: 3px 10px 3px 10px;
+    border: 1px solid #D3D3D3;
+    border-collapse: collapse;
+}
+
+.top10 th {
+    padding: 3px 10px 3px 10px;
+    border: 1px solid #D3D3D3;
+}
+
+.top10 .col1 {
+    width: 20%;
+}
+
+.top10 .col2 {
+    width: 60%;
+}
+
+.top10 .col3 {
+    width: 20%;
+}
+
+.label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 20px;
+    font-size: 105%;
+}
+
