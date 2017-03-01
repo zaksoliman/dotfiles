@@ -1,5 +1,5 @@
 {
-   "checksum": "b802e47a743116e4dced979198f07a3c",
+   "checksum": "bab16f958e00b53136092b01a3d18086",
    "roots": {
       "bookmark_bar": {
          "children": [ {
@@ -64,10 +64,10 @@
             "id": "442",
             "meta_info": {
                "last_visited": "13132280732006235",
-               "last_visited_desktop": "13132607443553283"
+               "last_visited_desktop": "13132785482564880"
             },
             "name": "",
-            "sync_transaction_version": "26",
+            "sync_transaction_version": "31",
             "type": "url",
             "url": "https://news.ycombinator.com/"
          }, {
@@ -95,10 +95,10 @@
             "date_added": "13098079953245265",
             "id": "446",
             "meta_info": {
-               "last_visited_desktop": "13132735464983008"
+               "last_visited_desktop": "13132798917439851"
             },
             "name": "",
-            "sync_transaction_version": "30",
+            "sync_transaction_version": "35",
             "type": "url",
             "url": "https://github.com/"
          }, {
@@ -10428,7 +10428,7 @@
                      "stars.version": "sync.server.Chrome40"
                   },
                   "name": "Distributed systems theory for the distributed systems engineer | Hacker News",
-                  "sync_transaction_version": "20",
+                  "sync_transaction_version": "31",
                   "type": "url",
                   "url": "https://news.ycombinator.com/item?id=8158832"
                }, {
@@ -10499,7 +10499,7 @@
                   "url": "https://www.andrewmunsell.com/blog/development-environments-with-vagrant-and-puppet"
                } ],
                "date_added": "13132561679413819",
-               "date_modified": "13132561679413819",
+               "date_modified": "13132795650597768",
                "id": "1873",
                "name": "Software Engineering",
                "sync_transaction_version": "1",
@@ -12521,7 +12521,7 @@
                   "stars.type": "2"
                },
                "name": "Ask HN: Where can I find free/cheap financial data? | Hacker News",
-               "sync_transaction_version": "1",
+               "sync_transaction_version": "31",
                "type": "url",
                "url": "https://news.ycombinator.com/item?id=1902628"
             }, {
@@ -12646,7 +12646,7 @@
                "url": "https://gist.github.com/hofmannsven/6814451"
             } ],
             "date_added": "13132561679332982",
-            "date_modified": "13132561679332982",
+            "date_modified": "13132795650597772",
             "id": "465",
             "meta_info": {
                "stars.id": "ssf_97fdfdcd3e687199",
@@ -21463,7 +21463,7 @@
                   "date_added": "13097364064961838",
                   "id": "863",
                   "name": "Don’t waste your time in crappy startup jobs. |",
-                  "sync_transaction_version": "14",
+                  "sync_transaction_version": "31",
                   "type": "url",
                   "url": "https://michaelochurch.wordpress.com/2012/07/08/dont-waste-your-time-in-crappy-startup-jobs/"
                }, {
@@ -21489,7 +21489,7 @@
                   "url": "https://triplebyte.com/"
                } ],
                "date_added": "13132561679354231",
-               "date_modified": "13132561679354231",
+               "date_modified": "13132795650597760",
                "id": "817",
                "name": "Jobs",
                "sync_transaction_version": "1",
@@ -21764,7 +21764,7 @@
                      "last_visited_desktop": "13131237128936742"
                   },
                   "name": "IFT6266 H-2016 Deep Learning | Deep Learning, graduate class at U. Montreal",
-                  "sync_transaction_version": "1",
+                  "sync_transaction_version": "31",
                   "type": "url",
                   "url": "https://ift6266h16.wordpress.com/"
                }, {
@@ -21797,7 +21797,7 @@
                   "url": "http://www-ens.iro.umontreal.ca/~solimanz/"
                } ],
                "date_added": "13132561679350898",
-               "date_modified": "13132561679350898",
+               "date_modified": "13132795650597212",
                "id": "756",
                "name": "Winter 2016",
                "sync_transaction_version": "1",
@@ -22311,10 +22311,10 @@
                "id": "769",
                "meta_info": {
                   "last_visited": "13132118255471536",
-                  "last_visited_desktop": "13132621770825416"
+                  "last_visited_desktop": "13132783561240578"
                },
                "name": "IFT6266 - H2017 Deep Learning | A Graduate Course Offered at Université de Montréal",
-               "sync_transaction_version": "26",
+               "sync_transaction_version": "31",
                "type": "url",
                "url": "https://ift6266h17.wordpress.com/"
             }, {
@@ -22324,12 +22324,12 @@
                   "last_visited_desktop": "13131237128936742"
                },
                "name": "IFT6266 H-2016 Deep Learning | Deep Learning, graduate class at U. Montreal",
-               "sync_transaction_version": "9",
+               "sync_transaction_version": "31",
                "type": "url",
                "url": "https://ift6266h16.wordpress.com/"
             } ],
             "date_added": "13132561679334225",
-            "date_modified": "13132709518842864",
+            "date_modified": "13132795650596595",
             "id": "471",
             "meta_info": {
                "stars.id": "ssf_fff05ee188c0abb9",
@@ -22390,7 +22390,7 @@
                      "stars.type": "2"
                   },
                   "name": "Lessons Learned in Software Development | Henrik Warne's blog",
-                  "sync_transaction_version": "3",
+                  "sync_transaction_version": "31",
                   "type": "url",
                   "url": "http://henrikwarne.com/2015/04/16/lessons-learned-in-software-development/"
                }, {
@@ -22441,9 +22441,19 @@
                   "sync_transaction_version": "1",
                   "type": "url",
                   "url": "http://alekseykorzun.com/"
+               }, {
+                  "date_added": "13132785166358873",
+                  "id": "3033",
+                  "meta_info": {
+                     "last_visited_desktop": "13132785166380333"
+                  },
+                  "name": "How I Start.",
+                  "sync_transaction_version": "31",
+                  "type": "url",
+                  "url": "http://howistart.org/"
                } ],
                "date_added": "13132561679348573",
-               "date_modified": "13132561679348573",
+               "date_modified": "13132795650597222",
                "id": "710",
                "meta_info": {
                   "stars.id": "ssf_3893668a62325afd",
@@ -24528,7 +24538,7 @@
             "url": "http://forums.redflagdeals.com/rogers-wireless-retention-plans-933329/2601/"
          } ],
          "date_added": "13132561443376643",
-         "date_modified": "13132709518842881",
+         "date_modified": "13132795650597226",
          "id": "1",
          "name": "Bookmarks bar",
          "type": "folder"
@@ -24638,10 +24648,10 @@
                "date_added": "13114921048036063",
                "id": "399",
                "meta_info": {
-                  "last_visited_desktop": "13132725836906096"
+                  "last_visited_desktop": "13132782747343834"
                },
                "name": "ExtraTorrent.cc The World's Largest BitTorrent System",
-               "sync_transaction_version": "27",
+               "sync_transaction_version": "31",
                "type": "url",
                "url": "https://extratorrent.cc/"
             }, {
@@ -24845,7 +24855,7 @@
                "url": "https://torrentcafe.com/index.php"
             } ],
             "date_added": "13132561679302553",
-            "date_modified": "13132726724334574",
+            "date_modified": "13132795650597217",
             "id": "7",
             "meta_info": {
                "stars.id": "ssf_51cec7cd03e0e84a",
@@ -28113,7 +28123,7 @@
          "name": "Other bookmarks",
          "type": "folder"
       },
-      "sync_transaction_version": "30",
+      "sync_transaction_version": "35",
       "synced": {
          "children": [  ],
          "date_added": "13132561443376649",

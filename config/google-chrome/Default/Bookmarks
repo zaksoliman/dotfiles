@@ -95,10 +95,10 @@
             "date_added": "13098079953245265",
             "id": "446",
             "meta_info": {
-               "last_visited_desktop": "13132798917439851"
+               "last_visited_desktop": "13132803618297571"
             },
             "name": "",
-            "sync_transaction_version": "35",
+            "sync_transaction_version": "36",
             "type": "url",
             "url": "https://github.com/"
          }, {
@@ -28123,7 +28123,7 @@
          "name": "Other bookmarks",
          "type": "folder"
       },
-      "sync_transaction_version": "35",
+      "sync_transaction_version": "36",
       "synced": {
          "children": [  ],
          "date_added": "13132561443376649",
