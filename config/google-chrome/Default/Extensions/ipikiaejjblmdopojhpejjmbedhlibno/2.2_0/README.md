@@ -1,1 +1,0 @@
-[On the Chrome web store](https://chrome.google.com/webstore/detail/spreed-speed-read-the-web/ipikiaejjblmdopojhpejjmbedhlibno)

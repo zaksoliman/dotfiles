@@ -1,8 +1,0 @@
-<x-meta id="``tagName``" label="``projectName``">
-  <template>
-    <``tagName``></``tagName``>
-  </template>
-  <template id="imports">
-    <link rel="import" href="``sourceName``.html">
-  </template>
-</x-meta>

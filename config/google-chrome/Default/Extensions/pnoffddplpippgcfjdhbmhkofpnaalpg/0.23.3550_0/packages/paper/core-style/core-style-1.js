@@ -1,3 +1,0 @@
-
-      CoreStyle.g.myColor = 'tomato';
-    
