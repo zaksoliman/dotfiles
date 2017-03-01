@@ -49,10 +49,29 @@
 	XF86AudioMute
 
 "terminator"
-    m:"0x40 + c:28
+    Mod4 + t
 
 "google-chrome-stable"
-    m:0x40 + c:25
+    Mod4 + w
+
+"spotify"
+    Mod4 + s
+
+# Play/Pause
+"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+    Mod4 + Down
+
+# Next
+"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+    Mod4 + Right
+
+# Previous
+"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+    Mod4 + Left
+
+# Stop
+"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
+    Mod4 + Up
 
 #Lock
 #"i3lock -b -i /home/pschmitt/pictures/wallpapers/me\ gusta\ mucho_1366.png"
