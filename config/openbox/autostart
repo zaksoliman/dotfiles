@@ -18,3 +18,4 @@
 
 (sleep 3 && nm-applet --sm-disable) &
 tint2 &
+volumeicon &
