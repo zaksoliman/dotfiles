@@ -8,6 +8,11 @@ case $- in
       *) return;;
 esac
 
+# For the machine I use in the lab
+if  [[ $(hostname) == "octal16" ]]; then
+    export VIMRUNTIME=~/.local/usr/share/vim/vim80/
+fi
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -88,6 +93,8 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+# alias gvim="~/.local/usr/bin/gvim"
+# alias vim="~/.local/usr/bin/vim"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
