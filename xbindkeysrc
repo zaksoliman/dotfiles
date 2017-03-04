@@ -48,6 +48,17 @@
 "pamixer -t"
 	XF86AudioMute
 
+#BrightnessUp
+"xbacklight +5"
+  XF86MonBrightnessUp
+
+#BrightnessDown
+"xbacklight -5"
+  XF86MonBrightnessDown
+
+"rox"
+    Mod4 + e
+
 "terminator"
     Mod4 + t
 

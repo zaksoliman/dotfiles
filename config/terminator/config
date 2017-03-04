@@ -15,5 +15,5 @@
 [profiles]
   [[default]]
     cursor_color = "#aaaaaa"
-    font = Monospace 14
+    font = Monospace 11
     use_system_font = False
