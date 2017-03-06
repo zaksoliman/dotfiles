@@ -49,12 +49,15 @@
 	XF86AudioMute
 
 #BrightnessUp
-"xbacklight +5"
+"xbacklight +2"
   XF86MonBrightnessUp
 
 #BrightnessDown
-"xbacklight -5"
+"xbacklight -2"
   XF86MonBrightnessDown
+
+"xrandr --output eDP1 --mode 1920x1080 --output HDMI2 --mode 1920x1080i --same-as eDP1"
+    XF86Display
 
 "rox"
     Mod4 + e
