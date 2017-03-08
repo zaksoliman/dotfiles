@@ -1,6 +1,6 @@
 config/google-chrome
 config/spotify
-config/vim/plugged
+config/vim/plugged/
 
 config/dconf/user
 config/gtk-2.0/
