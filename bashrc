@@ -153,6 +153,11 @@ export PATH="$GOPATH/bin:$PATH"
 
 export PATH="$HOME/development/mongodb/bin:$PATH"
 
+## CUDA
+CUDA_ROOT="/usr/local/cuda-8.0/bin"
+
+export PATH="/usr/local/cuda-8.0/bin$:$PATH"
+
 #-------------------
 # Personnal Aliases
 #-------------------
