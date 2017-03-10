@@ -11,7 +11,7 @@ set cursorline
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'taglist.vim'
+"Plug 'taglist.vim'
 Plug 'Valloric/YouCompleteMe'
 Plug 'jiangmiao/auto-pairs'
 

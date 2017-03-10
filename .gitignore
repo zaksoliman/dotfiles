@@ -1,3 +1,16 @@
 config/google-chrome
 config/spotify
-config/vim/plugged
+config/vim/plugged/
+
+config/dconf/user
+config/gtk-2.0/
+config/pulse/
+config/terminator
+config/tint2
+config/epdfview
+config/htop
+config/menus
+config/rox.sourceforge.net
+
+*.ini
+*.tdb
