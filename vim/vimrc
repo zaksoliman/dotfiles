@@ -12,7 +12,7 @@ set cursorline
 call plug#begin('~/.vim/plugged')
 
 "Plug 'taglist.vim'
-Plug 'Valloric/YouCompleteMe'
+"Plug 'Valloric/YouCompleteMe'
 Plug 'jiangmiao/auto-pairs'
 
 " ========== PYTHON ==========
@@ -48,6 +48,9 @@ call plug#end()
 "=============================
 "   End loading plugins
 "=============================
+" Setting up YCM
+" /home/danglewaggle/.pyenv/shims/python
+let g:ycm_path_to_python_interpreter = '/home/danglewaggle/.pyenv/shims/python'
 
 "Setting up vim-airline
 set laststatus=2

@@ -116,6 +116,7 @@ PATH=$PATH:/usr/lib/lightdm/lightdm:$HOME/.local/bin
 #***********************#
 
 export PYENV_ROOT="${HOME}/.pyenv"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 if [ -d "${PYENV_ROOT}" ]; then
     export PATH="$PYENV_ROOT/bin:$PATH"

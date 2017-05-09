@@ -87,10 +87,15 @@
 "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
     Mod4 + Up
 
+
+Lock
+"i3lock -n -i ~/Pictures/Wallpapers/JURDO_-_Imgur.png"
+   Mod4 + l 
+
 #Lock
 #"i3lock -b -i /home/pschmitt/pictures/wallpapers/me\ gusta\ mucho_1366.png"
 #   Mod4 + Super_L
-
+#
 #"xbindkeys_show"
 #  control+shift + q
 #
