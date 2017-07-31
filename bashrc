@@ -11,7 +11,10 @@ esac
 # For the machine I use in the lab
 if  [[ $(hostname) == "octal16" ]]; then
     export VIMRUNTIME=~/.local/usr/share/vim/vim80/
+    alias vim="~/.local/usr/bin/vim"
 fi
+
+umask 027
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -84,7 +87,6 @@ alias la='ls -A'
 alias l='ls -CF'
 alias lh='ls -lh'
 # alias gvim="~/.local/usr/bin/gvim"
-# alias vim="~/.local/usr/bin/vim"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -122,6 +124,7 @@ if [ -d "${PYENV_ROOT}" ]; then
     eval "$(pyenv init -)"
 fi
 
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 #***********************#
 #   Virtualenv Setup    #
 #***********************#
@@ -160,3 +163,4 @@ export PATH="/usr/local/cuda-8.0/bin$:$PATH"
 #-------------------
 
 alias cats='highlight -O xterm256 -s bipolar'
+alias tmux="TERM=screen-256color-bce tmux"

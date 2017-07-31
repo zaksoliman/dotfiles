@@ -132,7 +132,7 @@ colorscheme dracula
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
-"set background=dark
+" set background=dark
 
 " Enable syntax highlighting
 " You need to reload this file for the change to apply
