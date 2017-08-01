@@ -9,10 +9,10 @@ case $- in
 esac
 
 # For the machine I use in the lab
-if  [[ $(hostname) == "octal16" ]]; then
-    export VIMRUNTIME=~/.local/usr/share/vim/vim80/
-    alias vim="~/.local/usr/bin/vim"
-fi
+#if  [[ $(hostname) == "octal16" ]]; then
+#    export VIMRUNTIME=~/.local/vim80/share/vim/vim80
+#    alias vim="~/.local/vim80/bin/vim"
+#fi
 
 umask 027
 
