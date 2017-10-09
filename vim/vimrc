@@ -18,7 +18,7 @@ Plug 'jiangmiao/auto-pairs'
 " ========== PYTHON ==========
 
 Plug 'tmhedberg/SimpylFold', {'for': 'python'}
-Plug 'davidhalter/jedi-vim', {'for': 'python'}
+"Plug 'davidhalter/jedi-vim', {'for': 'python'}
 "Plug 'jmcantrell/vim-virtualenv', {'for': 'python'}
 Plug 'lambdalisue/vim-pyenv', {'for': 'python'}
 Plug 'nvie/vim-flake8', {'for': 'python'}
@@ -50,8 +50,8 @@ call plug#end()
 "=============================
 " Setting up YCM
 " /home/danglewaggle/.pyenv/shims/python
-let g:ycm_path_to_python_interpreter = '/home/danglewaggle/.pyenv/shims/python'
-
+"let g:ycm_path_to_python_interpreter = '/home/danglewaggle/.pyenv/shims/python'
+"let g:jedi#completions_enabled = 0
 "Setting up vim-airline
 set laststatus=2
 
@@ -135,7 +135,7 @@ colorscheme dracula
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
-"set background=dark
+" set background=dark
 
 " Enable syntax highlighting
 " You need to reload this file for the change to apply

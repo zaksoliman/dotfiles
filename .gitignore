@@ -3,6 +3,7 @@ config/google-chrome
 config/spotify
 config/vim/plugged/
 
+vim/plugged
 config/dconf/user
 config/gtk-2.0/
 config/pulse/
