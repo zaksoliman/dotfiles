@@ -37,16 +37,26 @@
 #keystate_capslock = enable
 #keystate_scrolllock= enable
 
-#"amixer -D pulse set Master 5%+ unmute"
-"pamixer --allow-boost --increase 5; pamixer --unmute; volnoti-show $(pamixer --get-volume)"
+#"amixer -D pulse set Master 5%+ unmute; volnoti-show $(pamixer --get-volume)"
+#"pamixer --allow-boost --increase 5; pamixer --unmute; volnoti-show $(pamixer --get-volume)"
+"pulseaudio-ctl up; volnoti-show $(pamixer --get-volume)"
 	XF86AudioRaiseVolume
 
-#"amixer -D pulse set Master 5%- unmute"
-"pamixer --allow-boost --decrease 5; pamixer --unmute; volnoti-show $(pamixer --get-volume)"
+#"amixer -D pulse set Master 5%- unmute; pamixer --unmute; volnoti-show $(pamixer --get-volume)"
+#"pamixer --allow-boost --decrease 5; pamixer --unmute; volnoti-show $(pamixer --get-volume)"
+"pulseaudio-ctl down; volnoti-show $(pamixer --get-volume)"
 	XF86AudioLowerVolume
 
-"pamixer -t"
+#"pamixer -t"
+"pulseaudio-ctl mute"
 	XF86AudioMute
+#Mute mic
+"pulseaudio-ctl mute-input"
+    XF86AudioMicMute
+
+#pavucontrol
+"pavucontrol"
+    Mod4 + a
 
 #BrightnessUp
 "xbacklight +2"
