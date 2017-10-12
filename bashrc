@@ -9,9 +9,12 @@ case $- in
 esac
 
 # For the machine I use in the lab
-if  [[ $(hostname) == "octal16" ]]; then
-    export VIMRUNTIME=~/.local/usr/share/vim/vim80/
-fi
+#if  [[ $(hostname) == "octal16" ]]; then
+#    export VIMRUNTIME=~/.local/vim80/share/vim/vim80
+#    alias vim="~/.local/vim80/bin/vim"
+#fi
+
+umask 027
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -84,7 +87,6 @@ alias la='ls -A'
 alias l='ls -CF'
 alias lh='ls -lh'
 # alias gvim="~/.local/usr/bin/gvim"
-# alias vim="~/.local/usr/bin/vim"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -117,6 +119,7 @@ PATH=$PATH:/usr/lib/lightdm/lightdm:$HOME/.local/bin
 
 export PYENV_ROOT="${HOME}/.pyenv"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
 if [ -d "${PYENV_ROOT}" ]; then
     export PATH="$PYENV_ROOT/bin:$PATH"
@@ -162,3 +165,4 @@ export PATH="/usr/local/cuda-8.0/bin$:$PATH"
 
 alias cats='highlight -O xterm256 -s bipolar'
 source /usr/share/nvm/init-nvm.sh
+alias tmux="TERM=screen-256color-bce tmux"
