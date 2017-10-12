@@ -161,3 +161,4 @@ export PATH="/usr/local/cuda-8.0/bin$:$PATH"
 #-------------------
 
 alias cats='highlight -O xterm256 -s bipolar'
+source /usr/share/nvm/init-nvm.sh
