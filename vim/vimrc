@@ -43,6 +43,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-surround'
 Plug 'ap/vim-css-color'
 
+Plug 'nightsense/forgotten'
 call plug#end()
 
 "=============================
@@ -131,7 +132,8 @@ au InsertLeave * match ExtraWhitespace /\s\+$/
 
 " Color scheme
 set t_Co=256
-colorscheme dracula
+colorscheme forgotten-dark
+"colorscheme dracula
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
