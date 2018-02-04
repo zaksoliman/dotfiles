@@ -75,7 +75,8 @@
 "terminator"
     Mod4 + t
 
-"google-chrome-stable"
+#"google-chrome-stable"
+"firefox"
     Mod4 + w
 
 "spotify"
