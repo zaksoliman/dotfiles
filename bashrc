@@ -96,7 +96,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -116,7 +115,6 @@ PATH=$PATH:/usr/lib/lightdm/lightdm:$HOME/.local/bin
 #***********************#
 #      Pyenv Setup      #
 #***********************#
-
 export PYENV_ROOT="${HOME}/.pyenv"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
@@ -143,6 +141,10 @@ fi
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+#***********************#
+#       NVM setup       #
+#***********************#
+
 export NVM_DIR="/home/danglewaggle/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -152,18 +154,11 @@ export GOPATH="$HOME/development/gocode"
 export PATH="$GOPATH/bin:$PATH"
 
 ### MongoDB path
-
 export PATH="$HOME/development/mongodb/bin:$PATH"
-
-## CUDA
-CUDA_ROOT="/usr/local/cuda-8.0/bin"
-
-export PATH="/usr/local/cuda-8.0/bin$:$PATH"
 
 #-------------------
 # Personnal Aliases
 #-------------------
-
 alias cats='highlight -O xterm256 -s bipolar'
-source /usr/share/nvm/init-nvm.sh
+#source /usr/share/nvm/init-nvm.sh
 alias tmux="TERM=screen-256color-bce tmux"
