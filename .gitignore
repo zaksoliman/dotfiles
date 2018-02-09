@@ -1,5 +1,5 @@
 vim/plugged
-config/
-!config/openbox/*
+config/*
+!config/openbox
 *.ini
 *.tdb
