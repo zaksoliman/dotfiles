@@ -1,0 +1,86 @@
+2018-02-06 07:59:44		New key binding (context "default"): meta-meta-OQ => /bar scroll buflist * e
+2018-02-06 07:59:44		New key binding (context "default"): meta-meta-OP => /bar scroll buflist * b
+2018-02-06 07:59:44		New key binding (context "default"): meta-OQ => /bar scroll buflist * +100%
+2018-02-06 07:59:44		New key binding (context "default"): meta-OP => /bar scroll buflist * -100%
+2018-02-06 07:59:44		Plugins loaded: alias, aspell, buflist, charset, exec, fifo, guile, irc, logger, lua, perl, python, relay, ruby, script, tcl, trigger, xfer
+2018-02-06 08:04:58		[irc]  /server  list|listfull [<server>]
+2018-02-06 08:04:58		                add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
+2018-02-06 08:04:58		                copy|rename <server> <new_name>
+2018-02-06 08:04:58		                reorder <server> [<server>...]
+2018-02-06 08:04:58		                open <server>|-all [<server>...]
+2018-02-06 08:04:58		                del|keep <server>
+2018-02-06 08:04:58		                deloutq|jump|raw
+2018-02-06 08:04:58		list, add or remove IRC servers
+2018-02-06 08:04:58		    list: list servers (without argument, this list is displayed)
+2018-02-06 08:04:58		listfull: list servers with detailed info for each server
+2018-02-06 08:04:58		     add: add a new server
+2018-02-06 08:04:58		  server: server name, for internal and display use
+2018-02-06 08:04:58		hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
+2018-02-06 08:04:58		   -temp: add a temporary server (not saved)
+2018-02-06 08:04:58		  option: set option for server (for boolean option, value can be omitted)
+2018-02-06 08:04:58		nooption: set boolean option to 'off' (for example: -nossl)
+2018-02-06 08:04:58		    copy: duplicate a server
+2018-02-06 08:04:58		  rename: rename a server
+2018-02-06 08:04:58		 reorder: reorder list of servers
+2018-02-06 08:04:58		    open: open the server buffer without connecting
+2018-02-06 08:04:58		    keep: keep server in config file (for temporary servers only)
+2018-02-06 08:04:58		     del: delete a server
+2018-02-06 08:04:58		 deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
+2018-02-06 08:04:58		    jump: jump to server buffer
+2018-02-06 08:04:58		     raw: open buffer with raw IRC data
+2018-02-06 08:04:58		Examples:
+2018-02-06 08:04:58		  /server listfull
+2018-02-06 08:04:58		  /server add freenode chat.freenode.net
+2018-02-06 08:04:58		  /server add freenode chat.freenode.net/6697 -ssl -autoconnect
+2018-02-06 08:04:58		  /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667
+2018-02-06 08:04:58		  /server copy freenode freenode-test
+2018-02-06 08:04:58		  /server rename freenode-test freenode2
+2018-02-06 08:04:58		  /server reorder freenode2 freenode
+2018-02-06 08:04:58		  /server del freenode
+2018-02-06 08:04:58		  /server deloutq
+2018-02-06 08:05:06		No server
+2018-02-06 08:05:58		No server
+2018-02-06 08:12:01		[core]
+2018-02-06 08:12:01		  away     buffer   command  debug    filter   history  key      mouse    plugin   proxy    reload   save     set      upgrade  version  window 
+2018-02-06 08:12:01		  bar      color    cursor   eval     help     input    layout   mute     print    quit     repeat   secure   unset    uptime   wait   
+2018-02-06 08:12:01		[relay]
+2018-02-06 08:12:01		  relay
+2018-02-06 08:12:01		[trigger]
+2018-02-06 08:12:01		  trigger
+2018-02-06 08:12:01		[ruby]
+2018-02-06 08:12:01		  ruby
+2018-02-06 08:12:01		[irc]
+2018-02-06 08:12:01		  admin       cap         dehalfop    halfop      join        list        motd        notify      pong        rehash      sanick      servlist    time        userhost    wallops   
+2018-02-06 08:12:01		  allchan     connect     deop        ignore      kick        lusers      msg         op          query       remove      sapart      squery      topic       users       who       
+2018-02-06 08:12:01		  allpv       ctcp        devoice     info        kickban     map         names       oper        quiet       restart     saquit      squit       trace       version     whois     
+2018-02-06 08:12:01		  allserv     cycle       die         invite      kill        me          nick        part        quote       sajoin      server      stats       unban       voice       whowas    
+2018-02-06 08:12:01		  ban         dcc         disconnect  ison        links       mode        notice      ping        reconnect   samode      service     summon      unquiet     wallchops 
+2018-02-06 08:12:01		[tcl]
+2018-02-06 08:12:01		  tcl
+2018-02-06 08:12:01		[fifo]
+2018-02-06 08:12:01		  fifo
+2018-02-06 08:12:01		[script]
+2018-02-06 08:12:01		  script
+2018-02-06 08:12:01		[charset]
+2018-02-06 08:12:01		  charset
+2018-02-06 08:12:01		[lua]
+2018-02-06 08:12:01		  lua
+2018-02-06 08:12:01		[guile]
+2018-02-06 08:12:01		  guile
+2018-02-06 08:12:01		[perl]
+2018-02-06 08:12:01		  perl
+2018-02-06 08:12:01		[exec]
+2018-02-06 08:12:01		  exec
+2018-02-06 08:12:01		[alias]
+2018-02-06 08:12:01		  AAWAY    AME      ANICK    BYE      CHAT     CLOSE    IG       K        LEAVE    MSGBUF   N        REDRAW   SIGNOFF  UB       V        WC       WII    
+2018-02-06 08:12:01		  alias    AMSG     BEEP     C        CL       EXIT     J        KB       M        MUB      Q        SAY      T        UMODE    W        WI       WW     
+2018-02-06 08:12:01		[buflist]
+2018-02-06 08:12:01		  buflist
+2018-02-06 08:12:01		[logger]
+2018-02-06 08:12:01		  logger
+2018-02-06 08:12:01		[python]
+2018-02-06 08:12:01		  python
+2018-02-06 08:12:01		[xfer]
+2018-02-06 08:12:01		  me  xfer
+2018-02-06 08:12:01		[aspell]
+2018-02-06 08:12:01		  aspell
