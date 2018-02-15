@@ -48,6 +48,8 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
+xrdb -merge ~/.Xdefaults
+
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
@@ -162,3 +164,5 @@ export PATH="$HOME/development/mongodb/bin:$PATH"
 alias cats='highlight -O xterm256 -s bipolar'
 #source /usr/share/nvm/init-nvm.sh
 alias tmux="TERM=screen-256color-bce tmux"
+
+export PATH=$PATH:~/.local
