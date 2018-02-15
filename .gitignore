@@ -1,5 +1,7 @@
 vim/plugged
 config/*
 !config/openbox
+!config/pulse
+!config/pulseaudio-ctl
 *.ini
 *.tdb

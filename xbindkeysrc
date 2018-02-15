@@ -72,7 +72,8 @@
 "rox"
     Mod4 + e
 
-"terminator"
+#"terminator"
+"xterm"
     Mod4 + t
 
 #"google-chrome-stable"

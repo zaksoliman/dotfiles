@@ -7,7 +7,7 @@ case $- in
     *i*) ;;
       *) return;;
 esac
-
+xset -b
 # For the machine I use in the lab
 #if  [[ $(hostname) == "octal16" ]]; then
 #    export VIMRUNTIME=~/.local/vim80/share/vim/vim80
