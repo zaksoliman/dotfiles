@@ -1,0 +1,111 @@
+! xterm color scheme — Make all 16 beautiful.
+!
+! Suited for black background, but includes disabled alternative light scheme.
+!
+! Use xfontsel and xlsfonts to find other fonts.
+!
+! On Ubuntu I have to name this file ‘~/.Xdefaults-$(hostname)’
+!
+! ‘xrdb -load ~/.Xdefaults-stud’ is supposed to reload this file, but
+! doesn’t seem to, so just fire new xterm upon every change.
+!
+! Other resources:
+! * showrgb — util to dump color db.
+! * test-color-words16 — another color-displaying util (worth gist-ing).
+
+
+!!! Fonts
+!xterm*font: -*-terminus-*-*-*-*-*-*-*-*-*-*-iso10646-*
+!xterm*boldFont: -*-terminus-*-*-*-*-*-*-*-*-*-*-iso10646-*
+!xterm*italicFont: -*-terminus-*-*-*-*-*-*-*-*-*-*-iso10646-*
+!xterm*font: -misc-fixed-medium-r-*-*-18-*-*-*-*-*-*-*
+!xterm*boldFont: -misc-fixed-medium-r-*-*-18-*-*-*-*-*-*-*
+
+! Very surprising that now neglecting to specify font still renders
+! perfect misc-fixed font. Oh, it’s so lovely.
+xterm*font: -*-*-*-*-*-*-*-100-*-*-*-60-iso10646-*
+xterm*boldFont: -*-*-*-*-*-*-*-100-*-*-*-60-iso10646-*
+!xterm*italicFont: -*-*-*-*-*-*-*-100-*-*-*-60-iso10646-*
+
+
+!!! Enable copy/paste.
+! http://www.davidsimmons.com/soft/xtermhacks/
+xterm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
+
+
+!!! Foreground
+xterm*foreground:       #d3d3d3
+
+
+!!! Background
+! Black
+!xterm*background: #000000
+! Green
+!xterm*background: #022C0A
+! Brown
+!xterm*background: #3F2F08
+! Black
+xterm*background:       #000000
+
+
+xterm*cursorColor:  #ff0000
+!xterm*cursorColor:  #57fd76
+!xterm*cursorColor:  yellow
+!xterm*cursorColor:      orange
+
+!xterm*charClass:        33:48,35-38:48,39:43,42-47:48,58-59:48,61:48,63-64:48,126:48
+!xterm*dynamicColors:    true
+
+
+! Blacks
+xterm*color0:           #151515
+xterm*color8:           #505450
+! Reds
+xterm*color1:           #a60101
+xterm*color9:           #f99090
+! Greens
+xterm*color2:           #026802
+xterm*color10:          #a7e14b
+! Yellows
+xterm*color3:           #ab6e03
+xterm*color11:          #fddc01
+! Blues
+xterm*color4:           #4a5463
+xterm*color12:          #7d8794
+! Purples
+xterm*color5:           #9c3885
+xterm*color13:          #e628ba
+! Cyans
+xterm*color6:           #08bab0
+xterm*color14:          #74fff7
+! Whites
+xterm*color7:           #bbbbbb
+xterm*color15:          #ffffff
+
+
+!!! Themes overrides
+
+! MDE’s adobe theme overrides; very similar to vim colorscheme:
+!   http://www.vim.org/scripts/script.php?script_id=1365
+! Comment these out to enable theme.
+!xterm*foreground: #000000
+!xterm*background: #A2955F
+! yellow1
+!xterm*color3:           #684802
+! cyan1
+!xterm*color6:           #05635d
+! blue1
+!xterm*color4:           #3a5e87
+! blue2
+!xterm*color12:          #bcd7fd
+! purple2
+!xterm*color13:          #cf03a1
+! red2
+!xterm*color9:           #ffc2c2
+! white1
+!xterm*color7:           #c7c7c7
+
+
+! Other themes
+!xterm*background: #E3D7B4
+!xterm*background: #AFAF87
