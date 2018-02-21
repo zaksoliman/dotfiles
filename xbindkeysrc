@@ -69,7 +69,8 @@
 "xrandr --output eDP1 --mode 1920x1080 --output HDMI2 --mode 1920x1080i --same-as eDP1"
     XF86Display
 
-"rox"
+#"rox"
+"pcmanfm"
     Mod4 + e
 
 #"terminator"

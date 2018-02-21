@@ -3,5 +3,7 @@ config/*
 !config/openbox
 !config/pulse
 !config/pulseaudio-ctl
+!config/obmenu-generator
+config/obmenu-generator/icons
 *.ini
 *.tdb
