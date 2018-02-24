@@ -7,12 +7,11 @@ case $- in
     *i*) ;;
       *) return;;
 esac
-xset -b
 # For the machine I use in the lab
-#if  [[ $(hostname) == "octal16" ]]; then
-#    export VIMRUNTIME=~/.local/vim80/share/vim/vim80
-#    alias vim="~/.local/vim80/bin/vim"
-#fi
+if  [[ $(hostname) == "solaris" ] || [ $(hostname) == "deathstar" ]]; then
+    xrdb -merge ~/.Xdefaults
+    xset -b
+fi
 
 umask 027
 
@@ -48,7 +47,6 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
-xrdb -merge ~/.Xdefaults
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
