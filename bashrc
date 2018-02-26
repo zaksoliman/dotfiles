@@ -8,7 +8,7 @@ case $- in
       *) return;;
 esac
 # For the machine I use in the lab
-if  [[ $(hostname) == "solaris" ] || [ $(hostname) == "deathstar" ]]; then
+if  [[ $(hostname) == "solaris"  ||  $(hostname) == "deathstar" ]]; then
     xrdb -merge ~/.Xdefaults
     xset -b
 fi
