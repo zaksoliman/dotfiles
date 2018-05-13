@@ -44,4 +44,5 @@ fi
 #exec xterm -geometry 80x66+0+0 -name login
 
 xbindkeys
-exec openbox-session
+#exec openbox-session
+exec gnome-session
