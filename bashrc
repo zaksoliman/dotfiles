@@ -65,8 +65,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 unset color_prompt force_color_prompt
-
-PS1="[ \[\e[0;34m\]λ \W \[\e[0m\]] "
+export PS1="[\[\e[m\]\[\e[34m\]\h\[\e[m\]\[\e[31m\]:\[\e[m\]\[\e[36m\]\W\[\e[m\]]$ "
 #export PS1="\[\e[34m\]\u\[\e[m\]\[\e[34m\]@\[\e[m\]\[\e[34m\]\h\[\e[m\]\[\e[33m\]:\[\e[m\]\[\e[33m\]\W\[\e[m\]\[\e[32m\]\`parse_git_branch\`\[\e[m\]\[\e[34m\]\\$\[\e[m\] "
 
 # enable color support of ls and also add handy aliases

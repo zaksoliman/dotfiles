@@ -1,4 +1,9 @@
+xterm*termName: xterm-256color
+xterm*vt100*utf8: 1
+xterm*vt100*utf8Title: true
+xterm*vt100*locale: false
 ! Use a nice truetype font and size by default...
+! DejaVu Sans Mono Book
 xterm*faceName: DejaVu Sans Mono Book
 xterm*faceSize: 11
 
@@ -33,7 +38,7 @@ xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
 ! Blues
 xterm*color4: #009ace
-xterm*color12: #ce009a
+xterm*color12: #0033ce
 
 ! Purples
 *xterm*color5: #7e40a5
