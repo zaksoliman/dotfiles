@@ -15,12 +15,15 @@ There are two things you can do about this warning:
   (add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
   )
 (package-initialize)
+(package-refresh-contents)
 
 (require 'evil)
 (evil-mode 1)
 
 ;; Disable the splash screen (to enable it agin, replace the t with 0)
-(setq inhibit-splash-screen 0)
+(setq inhibit-splash-screen t)
+
+(require 'rust-mode)
 
 ;; Enable transient mark mode
 (transient-mark-mode 1)
@@ -42,7 +45,12 @@ There are two things you can do about this warning:
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (solarized-theme material-theme slime evil))))
+ '(custom-safe-themes
+   (quote
+    ("0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" default)))
+ '(package-selected-packages
+   (quote
+    (rust-mode solarized-theme material-theme slime evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -51,4 +59,5 @@ There are two things you can do about this warning:
  )
 
 (setq inferior-lisp-program "/usr/bin/sbcl")
-(load-theme 'solarized-dark t)
+(load-theme 'zenburn t)
+
