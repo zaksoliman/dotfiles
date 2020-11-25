@@ -13,7 +13,7 @@
                 ("SConscript\\'" . python-mode))
               auto-mode-alist))
 
-(setq python-shell-interpreter "python3")
+(setq python-shell-interpreter "python")
 
 (require-package 'pip-requirements)
 
@@ -39,6 +39,9 @@
 
 (when (maybe-require-package 'reformatter)
   (reformatter-define black :program "black"))
+
+(require-package 'pyenv-mode)
+(pyenv-mode)
 
 (provide 'init-python)
 ;;; init-python.el ends here
