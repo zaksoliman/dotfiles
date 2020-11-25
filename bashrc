@@ -117,10 +117,18 @@ PATH=$PATH:/usr/lib/lightdm/lightdm:$HOME/.local/bin
 export PYENV_ROOT="${HOME}/.pyenv"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
+export PATH="$PYENV_ROOT/bin:$PATH"
 
-if [ -d "${PYENV_ROOT}" ]; then
-    export PATH="$PYENV_ROOT/bin:$PATH"
+#if [ -d "${PYENV_ROOT}" ]; then
+#    export PATH="$PYENV_ROOT/bin:$PATH"
+#    eval "$(pyenv init -)"
+#fi
+
+if command -v pyenv >/dev/null 2>&1; then
     eval "$(pyenv init -)"
+    if command -v pyenv-virtualenv >/dev/null 2>&1; then
+        eval "$(pyenv virtualenv-init -)"
+    fi
 fi
 
 #***********************#
