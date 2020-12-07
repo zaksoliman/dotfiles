@@ -53,7 +53,7 @@
 (maybe-require-package 'scratch)
 (require-package 'command-log-mode)
 
-(require 'init-evil)
+;;(require 'init-evil)
 (require 'init-frame-hooks)
 (require 'init-xterm)
 (require 'init-themes)
