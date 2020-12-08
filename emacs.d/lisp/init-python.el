@@ -40,6 +40,8 @@
 (when (maybe-require-package 'reformatter)
   (reformatter-define black :program "black"))
 
+(setq flycheck-python-pycompile-executable "python")
+
 (require-package 'pyenv-mode)
 (pyenv-mode)
 
