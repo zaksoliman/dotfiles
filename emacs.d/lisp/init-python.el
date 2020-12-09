@@ -41,9 +41,14 @@
   (reformatter-define black :program "black"))
 
 (setq flycheck-python-pycompile-executable "python")
+(setq flycheck-python-pylint-executable "python")
+(setq flycheck-python-flake8-executable "python")
 
 (require-package 'pyenv-mode)
+(require-package 'pyenv-mode-auto)
+(require 'pyenv-mode-auto)
 (pyenv-mode)
+(origami-mode)
 
 (provide 'init-python)
 ;;; init-python.el ends here
