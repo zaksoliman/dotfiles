@@ -15,6 +15,9 @@
 
 (setq python-shell-interpreter "python")
 
+(when (executable-find "ipython")
+  (setq python-shell-interpreter "ipython"))
+
 (require-package 'pip-requirements)
 
 (when (maybe-require-package 'anaconda-mode)
