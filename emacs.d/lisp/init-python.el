@@ -48,7 +48,6 @@
 (require-package 'pyenv-mode-auto)
 (require 'pyenv-mode-auto)
 (pyenv-mode)
-(origami-mode)
 
 (provide 'init-python)
 ;;; init-python.el ends here
