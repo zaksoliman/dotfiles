@@ -26,7 +26,7 @@
 (maybe-require-package 'org-roam)
 (setq org-roam-directory "~/Documents/notes/org-roam/zettels")
 (setq org-roam-dailies-directory "~/Documents/notes/org-roam/daily")
-(setq org-roam-db-location "~/Documents/notes/org-roam/db")
+(setq org-roam-db-location "~/Documents/notes/org-roam/db/org-roam.db")
 
 (setq org-roam-dailies-capture-templates
       '(("d" "default" entry
