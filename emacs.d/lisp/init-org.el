@@ -28,6 +28,13 @@
 (setq org-roam-dailies-directory "~/Documents/notes/org-roam/daily")
 (setq org-roam-db-location "~/Documents/notes/org-roam/db/org-roam.db")
 
+(setq org-roam-capture-templates
+	(quote (("d" "Default" plain (function org-roam--capture-get-point)
+                 "%?"
+                 :file-name "%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
+                 :head "#+TITLE: ${title}\n#+DATE: %<%Y-%m-%d>\n#+ROAM_ALIAS:\n#+ROAM_TAGS:\n#+ROAM_KEY:\n\n"
+                 :unnarrowed t))))
+
 (setq org-roam-dailies-capture-templates
       '(("d" "default" entry
          #'org-roam-capture--get-point
