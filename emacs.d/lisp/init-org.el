@@ -24,7 +24,17 @@
 
 
 (maybe-require-package 'org-roam)
-(setq org-roam-directory "~/Documents/notes/org-roam")
+(setq org-roam-directory "~/Documents/notes/org-roam/zettels")
+(setq org-roam-dailies-directory "~/Documents/notes/org-roam/daily")
+(setq org-roam-db-location "~/Documents/notes/org-roam/db")
+
+(setq org-roam-dailies-capture-templates
+      '(("d" "default" entry
+         #'org-roam-capture--get-point
+         "* %?"
+         :file-name "daily/%<%Y-%m-%d>"
+         :head "#+title: %<%Y-%m-%d>\n\n")))
+
 
 (add-hook 'after-init-hook 'org-roam-mode)
 
