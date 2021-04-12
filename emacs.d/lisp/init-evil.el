@@ -1,4 +1,8 @@
+;;; init-evil.el --- Initialization file for evil mode
+;;; Commentary:
+;; Included in main initialization file
 
+;;; Code:
 (require-package 'evil)
 (require-package 'evil-collection)
 
@@ -18,3 +22,5 @@
 (evil-org-agenda-set-keys)
 
 (provide 'init-evil)
+
+;;; init-evil.el ends here
