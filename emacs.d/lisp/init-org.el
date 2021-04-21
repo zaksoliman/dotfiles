@@ -24,8 +24,8 @@
 
 
 (maybe-require-package 'org-roam)
-(setq org-roam-directory "~/Documents/notes/org-roam/zettels")
-(setq org-roam-dailies-directory "~/Documents/notes/org-roam/daily")
+(setq org-roam-directory "~/Documents/notes/org-roam/zettels/")
+(setq org-roam-dailies-directory "~/Documents/notes/org-roam/zettels/daily/")
 (setq org-roam-db-location "~/Documents/notes/org-roam/db/org-roam.db")
 (setq org-roam-completion-system 'ivy)
 
@@ -45,44 +45,6 @@
 
 
 (add-hook 'after-init-hook 'org-roam-mode)
-
-(provide 'init-org)
-;;; init-org.el ends here
-
-
-
-;;(when *is-a-mac*
-;;  (maybe-require-package 'grab-mac-link))
-;;
-;;(maybe-require-package 'org-cliplink)
-;;
-;;(define-key global-map (kbd "C-c l") 'org-store-link)
-;;(define-key global-map (kbd "C-c a") 'org-agenda)
-;;
-;;(defvar sanityinc/org-global-prefix-map (make-sparse-keymap)
-;;  "A keymap for handy global access to org helpers, particularly clocking.")
-;;
-;;(define-key sanityinc/org-global-prefix-map (kbd "j") 'org-clock-jump-to-current-clock)
-;;(define-key sanityinc/org-global-prefix-map (kbd "l") 'org-clock-in-last)
-;;(define-key sanityinc/org-global-prefix-map (kbd "i") 'org-clock-in)
-;;(define-key sanityinc/org-global-prefix-map (kbd "o") 'org-clock-out)
-;;(define-key global-map (kbd "C-c o") sanityinc/org-global-prefix-map)
-
-
-; ;; Various preferences
-; (setq org-log-done t
-;       org-edit-timestamp-down-means-later t
-;       org-hide-emphasis-markers t
-;       org-catch-invisible-edits 'show
-;       org-export-coding-system 'utf-8
-;       org-fast-tag-selection-single-key 'expert
-;       org-html-validation-link nil
-;       org-export-kill-product-buffer-when-displayed t
-;       org-tags-column 80)
-
-
-;; Lots of stuff from http://doc.norang.ca/org-mode.html
-
 
 (maybe-require-package 'writeroom-mode)
 (define-minor-mode prose-mode
@@ -124,6 +86,45 @@ typical word processor."
 
 ;;(add-hook 'org-mode-hook 'buffer-face-mode)
 (setq org-support-shift-select t)
+
+(provide 'init-org)
+;;; init-org.el ends here
+
+
+
+;;(when *is-a-mac*
+;;  (maybe-require-package 'grab-mac-link))
+;;
+;;(maybe-require-package 'org-cliplink)
+;;
+;;(define-key global-map (kbd "C-c l") 'org-store-link)
+;;(define-key global-map (kbd "C-c a") 'org-agenda)
+;;
+;;(defvar sanityinc/org-global-prefix-map (make-sparse-keymap)
+;;  "A keymap for handy global access to org helpers, particularly clocking.")
+;;
+;;(define-key sanityinc/org-global-prefix-map (kbd "j") 'org-clock-jump-to-current-clock)
+;;(define-key sanityinc/org-global-prefix-map (kbd "l") 'org-clock-in-last)
+;;(define-key sanityinc/org-global-prefix-map (kbd "i") 'org-clock-in)
+;;(define-key sanityinc/org-global-prefix-map (kbd "o") 'org-clock-out)
+;;(define-key global-map (kbd "C-c o") sanityinc/org-global-prefix-map)
+
+
+; ;; Various preferences
+; (setq org-log-done t
+;       org-edit-timestamp-down-means-later t
+;       org-hide-emphasis-markers t
+;       org-catch-invisible-edits 'show
+;       org-export-coding-system 'utf-8
+;       org-fast-tag-selection-single-key 'expert
+;       org-html-validation-link nil
+;       org-export-kill-product-buffer-when-displayed t
+;       org-tags-column 80)
+
+
+;; Lots of stuff from http://doc.norang.ca/org-mode.html
+
+
 ; 
 ; ;;; To-do settings
 ; 
