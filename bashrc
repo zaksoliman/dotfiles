@@ -171,3 +171,5 @@ alias cats='highlight -O xterm256 -s bipolar'
 alias tmux="TERM=screen-256color-bce tmux"
 
 export PATH=$PATH:~/.local
+
+export INFOPATH=$INFOPATH:/usr/share/info
