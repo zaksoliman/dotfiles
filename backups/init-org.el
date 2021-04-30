@@ -22,29 +22,29 @@
 
 ;;; Code:
 
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 4.0))
+;; (maybe-require-package 'org-roam)
+;; (setq org-roam-directory "~/Documents/notes/org-roam/zettels/")
+;; (setq org-roam-dailies-directory "~/Documents/notes/org-roam/zettels/daily/")
+;; (setq org-roam-db-location "~/Documents/notes/org-roam/db/org-roam.db")
+;; (setq org-roam-completion-system 'ivy)
 
-(maybe-require-package 'org-roam)
-(setq org-roam-directory "~/Documents/notes/org-roam/zettels/")
-(setq org-roam-dailies-directory "~/Documents/notes/org-roam/zettels/daily/")
-(setq org-roam-db-location "~/Documents/notes/org-roam/db/org-roam.db")
-(setq org-roam-completion-system 'ivy)
+;; (setq org-roam-capture-templates
+;;       (quote (("d" "Default" plain (function org-roam--capture-get-point)
+;;                "%?"
+;;                :file-name "%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
+;;                :head "#+TITLE: ${title}\n#+DATE: %<%Y-%m-%d>\n#+ROAM_ALIAS:\n#+ROAM_TAGS:\n#+ROAM_KEY:\n\n"
+;;                :unnarrowed t))))
 
-(setq org-roam-capture-templates
-      (quote (("d" "Default" plain (function org-roam--capture-get-point)
-               "%?"
-               :file-name "%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
-               :head "#+TITLE: ${title}\n#+DATE: %<%Y-%m-%d>\n#+ROAM_ALIAS:\n#+ROAM_TAGS:\n#+ROAM_KEY:\n\n"
-               :unnarrowed t))))
-
-(setq org-roam-dailies-capture-templates
-      '(("d" "default" entry
-         #'org-roam-capture--get-point
-         "* %?"
-         :file-name "daily/%<%Y-%m-%d>"
-         :head "#+title: %<%Y-%m-%d>\n\n")))
+;; (setq org-roam-dailies-capture-templates
+;;       '(("d" "default" entry
+;;          #'org-roam-capture--get-point
+;;          "* %?"
+;;          :file-name "daily/%<%Y-%m-%d>"
+;;          :head "#+title: %<%Y-%m-%d>\n\n")))
 
 
-(add-hook 'after-init-hook 'org-roam-mode)
+;; (add-hook 'after-init-hook 'org-roam-mode)
 
 (maybe-require-package 'writeroom-mode)
 (define-minor-mode prose-mode
