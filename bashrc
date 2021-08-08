@@ -173,3 +173,5 @@ alias tmux="TERM=screen-256color-bce tmux"
 export PATH=$PATH:~/.local
 
 export INFOPATH=$INFOPATH:/usr/share/info
+eval "$(pyenv virtualenv-init -)"
+eval "$(direnv hook bash)"
