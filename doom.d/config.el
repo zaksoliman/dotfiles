@@ -56,6 +56,11 @@
   (org-roam-setup)
   )
 
+(use-package! circe
+  :config
+  (setq circe-default-nick "DangleWaggle"
+        circe-default-user "DangleWaggle"
+        circe-default-realname "DangleWaggle"))
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
