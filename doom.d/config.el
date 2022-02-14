@@ -43,16 +43,47 @@
   (org-roam-capture-templates
    '(("d" "default" plain
       "%?"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :if-new(file+head "main/%<%Y%m%d%H%M%S>-${slug}.org"
+                        "#+title: ${title}\n#+filetags: :draft:\n")
+      :unnarrowed t)
+     ("w" "work" plain
+      "%?"
+      :if-new (file+head "work/%<%Y%m%d%H%M%S>-${slug}.org"
+                         "#+title: ${title}\n#+filetags: :draft:\n")
+      :unnarrowed t)
+     ("s" "Slipbox" entry  (file "inbox.org")
+      "* %?\n")
+     ("r" "reference" plain
+      "%?"
+      :if-new (file+head "reference/%<%Y%m%d%H%M%S>-${slug}.org"
+                         "#+title: ${title}\n#+filetags: :draft:\n")
+      :unnarrowed t)
+     ("a" "article" plain
+      "%?"
+      :if-new (file+head "articles/%<%Y%m%d%H%M%S>-${slug}.org"
+                         "#+title: ${title}\n#+filetags: :article:draft:\n")
       :unnarrowed t)
      ("b" "book notes" plain
       "\n* Source\n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :if-new (file+head "reference/%<%Y%m%d%H%M%S>-${slug}.org"
+                         "#+title: ${title}\n#+filetags: :draft:\n")
       :unnarrowed t)
-     ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+     ("p" "project" plain
+      "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+      :if-new (file+head "main/%<%Y%m%d%H%M%S>-${slug}.org"
+                         "#+title: ${title}\n#+filetags: :project:draft:\n")
       :unnarrowed t)))
   :config
+  (cl-defmethod org-roam-node-type ((node org-roam-node))
+    "Return the TYPE of NODE."
+    (condition-case nil
+        (file-name-nondirectory
+         (directory-file-name
+          (file-name-directory
+           (file-relative-name (org-roam-node-file node) org-roam-directory))))
+      (error "")))
+  (setq org-roam-node-display-template
+        (concat "${type:15} ${doom-hierarchy:40} " (propertize "${tags:*}" 'face 'org-tag)))
   (org-roam-setup)
   )
 
@@ -65,11 +96,11 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 (package! gitconfig-mode
-	  :recipe (:host github :repo "magit/git-modes"
-			 :files ("gitconfig-mode.el")))
+  :recipe (:host github :repo "magit/git-modes"
+	   :files ("gitconfig-mode.el")))
 (package! gitignore-mode
-	  :recipe (:host github :repo "magit/git-modes"
-			 :files ("gitignore-mode.el")))
+  :recipe (:host github :repo "magit/git-modes"
+	   :files ("gitignore-mode.el")))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
