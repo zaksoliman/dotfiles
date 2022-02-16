@@ -61,7 +61,7 @@
      ("a" "article" plain
       "%?"
       :if-new (file+head "articles/%<%Y%m%d%H%M%S>-${slug}.org"
-                         "#+title: ${title}\n#+filetags: :article:draft:\n")
+                         "#+title: ${title}\n#+filetags: :draft:\n")
       :unnarrowed t)
      ("b" "book notes" plain
       "\n* Source\n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
