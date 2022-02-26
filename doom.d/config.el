@@ -25,7 +25,10 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq
+ doom-theme 'doom-one
+  projectile-project-search-path '("~/Projects")
+ )
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -36,39 +39,38 @@
   (setq org-roam-directory "~/Documents/notes/org-roam/zettels")
   (setq org-roam-dailies-directory "~/Documents/notes/org-roam/dailies")
   :custom
+  (org-roam-graph-executable "neato")
   (org-roam-completion-everywhere t)
   (org-roam-dailies-capture-templates
    '(("d" "default" entry "* %<%I:%M %p>: %?"
       :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
   (org-roam-capture-templates
-   '(("d" "default" plain
+   '(("m" "Main" plain
       "%?"
       :if-new(file+head "main/%<%Y%m%d%H%M%S>-${slug}.org"
                         "#+title: ${title}\n#+filetags: :draft:\n")
       :unnarrowed t)
-     ("w" "work" plain
+     ("w" "Work" plain
       "%?"
       :if-new (file+head "work/%<%Y%m%d%H%M%S>-${slug}.org"
                          "#+title: ${title}\n#+filetags: :draft:\n")
       :unnarrowed t)
-     ("s" "Slipbox" entry  (file "inbox.org")
-      "* %?\n")
-     ("r" "reference" plain
+     ("r" "Reference" plain
       "%?"
       :if-new (file+head "reference/%<%Y%m%d%H%M%S>-${slug}.org"
                          "#+title: ${title}\n#+filetags: :draft:\n")
       :unnarrowed t)
-     ("a" "article" plain
+     ("a" "Article" plain
       "%?"
       :if-new (file+head "articles/%<%Y%m%d%H%M%S>-${slug}.org"
                          "#+title: ${title}\n#+filetags: :draft:\n")
       :unnarrowed t)
-     ("b" "book notes" plain
+     ("b" "Book Notes" plain
       "\n* Source\n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
       :if-new (file+head "reference/%<%Y%m%d%H%M%S>-${slug}.org"
                          "#+title: ${title}\n#+filetags: :draft:\n")
       :unnarrowed t)
-     ("p" "project" plain
+     ("p" "Project" plain
       "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
       :if-new (file+head "main/%<%Y%m%d%H%M%S>-${slug}.org"
                          "#+title: ${title}\n#+filetags: :project:draft:\n")
