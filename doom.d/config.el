@@ -112,12 +112,6 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
-(package! gitconfig-mode
-  :recipe (:host github :repo "magit/git-modes"
-	   :files ("gitconfig-mode.el")))
-(package! gitignore-mode
-  :recipe (:host github :repo "magit/git-modes"
-	   :files ("gitignore-mode.el")))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;

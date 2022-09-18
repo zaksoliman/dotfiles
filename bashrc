@@ -8,7 +8,7 @@ case $- in
       *) return;;
 esac
 # For the machine I use in the lab
-if  [[ $(hostname) == "solaris" || $(hostname) == "deathstar" ]]; then
+if  [[ $(hostname) == "solaris" || $(hostname) == "s" ]]; then
     xrdb -merge ~/.Xdefaults
     xset -b
 fi
@@ -175,3 +175,4 @@ export PATH=$PATH:~/.local
 export INFOPATH=$INFOPATH:/usr/share/info
 eval "$(pyenv virtualenv-init -)"
 eval "$(direnv hook bash)"
+. "$HOME/.cargo/env"
