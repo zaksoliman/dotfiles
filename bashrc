@@ -146,7 +146,6 @@ fi
 #source $HOME/.local/bin/virtualenvwrapper.sh
 
 ### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
 
 #***********************#
 #       NVM setup       #
@@ -156,13 +155,6 @@ export NVM_DIR="/home/danglewaggle/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-### GOPATH setup
-export GOPATH="$HOME/development/gocode"
-export PATH="$GOPATH/bin:$PATH"
-
-### MongoDB path
-export PATH="$HOME/development/mongodb/bin:$PATH"
-
 #-------------------
 # Personnal Aliases
 #-------------------
@@ -171,7 +163,6 @@ alias cats='highlight -O xterm256 -s bipolar'
 alias tmux="TERM=screen-256color-bce tmux"
 
 export PATH=$PATH:~/.local
-
 export INFOPATH=$INFOPATH:/usr/share/info
 eval "$(pyenv virtualenv-init -)"
 eval "$(direnv hook bash)"
