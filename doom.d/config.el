@@ -86,7 +86,7 @@
       (error "")))
   (setq org-roam-node-display-template
         (concat "${type:15} ${doom-hierarchy:40} " (propertize "${tags:*}" 'face 'org-tag)))
-  (org-roam-setup)
+  (org-roam-db-autosync-enable)
   )
 
 (use-package! websocket
