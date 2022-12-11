@@ -2,7 +2,7 @@
 #export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
 
 # Path
-export PATH=$PATH:~/.local
+export PATH=$PATH:~/.local:$HOME/.emacs.d/bin:$HOME/.local/opt/julia-1.8.3/bin
 export INFOPATH=$INFOPATH:/usr/share/info
 
 # Aliases
@@ -43,7 +43,7 @@ zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-completions"
 zplug "junegunn/fzf"
-zplug "themes/lambda", from:oh-my-zsh, as:theme   # Theme
+zplug "themes/sorin", from:oh-my-zsh, as:theme   # Theme
 
 # zplug - install/load new plugins when zsh is started or reloaded
 if ! zplug check --verbose; then
@@ -52,11 +52,20 @@ if ! zplug check --verbose; then
         echo; zplug install
     fi
 fi
-zplug load --verbose
-#zplug load
+#zplug load --verbose
+zplug load
 
 # PyEnv
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+eval "$(direnv hook zsh)"
+
+
