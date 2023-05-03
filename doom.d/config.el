@@ -25,10 +25,13 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq
- doom-theme 'doom-one
-  projectile-project-search-path '("~/Projects")
- )
+;; (setq doom-theme 'doom-one)
+(setq doom-theme 'doom-zenburn)
+;; (after! doom-themes
+;;   (load-theme 'doom-nano-dark t)
+;;   (setq doom-theme 'doom-nano-dark))
+
+(setq projectile-project-search-path '("~/Projects"))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -104,14 +107,38 @@
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 
+;; (setq rustic-lsp-server 'rust-analyzer)
 (use-package! circe
   :config
   (setq circe-default-nick "DangleWaggle"
         circe-default-user "DangleWaggle"
         circe-default-realname "DangleWaggle"))
+
+
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+
+;; Python Formatter
+(use-package! python-black
+  :demand t
+  :after python
+  :config
+  (map! :leader :desc "Blacken Buffer" "m b b" #'python-black-buffer)
+  (map! :leader :desc "Blacken Region" "m b r" #'python-black-region)
+  (map! :leader :desc "Blacken Statement" "m b s" #'python-black-statement)
+  )
+
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
+
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
