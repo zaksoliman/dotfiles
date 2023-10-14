@@ -57,10 +57,14 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
-(unpin! org-roam)
+;
+(package! org :pin "ca873f7")
+
+
+;; (unpin! org-roam)
 (package! org-roam-ui)
 
-
+(package! harpoon)
 ;; GitHub copilot integration
 (package! copilot
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
