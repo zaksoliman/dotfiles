@@ -383,3 +383,5 @@
 
 (setq delete-by-moving-to-trash t
       trash-directory "~/.local/share/Trash/files/")
+;; Never lose the cursor with beacon
+(beacon-mode 1)

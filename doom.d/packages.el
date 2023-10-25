@@ -68,3 +68,6 @@
 ;; GitHub copilot integration
 (package! copilot
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+
+;; Keep an eye on the cursor
+(package! beacon)
