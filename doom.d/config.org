@@ -542,4 +542,19 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 (setq delete-by-moving-to-trash t
       trash-directory "~/.local/share/Trash/files/")
 #+end_src
+* ELFEED
+RSS newsfeed
 
+#+begin_src elisp
+(setq elfeed-goodies/entry-pane-size 0.5)
+
+(evil-define-key 'normal elfeed-show-mode-map
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "K") 'elfeed-goodies/split-show-prev)
+(evil-define-key 'normal elfeed-search-mode-map
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "K") 'elfeed-goodies/split-show-prev)
+(setq elfeed-feeds (quote
+                    (("https://news.ycombinator.com/rss" Hacker News)
+                     ("https://this-week-in-rust.org/rss.xml"))))
+#+end_src
