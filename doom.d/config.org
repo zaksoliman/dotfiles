@@ -71,6 +71,10 @@ font string. You generally only need these two:
 (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
+;; (setq doom-font (font-spec :family "Iosevka Slab" :size 13)
+;;      ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
+;;      doom-variable-pitch-font (font-spec :family "Alegreya" :size 15))
+
 (setq doom-theme 'doom-one)
 
 ;; (setq doom-theme 'doom-zenburn)
@@ -80,17 +84,15 @@ font string. You generally only need these two:
 #+end_src
 
 ** Visual niceness
-;;
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
+
+This determines the style of line numbers in effect. If set to `nil', line
+numbers are disabled. For relative line numbers, set this to `relative'.
+
+#+begin_src elisp
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
-
 (add-hook 'window-setup-hook #'toggle-frame-maximized)
-
-;; (setq doom-font (font-spec :family "Iosevka Slab" :size 13)
-;;      ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
-;;      doom-variable-pitch-font (font-spec :family "Alegreya" :size 15))
+#+end_src
 
 * PROJECTILE
 #+begin_src elisp
@@ -107,16 +109,17 @@ If you use `org' and don't want your org files in the default location below,
 change `org-directory'. It must be set before org loads!
 
 #+begin_src elisp
+(add-hook! 'org-mode-hook
+  (setq left-margin-width 5))
+
 (setq org-directory "~/Documents/notes/")
+
 (add-hook! org-mode :append
            #'variable-pitch-mode)
 
-(add-hook! 'org-mode-hook
-  (setq left-margin-width 5))
 #+end_src
 
 Make it more like a WYSIWYG editor
-
 #+begin_src elisp
 (after! org (setq org-hide-emphasis-markers t))
 #+end_src
@@ -195,10 +198,8 @@ Make it more like a WYSIWYG editor
           org-roam-ui-open-on-start t))
 #+end_src
 
-;; (setq rustic-lsp-server 'rust-analyzer)
 
 * DEVELOPMENT ENVIRONMENT
-
 ** CO-PILOT
 
 Accept completion from copilot and fallback to company
@@ -226,62 +227,6 @@ Python Formatter
 ;;   (map! :leader :desc "Blacken Region" "m b r" #'python-black-region)
 ;;   (map! :leader :desc "Blacken Statement" "m b s" #'python-black-statement)
 ;;   )
-#+end_src
-
-** LSP GENERAL CONFIGS
-
-#+begin_src elisp
-(when (or (modulep! :checkers syntax +flymake)
-          (not (modulep! :checkers syntax)))
-  (setq lsp-diagnostics-provider :flymake))
-(after! lsp-mode
-  (setq
-   lsp-log-io nil
-   lsp-auto-guess-root t
-   lsp-progress-via-spinner t
-   lsp-enable-file-watchers nil
-   lsp-idle-delay 0.01
-   lsp-completion-enable-additional-text-edit t
-
-   lsp-signature-render-documentation t
-   lsp-signature-auto-activate '(:on-trigger-char :on-server-request :after-completion)
-   lsp-signature-doc-lines 10
-
-   lsp-eldoc-enable-hover t
-   lsp-eldoc-render-all t
-   lsp-headerline-breadcrumb-enable nil
-   lsp-modeline-code-actions-segments '(count icon name)
-
-   lsp-enable-indentation nil
-   lsp-enable-on-type-formatting nil
-   lsp-enable-symbol-highlighting nil
-   lsp-enable-links nil
-
-   lsp-lens-enable t))
-
-(when (modulep! :completion company)
-  (setq +lsp-company-backends '(company-capf :with company-yasnippet)))
-
-(after! lsp-ui
-  (setq
-   ;; Sideline
-   lsp-ui-sideline-enable nil
-   lsp-ui-sideline-show-code-actions nil
-   lsp-ui-sideline-show-symbol nil
-   lsp-ui-sideline-show-hover nil
-   lsp-ui-sideline-show-diagnostics nil
-   ;; Peek
-   lsp-ui-peek-enable nil
-   ;; Doc
-   lsp-ui-doc-enable t
-   lsp-ui-doc-position 'at-point
-   lsp-ui-doc-delay 0.51
-   lsp-ui-doc-max-width 50
-   lsp-ui-doc-max-height 30
-   lsp-ui-doc-include-signature t
-   lsp-ui-doc-show-with-cursor nil
-   lsp-ui-doc-show-with-mouse nil
-   lsp-ui-doc-header t))
 #+end_src
 
 ** RUST 🦀
@@ -338,6 +283,62 @@ Python Formatter
   ;;                    (s-join " " it))))
   ;;    (lsp--render-element (concat "```rust\n" sig "\n```"))))
   (advice-add #'lsp-hover :after (lambda () (setq lsp--hover-saved-bounds nil))))
+#+end_src
+
+** LSP GENERAL CONFIGS
+
+#+begin_src elisp
+(when (or (modulep! :checkers syntax +flymake)
+          (not (modulep! :checkers syntax)))
+  (setq lsp-diagnostics-provider :flymake))
+(after! lsp-mode
+  (setq
+   lsp-log-io nil
+   lsp-auto-guess-root t
+   lsp-progress-via-spinner t
+   lsp-enable-file-watchers nil
+   lsp-idle-delay 0.01
+   lsp-completion-enable-additional-text-edit t
+
+   lsp-signature-render-documentation t
+   lsp-signature-auto-activate '(:on-trigger-char :on-server-request :after-completion)
+   lsp-signature-doc-lines 10
+
+   lsp-eldoc-enable-hover t
+   lsp-eldoc-render-all t
+   lsp-headerline-breadcrumb-enable nil
+   lsp-modeline-code-actions-segments '(count icon name)
+
+   lsp-enable-indentation nil
+   lsp-enable-on-type-formatting nil
+   lsp-enable-symbol-highlighting nil
+   lsp-enable-links nil
+
+   lsp-lens-enable t))
+
+(when (modulep! :completion company)
+  (setq +lsp-company-backends '(company-capf :with company-yasnippet)))
+
+(after! lsp-ui
+  (setq
+   ;; Sideline
+   lsp-ui-sideline-enable nil
+   lsp-ui-sideline-show-code-actions nil
+   lsp-ui-sideline-show-symbol nil
+   lsp-ui-sideline-show-hover nil
+   lsp-ui-sideline-show-diagnostics nil
+   ;; Peek
+   lsp-ui-peek-enable nil
+   ;; Doc
+   lsp-ui-doc-enable t
+   lsp-ui-doc-position 'at-point
+   lsp-ui-doc-delay 0.51
+   lsp-ui-doc-max-width 50
+   lsp-ui-doc-max-height 30
+   lsp-ui-doc-include-signature t
+   lsp-ui-doc-show-with-cursor nil
+   lsp-ui-doc-show-with-mouse nil
+   lsp-ui-doc-header t))
 #+end_src
 
 * EVIL
