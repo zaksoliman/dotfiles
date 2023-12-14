@@ -1,10 +1,7 @@
 #+TITLE: Doom Emacs Config
 #+AUTHOR: Zak Soliman
 
-* Doom Emacs Config
-
 * ABOUT THIS CONFIG
-
 This is my personal Doom emacs configs. It will always stay a work in progress as I add and improve on it
 .
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
@@ -51,7 +48,6 @@ Never lose the cursor with beacon
 (beacon-mode 1)
 #+end_src
 * APPEARANCE
-
 There are two ways to load a theme. Both assume the theme is installed and
 available. You can either set `doom-theme' or manually load a theme with the
 `load-theme' function. I'm sticking with the default theme.
@@ -59,17 +55,21 @@ available. You can either set `doom-theme' or manually load a theme with the
 Doom exposes five (optional) variables for controlling fonts in Doom. Here
 are the three important ones:
 
-+ `doom-font'
-+ `doom-variable-pitch-font'
-+ `doom-big-font' -- used for `doom-big-font-mode'; use this for
-  presentations or streaming.
++ ~doom-font~ :: Standard monospace from that is used for most things in Emacs
++ ~doom-variable-pitch-font~ :: Variable font which is usefull in some Emacs plugins
++ ~doom-big-font~ :: Used for ~doom-big-font-mode~', use this for presentations or streaming.
++ ~font-lock-comment-face~ :: For comments
++ ~font-lock-keyword-face~ :: for keywords with special significance, like ~for~ and ~if~
 
 They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 font string. You generally only need these two:
 
-#+begin_src elisp
-(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "sans" :size 13))
+#+begin_src emacs-lisp
+(when (doom-font-exists-p "Fira Code")
+  (setq doom-font (font-spec :name "Fira Code" :size 13)))
+
+(when (doom-font-exists-p "Alegreya")
+  (setq doom-variable-pitch-font (font-spec :name "Alegreya"  :size 15)))
 
 ;; (setq doom-font (font-spec :family "Iosevka Slab" :size 13)
 ;;      ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
@@ -186,7 +186,7 @@ Make it more like a WYSIWYG editor
     :after org-roam)
 
 (use-package! org-roam-ui
-    :after org-roam ;; or :after org
+    :after org ;; or :after org-roam???
 ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
 ;;         a hookable mode anymore, you're advised to pick something yourself
 ;;         if you don't care about startup time, use
@@ -197,7 +197,6 @@ Make it more like a WYSIWYG editor
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 #+end_src
-
 
 * DEVELOPMENT ENVIRONMENT
 ** CO-PILOT
@@ -363,20 +362,20 @@ Python Formatter
 * HARPOON
 Use this hydra menu that have all the commands
 #+begin_src elisp
-(map! :n "C-SPC" 'harpoon-quick-menu-hydra)
-(map! :leader "j a" 'harpoon-add-file)
-(map! :leader "j c" 'harpoon-clear)
-(map! :leader "j f" 'harpoon-toggle-file)
-(map! :leader "j h" 'harpoon-toggle-quick-menu)
-(map! :leader "1" 'harpoon-go-to-1)
-(map! :leader "2" 'harpoon-go-to-2)
-(map! :leader "3" 'harpoon-go-to-3)
-(map! :leader "4" 'harpoon-go-to-4)
-(map! :leader "5" 'harpoon-go-to-5)
-(map! :leader "6" 'harpoon-go-to-6)
-(map! :leader "7" 'harpoon-go-to-7)
-(map! :leader "8" 'harpoon-go-to-8)
-(map! :leader "9" 'harpoon-go-to-9)
+;; (map! :n "C-SPC" 'harpoon-quick-menu-hydra)
+;; (map! :leader "j a" 'harpoon-add-file)
+;; (map! :leader "j c" 'harpoon-clear)
+;; (map! :leader "j f" 'harpoon-toggle-file)
+;; (map! :leader "j h" 'harpoon-toggle-quick-menu)
+;; (map! :leader "1" 'harpoon-go-to-1)
+;; (map! :leader "2" 'harpoon-go-to-2)
+;; (map! :leader "3" 'harpoon-go-to-3)
+;; (map! :leader "4" 'harpoon-go-to-4)
+;; (map! :leader "5" 'harpoon-go-to-5)
+;; (map! :leader "6" 'harpoon-go-to-6)
+;; (map! :leader "7" 'harpoon-go-to-7)
+;; (map! :leader "8" 'harpoon-go-to-8)
+;; (map! :leader "9" 'harpoon-go-to-9)
 #+end_src
 * COLORED TEXT HIGHLIGHTING
 ** RAINBOW MODE

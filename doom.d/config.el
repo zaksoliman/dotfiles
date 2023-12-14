@@ -1,53 +1,34 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
-;;
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
 (setq user-full-name "Zak Soliman"
       user-mail-address "zakaria.soliman1@gmail.com")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-     doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(use-package! circe
+  :config
+  (setq circe-default-nick "DangleWaggle"
+        circe-default-user "DangleWaggle"
+        circe-default-realname "DangleWaggle"))
 
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-;;
+(beacon-mode 1)
+
+(when (doom-font-exists-p "Fira Code")
+  (setq doom-font (font-spec :name "Fira Code" :size 13)))
+
+(when (doom-font-exists-p "Alegreya")
+  (setq doom-variable-pitch-font (font-spec :name "Alegreya"  :size 15)))
+
+;; (setq doom-font (font-spec :family "Iosevka Slab" :size 13)
+;;      ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
+;;      doom-variable-pitch-font (font-spec :family "Alegreya" :size 15))
+
 (setq doom-theme 'doom-one)
+
 ;; (setq doom-theme 'doom-zenburn)
 ;; (after! doom-themes
 ;;   (load-theme 'doom-nano-dark t)
 ;;   (setq doom-theme 'doom-nano-dark))
+
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(setq display-line-numbers-type 'relative)
+(add-hook 'window-setup-hook #'toggle-frame-maximized)
 
 (use-package! projectile
   :config
@@ -55,15 +36,15 @@
   (setq projectile-project-root-files-bottom-up  '("Cargo.toml" ".projectile" ".project" ".git"))
   (setq projectile-project-root-files '("setup.py" "requirements.txt" "pyproject.toml" "package.json" "build.gradle" "gradlew" "deps.edn" "build.boot" "project.clj"))
 )
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Documents/notes/")
-(add-hook! org-mode :append
-           #'variable-pitch-mode)
 
 (add-hook! 'org-mode-hook
   (setq left-margin-width 5))
-;; Make it more like a WYSIWYG editor
+
+(setq org-directory "~/Documents/notes/")
+
+(add-hook! org-mode :append
+           #'variable-pitch-mode)
+
 (after! org (setq org-hide-emphasis-markers t))
 
 (use-package! org-roam
@@ -125,7 +106,7 @@
     :after org-roam)
 
 (use-package! org-roam-ui
-    :after org-roam ;; or :after org
+    :after org ;; or :after org-roam???
 ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
 ;;         a hookable mode anymore, you're advised to pick something yourself
 ;;         if you don't care about startup time, use
@@ -136,15 +117,6 @@
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 
-;; (setq rustic-lsp-server 'rust-analyzer)
-(use-package! circe
-  :config
-  (setq circe-default-nick "DangleWaggle"
-        circe-default-user "DangleWaggle"
-        circe-default-realname "DangleWaggle"))
-
-
-;; accept completion from copilot and fallback to company
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
@@ -153,7 +125,6 @@
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
-;; Python Formatter
 ;; (use-package! python-black
 ;;   :demand t
 ;;   :after python
@@ -163,7 +134,58 @@
 ;;   (map! :leader :desc "Blacken Statement" "m b s" #'python-black-statement)
 ;;   )
 
-;;;; LSP
+(after! rustic
+  (set-formatter! 'rustic-mode #'rustic-cargo-fmt))
+
+(map! (:map rustic-mode-map
+       :localleader
+       :desc "Toggle LSP hints" "h" #'lsp-rust-analyzer-inlay-hints-mode))
+
+(setq rustic-lsp-server 'rust-analyzer
+      lsp-rust-server 'rust-analyzer)
+
+(set-popup-rule!
+  "^\\*rust"
+  :slot -2
+  :size 0.45
+  :side 'right
+  :autosave t
+  :quit 'current
+  :ttl nil
+  :modeline t)
+
+(after! lsp-rust
+  (setq lsp-rust-analyzer-lru-capacity 100
+        ;; lsp-rust-analyzer-server-display-inlay-hints t
+        lsp-inlay-hint-enable t
+        lsp-rust-analyzer-display-chaining-hints t
+        lsp-rust-analyzer-display-reborrow-hints t
+        lsp-rust-analyzer-display-closure-return-type-hints t
+        lsp-rust-analyzer-display-parameter-hints t
+        lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial"
+        lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names t
+        lsp-rust-analyzer-cargo-watch-enable t
+        lsp-rust-analyzer-cargo-run-build-scripts t
+        lsp-rust-analyzer-proc-macro-enable t
+        lsp-rust-analyzer-cargo-watch-command "clippy"
+        ;; lsp-rust-analyzer-server-command '("rust-analyzer" "--lru-capacity" "32768" "--cargo-watch-enable" "--project-root" "./rust-project.json")
+)
+
+  ;; TODO: upstream those
+  ;; (cl-defmethod lsp-clients-extract-signature-on-hover (contents (_server-id (eql rust-analyzer)))
+  ;;  (-let* (((&plist :value) contents)
+  ;;          (groups (--partition-by (s-blank? it) (s-lines (s-trim value))))
+  ;;          (sig_group (if (s-equals? "```rust" (car (-third-item groups)))
+  ;;                         (-third-item groups)
+  ;;                       (car groups)))
+  ;;          (sig (--> sig_group
+  ;;                    (--drop-while (s-equals? "```rust" it) it)
+  ;;                    (--take-while (not (s-equals? "```" it)) it)
+  ;;                    (--map (s-trim it) it)
+  ;;                    (s-join " " it))))
+  ;;    (lsp--render-element (concat "```rust\n" sig "\n```"))))
+  (advice-add #'lsp-hover :after (lambda () (setq lsp--hover-saved-bounds nil))))
+
 (when (or (modulep! :checkers syntax +flymake)
           (not (modulep! :checkers syntax)))
   (setq lsp-diagnostics-provider :flymake))
@@ -216,62 +238,6 @@
    lsp-ui-doc-show-with-mouse nil
    lsp-ui-doc-header t))
 
-
-;;;; rust
-(after! rustic
-  (set-formatter! 'rustic-mode #'rustic-cargo-fmt))
-
-(map! (:map rustic-mode-map
-       :localleader
-       :desc "Toggle LSP hints" "h" #'lsp-rust-analyzer-inlay-hints-mode))
-
-(setq rustic-lsp-server 'rust-analyzer
-      lsp-rust-server 'rust-analyzer)
-
-(set-popup-rule!
-  "^\\*rust"
-  :slot -2
-  :size 0.45
-  :side 'right
-  :autosave t
-  :quit 'current
-  :ttl nil
-  :modeline t)
-
-(after! lsp-rust
-  (setq lsp-rust-analyzer-lru-capacity 100
-        ;; lsp-rust-analyzer-server-display-inlay-hints t
-        lsp-inlay-hint-enable t
-        lsp-rust-analyzer-display-chaining-hints t
-        lsp-rust-analyzer-display-reborrow-hints t
-        lsp-rust-analyzer-display-closure-return-type-hints t
-        lsp-rust-analyzer-display-parameter-hints t
-        lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial"
-        lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names t
-        lsp-rust-analyzer-cargo-watch-enable t
-        lsp-rust-analyzer-cargo-run-build-scripts t
-        lsp-rust-analyzer-proc-macro-enable t
-        lsp-rust-analyzer-cargo-watch-command "clippy"
-        ;; lsp-rust-analyzer-server-command '("rust-analyzer" "--lru-capacity" "32768" "--cargo-watch-enable" "--project-root" "./rust-project.json")
-        )
-
-  ;; TODO: upstream those
-  ;; (cl-defmethod lsp-clients-extract-signature-on-hover (contents (_server-id (eql rust-analyzer)))
-  ;;  (-let* (((&plist :value) contents)
-  ;;          (groups (--partition-by (s-blank? it) (s-lines (s-trim value))))
-  ;;          (sig_group (if (s-equals? "```rust" (car (-third-item groups)))
-  ;;                         (-third-item groups)
-  ;;                       (car groups)))
-  ;;          (sig (--> sig_group
-  ;;                    (--drop-while (s-equals? "```rust" it) it)
-  ;;                    (--take-while (not (s-equals? "```" it)) it)
-  ;;                    (--map (s-trim it) it)
-  ;;                    (s-join " " it))))
-  ;;    (lsp--render-element (concat "```rust\n" sig "\n```"))))
-
-  (advice-add #'lsp-hover :after (lambda () (setq lsp--hover-saved-bounds nil))))
-
-;; EVIL stuff!
 ;; (let ((alternatives '("doom-emacs-bw-light.svg")
 ;;                     ))
 ;;   (setq fancy-splash-image
@@ -289,36 +255,20 @@
 ;;     (prependq! evil-surround-pairs-alist pairs)
 ;;     (prependq! evil-embrace-evil-surround-keys (mapcar #'car pairs))))
 
-;; Visual niceness
-;;
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
-(setq display-line-numbers-type 'relative)
-
-(add-hook 'window-setup-hook #'toggle-frame-maximized)
-
-;; (setq doom-font (font-spec :family "Iosevka Slab" :size 13)
-;;      ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
-;;      doom-variable-pitch-font (font-spec :family "Alegreya" :size 15))
-
-
-;; Harpoon config
-;; You can use this hydra menu that have all the commands
-(map! :n "C-SPC" 'harpoon-quick-menu-hydra)
-(map! :leader "j a" 'harpoon-add-file)
-(map! :leader "j c" 'harpoon-clear)
-(map! :leader "j f" 'harpoon-toggle-file)
-(map! :leader "j h" 'harpoon-toggle-quick-menu)
-(map! :leader "1" 'harpoon-go-to-1)
-(map! :leader "2" 'harpoon-go-to-2)
-(map! :leader "3" 'harpoon-go-to-3)
-(map! :leader "4" 'harpoon-go-to-4)
-(map! :leader "5" 'harpoon-go-to-5)
-(map! :leader "6" 'harpoon-go-to-6)
-(map! :leader "7" 'harpoon-go-to-7)
-(map! :leader "8" 'harpoon-go-to-8)
-(map! :leader "9" 'harpoon-go-to-9)
+;; (map! :n "C-SPC" 'harpoon-quick-menu-hydra)
+;; (map! :leader "j a" 'harpoon-add-file)
+;; (map! :leader "j c" 'harpoon-clear)
+;; (map! :leader "j f" 'harpoon-toggle-file)
+;; (map! :leader "j h" 'harpoon-toggle-quick-menu)
+;; (map! :leader "1" 'harpoon-go-to-1)
+;; (map! :leader "2" 'harpoon-go-to-2)
+;; (map! :leader "3" 'harpoon-go-to-3)
+;; (map! :leader "4" 'harpoon-go-to-4)
+;; (map! :leader "5" 'harpoon-go-to-5)
+;; (map! :leader "6" 'harpoon-go-to-6)
+;; (map! :leader "7" 'harpoon-go-to-7)
+;; (map! :leader "8" 'harpoon-go-to-8)
+;; (map! :leader "9" 'harpoon-go-to-9)
 
 (add-hook! 'rainbow-mode-hook
   (hl-line-mode (if rainbow-mode -1 +1)))
@@ -336,7 +286,6 @@
           ("REVIEW"     . "#1E90FF")
           ("DEPRECATED" . "#1E90FF"))))
 
-;; Dired
 (map! :leader
       (:prefix ("d" . "dired")
        :desc "Open dired" "d" #'dired
@@ -373,6 +322,7 @@
   (kbd "* /") 'dired-mark-directories
   (kbd "; d") 'epa-dired-do-decrypt
   (kbd "; e") 'epa-dired-do-encrypt)
+
 ;; Get file icons in dired
 ;; (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 ;; With dired-open plugin, you can launch external programs for certain extensions
@@ -390,6 +340,3 @@
 
 (setq delete-by-moving-to-trash t
       trash-directory "~/.local/share/Trash/files/")
-
-;; Never lose the cursor with beacon
-(beacon-mode 1)
