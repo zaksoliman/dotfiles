@@ -49,14 +49,18 @@
 ;;   (load-theme 'doom-nano-dark t)
 ;;   (setq doom-theme 'doom-nano-dark))
 
-(setq projectile-project-search-path '("~/Projects"))
-
+(use-package! projectile
+  :config
+  (setq projectile-project-search-path '("~/Projects"))
+  (setq projectile-project-root-files-bottom-up  '("Cargo.toml" ".projectile" ".project" ".git"))
+  (setq projectile-project-root-files '("setup.py" "requirements.txt" "pyproject.toml" "package.json" "build.gradle" "gradlew" "deps.edn" "build.boot" "project.clj"))
+)
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/notes/")
 (add-hook! org-mode :append
-           #'visual-line-mode
            #'variable-pitch-mode)
+
 (add-hook! 'org-mode-hook
   (setq left-margin-width 5))
 ;; Make it more like a WYSIWYG editor
@@ -150,14 +154,14 @@
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 ;; Python Formatter
-(use-package! python-black
-  :demand t
-  :after python
-  :config
-  (map! :leader :desc "Blacken Buffer" "m b b" #'python-black-buffer)
-  (map! :leader :desc "Blacken Region" "m b r" #'python-black-region)
-  (map! :leader :desc "Blacken Statement" "m b s" #'python-black-statement)
-  )
+;; (use-package! python-black
+;;   :demand t
+;;   :after python
+;;   :config
+;;   (map! :leader :desc "Blacken Buffer" "m b b" #'python-black-buffer)
+;;   (map! :leader :desc "Blacken Region" "m b r" #'python-black-region)
+;;   (map! :leader :desc "Blacken Statement" "m b s" #'python-black-statement)
+;;   )
 
 ;;;; LSP
 (when (or (modulep! :checkers syntax +flymake)
@@ -236,7 +240,8 @@
 
 (after! lsp-rust
   (setq lsp-rust-analyzer-lru-capacity 100
-        lsp-rust-analyzer-server-display-inlay-hints t
+        ;; lsp-rust-analyzer-server-display-inlay-hints t
+        lsp-inlay-hint-enable t
         lsp-rust-analyzer-display-chaining-hints t
         lsp-rust-analyzer-display-reborrow-hints t
         lsp-rust-analyzer-display-closure-return-type-hints t
@@ -246,7 +251,9 @@
         lsp-rust-analyzer-cargo-watch-enable t
         lsp-rust-analyzer-cargo-run-build-scripts t
         lsp-rust-analyzer-proc-macro-enable t
-        lsp-rust-analyzer-cargo-watch-command "clippy")
+        lsp-rust-analyzer-cargo-watch-command "clippy"
+        ;; lsp-rust-analyzer-server-command '("rust-analyzer" "--lru-capacity" "32768" "--cargo-watch-enable" "--project-root" "./rust-project.json")
+        )
 
   ;; TODO: upstream those
   ;; (cl-defmethod lsp-clients-extract-signature-on-hover (contents (_server-id (eql rust-analyzer)))
@@ -291,9 +298,9 @@
 
 (add-hook 'window-setup-hook #'toggle-frame-maximized)
 
-(setq doom-font (font-spec :family "Iosevka Slab" :size 13)
-     ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
-     doom-variable-pitch-font (font-spec :family "Alegreya" :size 15))
+;; (setq doom-font (font-spec :family "Iosevka Slab" :size 13)
+;;      ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
+;;      doom-variable-pitch-font (font-spec :family "Alegreya" :size 15))
 
 
 ;; Harpoon config
@@ -367,7 +374,7 @@
   (kbd "; d") 'epa-dired-do-decrypt
   (kbd "; e") 'epa-dired-do-encrypt)
 ;; Get file icons in dired
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+;; (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 ;; With dired-open plugin, you can launch external programs for certain extensions
 ;; For example, I set all .png files to open in 'sxiv' and all .mp4 files to open in 'mpv'
 ;; (setq dired-open-extensions '(("gif" . "sxiv")
@@ -383,5 +390,6 @@
 
 (setq delete-by-moving-to-trash t
       trash-directory "~/.local/share/Trash/files/")
+
 ;; Never lose the cursor with beacon
 (beacon-mode 1)

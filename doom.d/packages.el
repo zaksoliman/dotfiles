@@ -61,6 +61,8 @@
 (package! org :pin "ca873f7")
 
 
+;; Keep an eye on the cursor
+(package! beacon)
 ;; (unpin! org-roam)
 (package! org-roam-ui)
 
@@ -69,5 +71,3 @@
 (package! copilot
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
 
-;; Keep an eye on the cursor
-(package! beacon)
