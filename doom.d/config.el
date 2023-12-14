@@ -9,6 +9,15 @@
 
 (beacon-mode 1)
 
+(setq bookmark-default-file "~/dotfiles/doom.d/bookmarks")
+
+(map! :leader
+      (:prefix ("b". "buffer")
+       :desc "List bookmarks"                          "L" #'list-bookmarks
+       :desc "Set bookmark"                            "m" #'bookmark-set
+       ;; :desc "Delete bookmark"                         "M" #'bookmark-set
+       :desc "Save current bookmarks to bookmark file" "w" #'bookmark-save))
+
 (when (doom-font-exists-p "Fira Code")
   (setq doom-font (font-spec :name "Fira Code" :size 13)))
 
@@ -37,13 +46,23 @@
   (setq projectile-project-root-files '("setup.py" "requirements.txt" "pyproject.toml" "package.json" "build.gradle" "gradlew" "deps.edn" "build.boot" "project.clj"))
 )
 
-(add-hook! 'org-mode-hook
-  (setq left-margin-width 5))
+;; (add-hook! 'org-mode-hook
+;;   (setq left-margin-width 5))
+(use-package! mixed-pitch
+  :hook ((org-mode      . mixed-pitch-mode)
+         (org-roam-mode . mixed-pitch-mode)
+         (LaTeX-mode    . mixed-pitch-mode))
+  ;; :config
+  ;; (pushnew! mixed-pitch-fixed-pitch-faces
+  ;;           'warning
+  ;;           'org-drawer 'org-cite-key 'org-list-dt 'org-hide
+  ;;           'corfu-default 'font-latex-math-face)
+  ;; (setq mixed-pitch-set-height t)
+  )
 
 (setq org-directory "~/Documents/notes/")
 
-(add-hook! org-mode :append
-           #'variable-pitch-mode)
+;; (add-hook! 'org-mode-hook #'mixed-pitch-mode)
 
 (after! org (setq org-hide-emphasis-markers t))
 
@@ -125,14 +144,13 @@
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
-;; (use-package! python-black
-;;   :demand t
-;;   :after python
-;;   :config
-;;   (map! :leader :desc "Blacken Buffer" "m b b" #'python-black-buffer)
-;;   (map! :leader :desc "Blacken Region" "m b r" #'python-black-region)
-;;   (map! :leader :desc "Blacken Statement" "m b s" #'python-black-statement)
-;;   )
+(after! python
+  (use-package! python-black
+    :config
+    (map! :localleader :desc "Blacken Buffer" "b b" #'python-black-buffer)
+    (map! :localleader :desc "Blacken Region" "b r" #'python-black-region)
+    (map! :localleader :desc "Blacken Statement" "b s" #'python-black-statement)
+    ))
 
 (after! rustic
   (set-formatter! 'rustic-mode #'rustic-cargo-fmt))

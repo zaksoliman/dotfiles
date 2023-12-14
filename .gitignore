@@ -1,5 +1,7 @@
 vim/plugged
 config/*
+!config/yabai
+!config/skhdrc
 !config/openbox
 !config/pulse
 !config/pulseaudio-ctl

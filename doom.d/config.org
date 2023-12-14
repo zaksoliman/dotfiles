@@ -2,8 +2,9 @@
 #+AUTHOR: Zak Soliman
 
 * ABOUT THIS CONFIG
-This is my personal Doom emacs configs. It will always stay a work in progress as I add and improve on it
-.
+This is my personal Doom emacs configs. It will always stay a work in progress as I add and improve on it.
+The initial setup is largely inspired by [[https://gitlab.com/dwt1/dotfiles/-/blob/master/.config/doom/config.org][Derek Taylor's config]]. This is enabled by the literate module in init.el
+
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 Place your private configuration here! Remember, you do not need to run 'doom
@@ -26,6 +27,11 @@ This will open documentation for it, including demos of how they are used.
 You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 they are implemented.
 
+** Anti-patterns to avoid
+
+https://discourse.doomemacs.org/t/common-config-anti-patterns/119
+*** TODO Fill this section with my summary of that link
+
 * IDENTITY
 
 Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -46,6 +52,22 @@ clients, file templates and snippets.
 Never lose the cursor with beacon
 #+begin_src elisp
 (beacon-mode 1)
+#+end_src
+* BOOKMARKS
+Bookmarks are somewhat like registers in that they record positions you can jump
+to. Unlike registers, they have long names, and they persist automatically from
+one Emacs session to the next. The prototypical use of bookmarks is to record
+where you were reading in various files.
+
+#+begin_src elisp
+(setq bookmark-default-file "~/dotfiles/doom.d/bookmarks")
+
+(map! :leader
+      (:prefix ("b". "buffer")
+       :desc "List bookmarks"                          "L" #'list-bookmarks
+       :desc "Set bookmark"                            "m" #'bookmark-set
+       ;; :desc "Delete bookmark"                         "M" #'bookmark-set
+       :desc "Save current bookmarks to bookmark file" "w" #'bookmark-save))
 #+end_src
 * APPEARANCE
 There are two ways to load a theme. Both assume the theme is installed and
@@ -84,7 +106,6 @@ font string. You generally only need these two:
 #+end_src
 
 ** Visual niceness
-
 This determines the style of line numbers in effect. If set to `nil', line
 numbers are disabled. For relative line numbers, set this to `relative'.
 
@@ -107,19 +128,30 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 
 If you use `org' and don't want your org files in the default location below,
 change `org-directory'. It must be set before org loads!
-
+*** TODO mixed pitched not working
 #+begin_src elisp
-(add-hook! 'org-mode-hook
-  (setq left-margin-width 5))
+;; (add-hook! 'org-mode-hook
+;;   (setq left-margin-width 5))
+(use-package! mixed-pitch
+  :hook ((org-mode      . mixed-pitch-mode)
+         (org-roam-mode . mixed-pitch-mode)
+         (LaTeX-mode    . mixed-pitch-mode))
+  ;; :config
+  ;; (pushnew! mixed-pitch-fixed-pitch-faces
+  ;;           'warning
+  ;;           'org-drawer 'org-cite-key 'org-list-dt 'org-hide
+  ;;           'corfu-default 'font-latex-math-face)
+  ;; (setq mixed-pitch-set-height t)
+  )
 
 (setq org-directory "~/Documents/notes/")
 
-(add-hook! org-mode :append
-           #'variable-pitch-mode)
+;; (add-hook! 'org-mode-hook #'mixed-pitch-mode)
 
 #+end_src
 
 Make it more like a WYSIWYG editor
+
 #+begin_src elisp
 (after! org (setq org-hide-emphasis-markers t))
 #+end_src
@@ -214,18 +246,15 @@ Accept completion from copilot and fallback to company
 #+end_src
 
 ** PYTHON 🐍
-
 Python Formatter
-
 #+begin_src elisp
-;; (use-package! python-black
-;;   :demand t
-;;   :after python
-;;   :config
-;;   (map! :leader :desc "Blacken Buffer" "m b b" #'python-black-buffer)
-;;   (map! :leader :desc "Blacken Region" "m b r" #'python-black-region)
-;;   (map! :leader :desc "Blacken Statement" "m b s" #'python-black-statement)
-;;   )
+(after! python
+  (use-package! python-black
+    :config
+    (map! :localleader :desc "Blacken Buffer" "b b" #'python-black-buffer)
+    (map! :localleader :desc "Blacken Region" "b r" #'python-black-region)
+    (map! :localleader :desc "Blacken Statement" "b s" #'python-black-statement)
+    ))
 #+end_src
 
 ** RUST 🦀
