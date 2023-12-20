@@ -48,17 +48,17 @@
 
 ;; (add-hook! 'org-mode-hook
 ;;   (setq left-margin-width 5))
-(use-package! mixed-pitch
-  :hook ((org-mode      . mixed-pitch-mode)
-         (org-roam-mode . mixed-pitch-mode)
-         (LaTeX-mode    . mixed-pitch-mode))
+;; (use-package! mixed-pitch
+;;   :hook ((org-mode      . mixed-pitch-mode)
+;;          (org-roam-mode . mixed-pitch-mode)
+;;          (LaTeX-mode    . mixed-pitch-mode))
   ;; :config
   ;; (pushnew! mixed-pitch-fixed-pitch-faces
   ;;           'warning
   ;;           'org-drawer 'org-cite-key 'org-list-dt 'org-hide
   ;;           'corfu-default 'font-latex-math-face)
   ;; (setq mixed-pitch-set-height t)
-  )
+  ;; )
 
 (setq org-directory "~/Documents/notes/")
 
