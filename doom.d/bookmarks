@@ -1,0 +1,11 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("org-capture-last-stored"
+ (filename . "~/Documents/notes/org-roam/zettels/main/20231223124418-probability_and_statistics.org")
+ (front-context-string)
+ (rear-context-string . "y-theory:draft:\n")
+ (position . 159)
+ (last-modified 25991 7311 629386 0))
+)

@@ -28,7 +28,7 @@
 ;;      ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
 ;;      doom-variable-pitch-font (font-spec :family "Alegreya" :size 15))
 
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-outrun-electric)
 
 ;; (setq doom-theme 'doom-zenburn)
 ;; (after! doom-themes
@@ -368,5 +368,8 @@
   (kbd "J") 'elfeed-goodies/split-show-next
   (kbd "K") 'elfeed-goodies/split-show-prev)
 (setq elfeed-feeds (quote
-                    (("https://news.ycombinator.com/rss" Hacker News)
-                     ("https://this-week-in-rust.org/rss.xml"))))
+                    (("https://this-week-in-rust.org/rss.xml")
+                     ("https://nnethercote.github.io/feed.xml" Nicholas Nethercote Blog)
+                     ("https://jvns.ca/atom.xml" Julia Evans)
+                     ("https://this-week-in-rust.org/rss.xml" This Week in Rust)
+                     )))
