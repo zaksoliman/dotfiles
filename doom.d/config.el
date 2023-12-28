@@ -29,6 +29,9 @@
 ;;      doom-variable-pitch-font (font-spec :family "Alegreya" :size 15))
 
 (setq doom-theme 'doom-outrun-electric)
+(custom-set-faces!
+  '(region :background "#353082")
+  '(hl-line :background "#353082"))
 
 ;; (setq doom-theme 'doom-zenburn)
 ;; (after! doom-themes
