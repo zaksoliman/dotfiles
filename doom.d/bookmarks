@@ -3,9 +3,9 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored"
- (filename . "~/Documents/notes/org-roam/zettels/main/20231223124418-probability_and_statistics.org")
- (front-context-string)
- (rear-context-string . "y-theory:draft:\n")
- (position . 159)
- (last-modified 25991 7311 629386 0))
+ (filename . "~/Documents/notes/org-roam/zettels/work/20240213095359-bit_event_management_sold_out_flag.org")
+ (front-context-string . "#+filetags: :wip")
+ (rear-context-string . "t Sold Out Flag\n")
+ (position . 112)
+ (last-modified 26059 33474 640840 0))
 )

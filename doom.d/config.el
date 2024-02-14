@@ -30,8 +30,10 @@
 
 (setq doom-theme 'doom-outrun-electric)
 (custom-set-faces!
-  '(region :background "#353082")
-  '(hl-line :background "#353082"))
+  '(region :background "#292478")
+  '(hl-line :background "#3e3b73")
+  '(font-lock-comment-face :foreground "#919396")
+  '(line-number :foreground "#919396"))
 
 ;; (setq doom-theme 'doom-zenburn)
 ;; (after! doom-themes
@@ -49,23 +51,27 @@
   (setq projectile-project-root-files '("setup.py" "requirements.txt" "pyproject.toml" "package.json" "build.gradle" "gradlew" "deps.edn" "build.boot" "project.clj"))
 )
 
-;; (add-hook! 'org-mode-hook
-;;   (setq left-margin-width 5))
+(add-hook! 'org-mode-hook
+  (setq left-margin-width 5))
 ;; (use-package! mixed-pitch
 ;;   :hook ((org-mode      . mixed-pitch-mode)
 ;;          (org-roam-mode . mixed-pitch-mode)
 ;;          (LaTeX-mode    . mixed-pitch-mode))
-  ;; :config
-  ;; (pushnew! mixed-pitch-fixed-pitch-faces
-  ;;           'warning
-  ;;           'org-drawer 'org-cite-key 'org-list-dt 'org-hide
-  ;;           'corfu-default 'font-latex-math-face)
-  ;; (setq mixed-pitch-set-height t)
-  ;; )
+;;   :config
+;;   (pushnew! mixed-pitch-fixed-pitch-faces
+;;             'warning
+;;             'org-drawer 'org-cite-key 'org-list-dt 'org-hide
+;;             'corfu-default 'font-latex-math-face)
+;;   (setq mixed-pitch-set-height t)
+;;   )
 
-(setq org-directory "~/Documents/notes/")
 
+(setq org-directory "~/Documents/notes/org")
+(setq org-agenda-files (list "~/Documents/notes/org/agenda"))
 ;; (add-hook! 'org-mode-hook #'mixed-pitch-mode)
+(after! org
+  (setq org-log-done t)
+  (setq org-log-into-drawer t))
 
 (after! org (setq org-hide-emphasis-markers t))
 

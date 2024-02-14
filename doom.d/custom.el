@@ -11,5 +11,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(hl-line ((t (:extend t :background "#353082"))))
+ '(font-lock-comment-face ((t (:foreground "#919396"))))
+ '(hl-line ((t (:extend t :background "#3e3b73"))))
+ '(line-number ((t (:inherit default :foreground "#919396" :slant italic :weight normal))))
+ '(region ((t (:extend t :background "#292478"))))
  '(ts-fold-replacement-face ((t (:foreground unspecified :box nil :inherit font-lock-comment-face :weight light)))))

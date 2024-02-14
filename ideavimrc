@@ -1,2 +1,4 @@
 :set relativenumber
 :set number
+
+source /Users/zakaria/dotfiles/init.vim

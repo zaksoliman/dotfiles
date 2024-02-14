@@ -99,8 +99,10 @@ font string. You generally only need these two:
 
 (setq doom-theme 'doom-outrun-electric)
 (custom-set-faces!
-  '(region :background "#353082")
-  '(hl-line :background "#353082"))
+  '(region :background "#292478")
+  '(hl-line :background "#3e3b73")
+  '(font-lock-comment-face :foreground "#919396")
+  '(line-number :foreground "#919396"))
 
 ;; (setq doom-theme 'doom-zenburn)
 ;; (after! doom-themes
@@ -133,24 +135,27 @@ If you use `org' and don't want your org files in the default location below,
 change `org-directory'. It must be set before org loads!
 *** TODO mixed pitched not working
 #+begin_src elisp
-;; (add-hook! 'org-mode-hook
-;;   (setq left-margin-width 5))
+(add-hook! 'org-mode-hook
+  (setq left-margin-width 5))
 ;; (use-package! mixed-pitch
 ;;   :hook ((org-mode      . mixed-pitch-mode)
 ;;          (org-roam-mode . mixed-pitch-mode)
 ;;          (LaTeX-mode    . mixed-pitch-mode))
-  ;; :config
-  ;; (pushnew! mixed-pitch-fixed-pitch-faces
-  ;;           'warning
-  ;;           'org-drawer 'org-cite-key 'org-list-dt 'org-hide
-  ;;           'corfu-default 'font-latex-math-face)
-  ;; (setq mixed-pitch-set-height t)
-  ;; )
+;;   :config
+;;   (pushnew! mixed-pitch-fixed-pitch-faces
+;;             'warning
+;;             'org-drawer 'org-cite-key 'org-list-dt 'org-hide
+;;             'corfu-default 'font-latex-math-face)
+;;   (setq mixed-pitch-set-height t)
+;;   )
 
-(setq org-directory "~/Documents/notes/")
 
+(setq org-directory "~/Documents/notes/org")
+(setq org-agenda-files (list "~/Documents/notes/org/agenda"))
 ;; (add-hook! 'org-mode-hook #'mixed-pitch-mode)
-
+(after! org
+  (setq org-log-done t)
+  (setq org-log-into-drawer t))
 #+end_src
 
 Make it more like a WYSIWYG editor
