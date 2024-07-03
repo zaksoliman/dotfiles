@@ -18,6 +18,10 @@
        ;; :desc "Delete bookmark"                         "M" #'bookmark-set
        :desc "Save current bookmarks to bookmark file" "w" #'bookmark-save))
 
+;; Use sql-mode for hive scripts
+(add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
+
+;; STYLE
 (when (doom-font-exists-p "Fira Code")
   (setq doom-font (font-spec :name "Fira Code" :size 13)))
 
@@ -28,12 +32,12 @@
 ;;      ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
 ;;      doom-variable-pitch-font (font-spec :family "Alegreya" :size 15))
 
-(setq doom-theme 'doom-outrun-electric)
-(custom-set-faces!
-  '(region :background "#292478")
-  '(hl-line :background "#3e3b73")
-  '(font-lock-comment-face :foreground "#919396")
-  '(line-number :foreground "#919396"))
+;; (setq doom-theme 'doom-outrun-electric)
+;; (custom-set-faces!
+;;   '(region :background "#292478")
+;;   '(hl-line :background "#3e3b73")
+;;   '(font-lock-comment-face :foreground "#919396")
+;;   '(line-number :foreground "#919396"))
 
 ;; (setq doom-theme 'doom-zenburn)
 ;; (after! doom-themes
@@ -44,12 +48,53 @@
 (setq display-line-numbers-type 'relative)
 (add-hook 'window-setup-hook #'toggle-frame-maximized)
 
+;; COMPANY
+(after! company
+    ;;; Prevent suggestions from being triggered automatically. In particular,
+  ;;; this makes it so that:
+  ;;; - TAB will always complete the current selection.
+  ;;; - RET will only complete the current selection if the user has explicitly
+  ;;;   interacted with Company.
+  ;;; - SPC will never complete the current selection.
+  ;;;
+  ;;; Based on:
+  ;;; - https://github.com/company-mode/company-mode/issues/530#issuecomment-226566961
+  ;;; - https://emacs.stackexchange.com/a/13290/12534
+  ;;; - http://stackoverflow.com/a/22863701/3538165
+  ;;;
+  ;;; See also:
+  ;;; - https://emacs.stackexchange.com/a/24800/12534
+  ;;; - https://emacs.stackexchange.com/q/27459/12534
+
+  ;; <return> is for windowed Emacs; RET is for terminal Emacs
+  (dolist (key '("<return>" "RET"))
+    ;; Here we are using an advanced feature of define-key that lets
+    ;; us pass an "extended menu item" instead of an interactive
+    ;; function. Doing this allows RET to regain its usual
+    ;; functionality when the user has not explicitly interacted with
+    ;; Company.
+    (define-key company-active-map (kbd key)
+                `(menu-item nil company-complete
+                  :filter ,(lambda (cmd)
+                             (when (company-explicit-action-p)
+                               cmd)))))
+  ;; (define-key company-active-map (kbd "TAB") #'company-complete-selection)
+  (map! :map company-active-map "TAB" #'company-complete-selection)
+  (map! :map company-active-map "<tab>" #'company-complete-selection)
+  (define-key company-active-map (kbd "SPC") nil)
+
+  ;; Company appears to override the above keymap based on company-auto-complete-chars.
+  ;; Turning it off ensures we have full control.
+  (setq company-insertion-triggers nil)
+  )
+
+;; PROJECTILE
 (use-package! projectile
   :config
   (setq projectile-project-search-path '("~/Projects"))
   (setq projectile-project-root-files-bottom-up  '("Cargo.toml" ".projectile" ".project" ".git"))
   (setq projectile-project-root-files '("setup.py" "requirements.txt" "pyproject.toml" "package.json" "build.gradle" "gradlew" "deps.edn" "build.boot" "project.clj"))
-)
+  )
 
 (add-hook! 'org-mode-hook
   (setq left-margin-width 5))
@@ -131,27 +176,27 @@
   )
 
 (use-package! websocket
-    :after org-roam)
+  :after org-roam)
 
 (use-package! org-roam-ui
-    :after org ;; or :after org-roam???
-;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;;         a hookable mode anymore, you're advised to pick something yourself
-;;         if you don't care about startup time, use
-;;  :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+  :after org ;; or :after org-roam???
+  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+  ;;         a hookable mode anymore, you're advised to pick something yourself
+  ;;         if you don't care about startup time, use
+  ;;  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 
-(use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+;; (use-package! copilot
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;               ("<tab>" . 'copilot-accept-completion)
+;;               ("TAB" . 'copilot-accept-completion)
+;;               ("C-TAB" . 'copilot-accept-completion-by-word)
+;;               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 (after! python
   (use-package! python-black
@@ -196,7 +241,7 @@
         lsp-rust-analyzer-proc-macro-enable t
         lsp-rust-analyzer-cargo-watch-command "clippy"
         ;; lsp-rust-analyzer-server-command '("rust-analyzer" "--lru-capacity" "32768" "--cargo-watch-enable" "--project-root" "./rust-project.json")
-)
+        )
 
   ;; TODO: upstream those
   ;; (cl-defmethod lsp-clients-extract-signature-on-hover (contents (_server-id (eql rust-analyzer)))
@@ -241,8 +286,8 @@
 
    lsp-lens-enable t))
 
-(when (modulep! :completion company)
-  (setq +lsp-company-backends '(company-capf :with company-yasnippet)))
+;; (when (modulep! :completion company)
+;;   (setq +lsp-company-backends '(company-capf :with company-yasnippet)))
 
 (after! lsp-ui
   (setq
@@ -318,9 +363,9 @@
        :desc "Open dired" "d" #'dired
        :desc "Dired jump to current" "j" #'dired-jump)
       (:after dired
-       (:map dired-mode-map
-        :desc "Peep-dired image previews" "d p" #'peep-dired
-        :desc "Dired view file"           "d v" #'dired-view-file)))
+              (:map dired-mode-map
+               :desc "Peep-dired image previews" "d p" #'peep-dired
+               :desc "Dired view file"           "d v" #'dired-view-file)))
 
 (evil-define-key 'normal dired-mode-map
   (kbd "M-RET") 'dired-display-file
@@ -382,3 +427,81 @@
                      ("https://jvns.ca/atom.xml" Julia Evans)
                      ("https://this-week-in-rust.org/rss.xml" This Week in Rust)
                      )))
+
+;; CODEIUM AI CONFIG
+;; we recommend using use-package to organize your init.el
+(use-package codeium
+  ;; if you use straight
+  ;; :straight '(:type git :host github :repo "Exafunction/codeium.el")
+  ;; otherwise, make sure that the codeium.el file is on load-path
+
+  :init
+  ;; use globally
+  (add-to-list 'completion-at-point-functions #'codeium-completion-at-point)
+  ;; or on a hook
+  ;; (add-hook 'python-mode-hook
+  ;;     (lambda ()
+  ;;         (setq-local completion-at-point-functions '(codeium-completion-at-point))))
+
+  ;; if you want multiple completion backends, use cape (https://github.com/minad/cape):
+  ;; (add-hook 'python-mode-hook
+  ;;     (lambda ()
+  ;;         (setq-local completion-at-point-functions
+  ;;             (list (cape-super-capf #'codeium-completion-at-point #'lsp-completion-at-point)))))
+  ;; an async company-backend is coming soon!
+
+  ;; codeium-completion-at-point is autoloaded, but you can
+  ;; optionally set a timer, which might speed up things as the
+  ;; codeium local language server takes ~0.2s to start up
+  ;; (add-hook 'emacs-startup-hook
+  ;;  (lambda () (run-with-timer 0.1 nil #'codeium-init)))
+
+  ;; :defer t ;; lazy loading, if you want
+  :config
+  (setq use-dialog-box nil) ;; do not use popup boxes
+
+  ;; if you don't want to use customize to save the api-key
+  ;; (setq codeium/metadata/api_key "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
+
+  ;; get codeium status in the modeline
+  (setq codeium-mode-line-enable
+        (lambda (api) (not (memq api '(CancelRequest Heartbeat AcceptCompletion)))))
+  (add-to-list 'mode-line-format '(:eval (car-safe codeium-mode-line)) t)
+  ;; alternatively for a more extensive mode-line
+  ;; (add-to-list 'mode-line-format '(-50 "" codeium-mode-line) t)
+
+  ;; use M-x codeium-diagnose to see apis/fields that would be sent to the local language server
+  (setq codeium-api-enabled
+        (lambda (api)
+          (memq api '(GetCompletions Heartbeat CancelRequest GetAuthToken RegisterUser auth-redirect AcceptCompletion))))
+  ;; you can also set a config for a single buffer like this:
+  ;; (add-hook 'python-mode-hook
+  ;;     (lambda ()
+  ;;         (setq-local codeium/editor_options/tab_size 4)))
+
+  ;; You can overwrite all the codeium configs!
+  ;; for example, we recommend limiting the string sent to codeium for better performance
+  (defun my-codeium/document/text ()
+    (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (min (+ (point) 1000) (point-max))))
+  ;; if you change the text, you should also change the cursor_offset
+  ;; warning: this is measured by UTF-8 encoded bytes
+  (defun my-codeium/document/cursor_offset ()
+    (codeium-utf8-byte-length
+     (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (point))))
+  (setq codeium/document/text 'my-codeium/document/text)
+  (setq codeium/document/cursor_offset 'my-codeium/document/cursor_offset))
+
+(use-package company
+  :defer 0.1
+  :config
+  (global-company-mode t)
+  (setq-default
+   company-idle-delay 0.05
+   company-require-match nil
+   company-minimum-prefix-length 0
+
+   ;; get only preview
+   company-frontends '(company-preview-frontend)
+   ;; also get a drop down
+   ;; company-frontends '(company-pseudo-tooltip-frontend company-preview-frontend)
+   ))

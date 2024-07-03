@@ -3,9 +3,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(codeium/metadata/api_key "430f4d33-324f-4bc1-b3c1-a8d311b930fe")
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(plantuml-jar-path
-   "/opt/homebrew/Cellar/plantuml/1.2023.13/libexec/plantuml.jar" t))
+   "/opt/homebrew/Cellar/plantuml/1.2023.13/libexec/plantuml.jar"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
