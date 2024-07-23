@@ -73,4 +73,4 @@
 ;;  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
 
 ;; Codeium AI Integration
-(package! codeium :recipe (:host github :repo "Exafunction/codeium.el"))
+;;(package! codeium :recipe (:host github :repo "Exafunction/codeium.el"))

@@ -2,10 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
- (filename . "~/Documents/notes/org-roam/zettels/work/20240213095359-bit_event_management_sold_out_flag.org")
- (front-context-string . "#+filetags: :wip")
- (rear-context-string . "t Sold Out Flag\n")
- (position . 112)
- (last-modified 26059 33474 640840 0))
+(("	fan-umg\n  		.buildkite\n  		api\n    		lambdas\n       		optin.py\n       		validate_export.py\n    		processors\n       		validate_export.py\n    		resources\n       		alerts.yml\n       		cloudwatch.yml\n       		conditions.yml\n       		dynamodb.yml\n       		outputs.yml\n    		tests\n     		.dockerignore\n     		__init__.py\n     		Dockerfile\n      package.json\n     		requirements.txt\n     		serverless.yml\n     		utilities.py\n     		variables.yml\n    bin\n  		hdfs\n   		.gitignore\n   		notes.txt"
+ (filename . "/Users/zakaria/Projects/BIT/fan-umg/api/processors/validate_export.py"))
+("org-capture-last-stored"
+ (filename . "~/Documents/notes/org-roam/zettels/main/20240722145906-setup_actix_app_for_easy_testing.org")
+ (front-context-string . "#+filetags: :sof")
+ (rear-context-string . "or Easy Testing\n")
+ (position . 110)
+ (last-modified 26270 44156 612970 0))
 )
