@@ -9,6 +9,14 @@
 
 (beacon-mode 1)
 
+;; FOR DEBUGING CRASHES
+;; Reference https://emacspal.com/debugging-emacs-crashes-a-step-by-step-guide/
+(setq debug-on-error t)
+(setq backtrace-depth 50)
+(setq message-log-max 16384) ; log up to 16MB
+(setq log-max (expt 2 22)) ; ~4 million lines
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t))) ; put autosave/backup files in system tmp directory
+
 (setq bookmark-default-file "~/dotfiles/doom.d/bookmarks")
 
 (map! :leader
