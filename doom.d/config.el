@@ -1,3 +1,37 @@
+;; This is my personal Doom emacs configs. It will always stay a work in progress as I add and improve on it.
+
+;; ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;; sync' after modifying this file!
+
+;; Here are some additional functions/macros that could help you configure Doom:
+
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package!' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.
+;;
+;; ANTI-PATTERNS TO AVOID
+;; https://discourse.doomemacs.org/t/common-config-anti-patterns/119
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; IDENTITY                                                                    ;;
+;; Some functionality uses this to identify you, e.g. GPG configuration, email ;;
+;; clients, file templates and snippets.                                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq user-full-name "Zak Soliman"
       user-mail-address "zakaria.soliman1@gmail.com")
 
@@ -7,15 +41,28 @@
         circe-default-user "DangleWaggle"
         circe-default-realname "DangleWaggle"))
 
-(beacon-mode 1)
+
 (setq garbage-collection-messages t)
-;; FOR DEBUGING CRASHES
-;; Reference https://emacspal.com/debugging-emacs-crashes-a-step-by-step-guide/
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; FOR DEBUGING CRASHES                                                         ;;
+;; Reference https://emacspal.com/debugging-emacs-crashes-a-step-by-step-guide/ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq debug-on-error t)
 (setq backtrace-depth 50)
 (setq message-log-max 16384) ; log up to 16MB
 (setq log-max (expt 2 22)) ; ~4 million lines
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t))) ; put autosave/backup files in system tmp directory
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; BOOKMARKS                                                                        ;;
+;;                                                                                  ;;
+;; Bookmarks are somewhat like registers in that they record positions you can jump ;;
+;; to. Unlike registers, they have long names, and they persist automatically from  ;;
+;; one Emacs session to the next. The prototypical use of bookmarks is to record    ;;
+;; where you were reading in various files.                                         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq bookmark-default-file "~/dotfiles/doom.d/bookmarks")
 
@@ -29,7 +76,26 @@
 ;; Use sql-mode for hive scripts
 (add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
 
-;; STYLE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;  STYLE                                                                                        ;;
+;;                                                                                               ;;
+;; There are two ways to load a theme. Both assume the theme is installed and                    ;;
+;; available. You can either set `doom-theme' or manually load a theme with the                  ;;
+;; `load-theme' function. I'm sticking with the default theme.                                   ;;
+;;                                                                                               ;;
+;; Doom exposes five (optional) variables for controlling fonts in Doom. Here                    ;;
+;; are the three important ones:                                                                 ;;
+;;                                                                                               ;;
+;; + ~doom-font~ :: Standard monospace from that is used for most things in Emacs                ;;
+;; + ~doom-variable-pitch-font~ :: Variable font which is usefull in some Emacs plugins          ;;
+;; + ~doom-big-font~ :: Used for ~doom-big-font-mode~', use this for presentations or streaming. ;;
+;; + ~font-lock-comment-face~ :: For comments                                                    ;;
+;; + ~font-lock-keyword-face~ :: for keywords with special significance, like ~for~ and ~if~     ;;
+;;                                                                                               ;;
+;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd                    ;;
+;; font string. You generally only need these two:                                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (when (doom-font-exists-p "Fira Code")
   (setq doom-font (font-spec :name "Fira Code" :size 13)))
 
@@ -52,9 +118,11 @@
 ;;   (load-theme 'doom-nano-dark t)
 ;;   (setq doom-theme 'doom-nano-dark))
 
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
-(add-hook 'window-setup-hook #'toggle-frame-maximized)
 
 ;; COMPANY
 (after! company
@@ -104,8 +172,17 @@
   (setq projectile-project-root-files '("setup.py" "requirements.txt" "pyproject.toml" "package.json" "build.gradle" "gradlew" "deps.edn" "build.boot" "project.clj"))
   )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ORG                                                                           ;;
+;;                                                                               ;;
+;; If you use `org' and don't want your org files in the default location below, ;;
+;; change `org-directory'. It must be set before org loads!                      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (add-hook! 'org-mode-hook
   (setq left-margin-width 5))
+
+;; TODO: mixed pitch not working
 ;; (use-package! mixed-pitch
 ;;   :hook ((org-mode      . mixed-pitch-mode)
 ;;          (org-roam-mode . mixed-pitch-mode)
@@ -126,9 +203,9 @@
   (setq org-log-done t)
   (setq org-log-into-drawer t))
 
-;; BEGIN ORG ROAM CONFIGS
 (after! org (setq org-hide-emphasis-markers t))
 
+;; BEGIN ORG ROAM CONFIGS
 (use-package! org-roam
   :init
   (setq org-roam-directory "~/Documents/notes/org-roam/zettels")
@@ -207,6 +284,15 @@
 ;;               ("C-TAB" . 'copilot-accept-completion-by-word)
 ;;               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; LANG                         ;;
+;;                              ;;
+;; Everything about programming ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; SECTION: PYTHON
 (after! python
   (use-package! python-black
     :config
@@ -217,6 +303,7 @@
 (add-hook 'python-mode-hook #'(lambda () (setq flycheck-checker 'python-pylint)))
 
 
+;; SECTION: RUST
 (after! rustic
   (set-formatter! 'rustic-mode #'rustic-cargo-fmt))
 
@@ -268,6 +355,9 @@
   ;;                    (s-join " " it))))
   ;;    (lsp--render-element (concat "```rust\n" sig "\n```"))))
   (advice-add #'lsp-hover :after (lambda () (setq lsp--hover-saved-bounds nil))))
+
+
+;; SECTION: GENERAL LSP CONFIGS
 
 (when (or (modulep! :checkers syntax +flymake)
           (not (modulep! :checkers syntax)))
@@ -327,6 +417,8 @@
 ;;         (concat doom-user-dir "splash/"
 ;;                 (nth (random (length alternatives)) alternatives))))
 
+;; SECTION: EVIL
+
 ;; (after! evil-surround
 ;;   (let ((pairs '((?g "$" . "$")
 ;;                  (?h "(" . ")")
@@ -338,21 +430,8 @@
 ;;     (prependq! evil-surround-pairs-alist pairs)
 ;;     (prependq! evil-embrace-evil-surround-keys (mapcar #'car pairs))))
 
-;; (map! :n "C-SPC" 'harpoon-quick-menu-hydra)
-;; (map! :leader "j a" 'harpoon-add-file)
-;; (map! :leader "j c" 'harpoon-clear)
-;; (map! :leader "j f" 'harpoon-toggle-file)
-;; (map! :leader "j h" 'harpoon-toggle-quick-menu)
-;; (map! :leader "1" 'harpoon-go-to-1)
-;; (map! :leader "2" 'harpoon-go-to-2)
-;; (map! :leader "3" 'harpoon-go-to-3)
-;; (map! :leader "4" 'harpoon-go-to-4)
-;; (map! :leader "5" 'harpoon-go-to-5)
-;; (map! :leader "6" 'harpoon-go-to-6)
-;; (map! :leader "7" 'harpoon-go-to-7)
-;; (map! :leader "8" 'harpoon-go-to-8)
-;; (map! :leader "9" 'harpoon-go-to-9)
 
+;; COLORED TEXT
 (add-hook! 'rainbow-mode-hook
   (hl-line-mode (if rainbow-mode -1 +1)))
 
@@ -369,6 +448,9 @@
           ("REVIEW"     . "#1E90FF")
           ("DEPRECATED" . "#1E90FF"))))
 
+
+;; SECTION: DIRED
+
 (map! :leader
       (:prefix ("d" . "dired")
        :desc "Open dired" "d" #'dired
@@ -378,33 +460,33 @@
                :desc "Peep-dired image previews" "d p" #'peep-dired
                :desc "Dired view file"           "d v" #'dired-view-file)))
 
-;; (evil-define-key 'normal dired-mode-map
-;;   (kbd "M-RET") 'dired-display-file
-;;   (kbd "h") 'dired-up-directory
-;;   (kbd "l") 'dired-open-file ; use dired-find-file instead of dired-open.
-;;   (kbd "m") 'dired-mark
-;;   (kbd "t") 'dired-toggle-marks
-;;   (kbd "u") 'dired-unmark
-;;   (kbd "C") 'dired-do-copy
-;;   (kbd "D") 'dired-do-delete
-;;   (kbd "J") 'dired-goto-file
-;;   (kbd "M") 'dired-do-chmod
-;;   (kbd "O") 'dired-do-chown
-;;   (kbd "P") 'dired-do-print
-;;   (kbd "R") 'dired-do-rename
-;;   (kbd "T") 'dired-do-touch
-;;   (kbd "Y") 'dired-copy-filenamecopy-filename-as-kill ; copies filename to kill ring.
-;;   (kbd "Z") 'dired-do-compress
-;;   (kbd "+") 'dired-create-directory
-;;   (kbd "-") 'dired-do-kill-lines
-;;   (kbd "% l") 'dired-downcase
-;;   (kbd "% m") 'dired-mark-files-regexp
-;;   (kbd "% u") 'dired-upcase
-;;   (kbd "* %") 'dired-mark-files-regexp
-;;   (kbd "* .") 'dired-mark-extension
-;;   (kbd "* /") 'dired-mark-directories
-;;   (kbd "; d") 'epa-dired-do-decrypt
-;;   (kbd "; e") 'epa-dired-do-encrypt)
+(evil-define-key 'normal dired-mode-map
+  (kbd "M-RET") 'dired-display-file
+  (kbd "h") 'dired-up-directory
+  (kbd "l") 'dired-open-file ; use dired-find-file instead of dired-open.
+  (kbd "m") 'dired-mark
+  (kbd "t") 'dired-toggle-marks
+  (kbd "u") 'dired-unmark
+  (kbd "C") 'dired-do-copy
+  (kbd "D") 'dired-do-delete
+  (kbd "J") 'dired-goto-file
+  (kbd "M") 'dired-do-chmod
+  (kbd "O") 'dired-do-chown
+  (kbd "P") 'dired-do-print
+  (kbd "R") 'dired-do-rename
+  (kbd "T") 'dired-do-touch
+  (kbd "Y") 'dired-copy-filenamecopy-filename-as-kill ; copies filename to kill ring.
+  (kbd "Z") 'dired-do-compress
+  (kbd "+") 'dired-create-directory
+  (kbd "-") 'dired-do-kill-lines
+  (kbd "% l") 'dired-downcase
+  (kbd "% m") 'dired-mark-files-regexp
+  (kbd "% u") 'dired-upcase
+  (kbd "* %") 'dired-mark-files-regexp
+  (kbd "* .") 'dired-mark-extension
+  (kbd "* /") 'dired-mark-directories
+  (kbd "; d") 'epa-dired-do-decrypt
+  (kbd "; e") 'epa-dired-do-encrypt)
 
 ;; Get file icons in dired
 ;; (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
@@ -438,81 +520,3 @@
                      ("https://jvns.ca/atom.xml" Julia Evans)
                      ("https://this-week-in-rust.org/rss.xml" This Week in Rust)
                      )))
-
-;; CODEIUM AI CONFIG
-;; we recommend using use-package to organize your init.el
-;;(use-package codeium
-;;   ;; if you use straight
-;;   ;; :straight '(:type git :host github :repo "Exafunction/codeium.el")
-;;   ;; otherwise, make sure that the codeium.el file is on load-path
-
-;;   :init
-;;   ;; use globally
-;;   ;; (add-to-list 'completion-at-point-functions #'codeium-completion-at-point)
-;;   ;; or on a hook
-;;   (add-hook 'python-mode-hook
-;;             (lambda ()
-;;               (setq-local completion-at-point-functions '(codeium-completion-at-point))))
-
-;;   ;; if you want multiple completion backends, use cape (https://github.com/minad/cape):
-;;   ;; (add-hook 'python-mode-hook
-;;   ;;     (lambda ()
-;;   ;;         (setq-local completion-at-point-functions
-;;   ;;             (list (cape-super-capf #'codeium-completion-at-point #'lsp-completion-at-point)))))
-;;   ;; an async company-backend is coming soon!
-
-;;   ;; codeium-completion-at-point is autoloaded, but you can
-;;   ;; optionally set a timer, which might speed up things as the
-;;   ;; codeium local language server takes ~0.2s to start up
-;;   ;; (add-hook 'emacs-startup-hook
-;;   ;;  (lambda () (run-with-timer 0.1 nil #'codeium-init)))
-
-;;   ;; :defer t ;; lazy loading, if you want
-;;   :config
-;;   (setq use-dialog-box nil) ;; do not use popup boxes
-
-;;   ;; if you don't want to use customize to save the api-key
-;;   ;; (setq codeium/metadata/api_key "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
-
-;;   ;; get codeium status in the modeline
-;;   (setq codeium-mode-line-enable
-;;         (lambda (api) (not (memq api '(CancelRequest Heartbeat AcceptCompletion)))))
-;;   (add-to-list 'mode-line-format '(:eval (car-safe codeium-mode-line)) t)
-;;   ;; alternatively for a more extensive mode-line
-;;   ;; (add-to-list 'mode-line-format '(-50 "" codeium-mode-line) t)
-
-;;   ;; use M-x codeium-diagnose to see apis/fields that would be sent to the local language server
-;;   (setq codeium-api-enabled
-;;         (lambda (api)
-;;           (memq api '(GetCompletions Heartbeat CancelRequest GetAuthToken RegisterUser auth-redirect AcceptCompletion))))
-;;   ;; you can also set a config for a single buffer like this:
-;;   ;; (add-hook 'python-mode-hook
-;;   ;;     (lambda ()
-;;   ;;         (setq-local codeium/editor_options/tab_size 4)))
-
-;;   ;; You can overwrite all the codeium configs!
-;;   ;; for example, we recommend limiting the string sent to codeium for better performance
-;;   (defun my-codeium/document/text ()
-;;     (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (min (+ (point) 1000) (point-max))))
-;;   ;; if you change the text, you should also change the cursor_offset
-;;   ;; warning: this is measured by UTF-8 encoded bytes
-;;   (defun my-codeium/document/cursor_offset ()
-;;     (codeium-utf8-byte-length
-;;      (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (point))))
-;;   (setq codeium/document/text 'my-codeium/document/text)
-;;   (setq codeium/document/cursor_offset 'my-codeium/document/cursor_offset))
-
-;; (use-package company
-;;   :defer 0.1
-;;   :config
-;;   (global-company-mode t)
-;;   (setq-default
-;;    company-idle-delay 0.05
-;;    company-require-match nil
-;;    company-minimum-prefix-length 0
-
-;;    ;; get only preview
-;;    company-frontends '(company-preview-frontend)
-;;    ;; also get a drop down
-;;    ;; company-frontends '(company-pseudo-tooltip-frontend company-preview-frontend)
-;;    ))
