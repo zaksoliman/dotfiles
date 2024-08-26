@@ -10,3 +10,9 @@ config/obmenu-generator/icons
 *.ini
 *.tdb
 *.DS_Store
+zeemacs.d/auto-save-list/*
+zeemacs.d/backups/*
+zeemacs.d/eln-cache/*
+zeemacs.d/elpaca/*
+zeemacs.d/projects
+zeemacs.d/transient/*

@@ -42,18 +42,23 @@
         circe-default-realname "DangleWaggle"))
 
 
-(setq garbage-collection-messages t)
+;; (setq garbage-collection-messages t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FOR DEBUGING CRASHES                                                         ;;
 ;; Reference https://emacspal.com/debugging-emacs-crashes-a-step-by-step-guide/ ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq debug-on-error t)
+;; (setq debug-on-error t)
 (setq backtrace-depth 50)
 (setq message-log-max 16384) ; log up to 16MB
 (setq log-max (expt 2 22)) ; ~4 million lines
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t))) ; put autosave/backup files in system tmp directory
+
+;; SECTION: KeyBindings
+
+(map! :leader
+      (:desc "Shell Command"            "!" #'async-shell-command))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; BOOKMARKS                                                                        ;;
@@ -196,8 +201,8 @@
 ;;   )
 
 
-(setq org-directory "~/Documents/notes/org")
-(setq org-agenda-files (list "~/Documents/notes/org/agenda"))
+(setq org-directory "~/Documents/Library of Alexandria/notes/org")
+(setq org-agenda-files (list "~/Documents/Library of Alexandria/notes/org/agenda"))
 ;; (add-hook! 'org-mode-hook #'mixed-pitch-mode)
 (after! org
   (setq org-log-done t)
@@ -208,8 +213,8 @@
 ;; BEGIN ORG ROAM CONFIGS
 (use-package! org-roam
   :init
-  (setq org-roam-directory "~/Documents/notes/org-roam/zettels")
-  (setq org-roam-dailies-directory "~/Documents/notes/org-roam/dailies")
+  (setq org-roam-directory "~/Documents/Library of Alexandria/notes/org-roam/zettels")
+  (setq org-roam-dailies-directory "~/Documents/Library of Alexandria/notes/org-roam/dailies")
   :custom
   (org-roam-graph-executable "neato")
   (org-roam-completion-everywhere t)
@@ -299,8 +304,9 @@
     (map! :localleader :desc "Blacken Buffer" "b b" #'python-black-buffer)
     (map! :localleader :desc "Blacken Region" "b r" #'python-black-region)
     (map! :localleader :desc "Blacken Statement" "b s" #'python-black-statement)
-    ))
-(add-hook 'python-mode-hook #'(lambda () (setq flycheck-checker 'python-pylint)))
+    )
+  (add-hook 'python-mode-hook #'(lambda () (setq flycheck-checker 'python-pylint)))
+  )
 
 
 ;; SECTION: RUST
@@ -460,33 +466,33 @@
                :desc "Peep-dired image previews" "d p" #'peep-dired
                :desc "Dired view file"           "d v" #'dired-view-file)))
 
-(evil-define-key 'normal dired-mode-map
-  (kbd "M-RET") 'dired-display-file
-  (kbd "h") 'dired-up-directory
-  (kbd "l") 'dired-open-file ; use dired-find-file instead of dired-open.
-  (kbd "m") 'dired-mark
-  (kbd "t") 'dired-toggle-marks
-  (kbd "u") 'dired-unmark
-  (kbd "C") 'dired-do-copy
-  (kbd "D") 'dired-do-delete
-  (kbd "J") 'dired-goto-file
-  (kbd "M") 'dired-do-chmod
-  (kbd "O") 'dired-do-chown
-  (kbd "P") 'dired-do-print
-  (kbd "R") 'dired-do-rename
-  (kbd "T") 'dired-do-touch
-  (kbd "Y") 'dired-copy-filenamecopy-filename-as-kill ; copies filename to kill ring.
-  (kbd "Z") 'dired-do-compress
-  (kbd "+") 'dired-create-directory
-  (kbd "-") 'dired-do-kill-lines
-  (kbd "% l") 'dired-downcase
-  (kbd "% m") 'dired-mark-files-regexp
-  (kbd "% u") 'dired-upcase
-  (kbd "* %") 'dired-mark-files-regexp
-  (kbd "* .") 'dired-mark-extension
-  (kbd "* /") 'dired-mark-directories
-  (kbd "; d") 'epa-dired-do-decrypt
-  (kbd "; e") 'epa-dired-do-encrypt)
+;; (evil-define-key 'normal dired-mode-map
+;;   (kbd "M-RET") 'dired-display-file
+;;   (kbd "h") 'dired-up-directory
+;;   (kbd "l") 'dired-open-file ; use dired-find-file instead of dired-open.
+;;   (kbd "m") 'dired-mark
+;;   (kbd "t") 'dired-toggle-marks
+;;   (kbd "u") 'dired-unmark
+;;   (kbd "C") 'dired-do-copy
+;;   (kbd "D") 'dired-do-delete
+;;   (kbd "J") 'dired-goto-file
+;;   (kbd "M") 'dired-do-chmod
+;;   (kbd "O") 'dired-do-chown
+;;   (kbd "P") 'dired-do-print
+;;   (kbd "R") 'dired-do-rename
+;;   (kbd "T") 'dired-do-touch
+;;   (kbd "Y") 'dired-copy-filenamecopy-filename-as-kill ; copies filename to kill ring.
+;;   (kbd "Z") 'dired-do-compress
+;;   (kbd "+") 'dired-create-directory
+;;   (kbd "-") 'dired-do-kill-lines
+;;   (kbd "% l") 'dired-downcase
+;;   (kbd "% m") 'dired-mark-files-regexp
+;;   (kbd "% u") 'dired-upcase
+;;   (kbd "* %") 'dired-mark-files-regexp
+;;   (kbd "* .") 'dired-mark-extension
+;;   (kbd "* /") 'dired-mark-directories
+;;   (kbd "; d") 'epa-dired-do-decrypt
+;;   (kbd "; e") 'epa-dired-do-encrypt)
 
 ;; Get file icons in dired
 ;; (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
@@ -520,3 +526,6 @@
                      ("https://jvns.ca/atom.xml" Julia Evans)
                      ("https://this-week-in-rust.org/rss.xml" This Week in Rust)
                      )))
+
+(dirvish-override-dired-mode)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
