@@ -80,9 +80,10 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq user-mail-address "zakaria.soliman1@gmail.com")
   (defalias 'yes-or-no-p 'y-or-n-p) ;; life is too short
   (setq indent-tabs-mode nil)
-    (setq version-control t)
-    (setq delete-old-versions t)
-    (setq create-lockfiles nil)
+  (setq version-control t)
+  (setq delete-old-versions t)
+  (setq create-lockfiles nil)
+  (setq-default tab-width 2)
    ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
   (setq tab-always-indent 'complete)
@@ -172,7 +173,8 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
         doom-themes-enable-italic t)
                                         ; if nil, italics is universally disabled
-  ;; (load-theme 'doom-nord t)
+  (load-theme 'doom-nord t)
+        ;; (load-theme 'doom-city-lights t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -402,6 +404,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 ;; AUTOCOMPLETION - VERTICO
 ;; Enable vertico
 (use-package vertico
+  :demand t
   :ensure t
   :custom
   ;; (vertico-scroll-margin 0) ;; Different scroll margin
@@ -409,17 +412,30 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   ;; (vertico-resize t) ;; Grow and shrink the Vertico minibuffer
   (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
   :init
-  (vertico-mode))
+  (vertico-mode)
+  (setq vertico-cycle t) ;; enable cycling for 'vertico-next' and 'vertico-prev'
+  :general
+  (:keymaps 'vertico-map
+            ;; keybindings to cycle through vertico results.
+            "C-j" 'vertico-next
+            "C-k" 'vertico-previous
+            "C-f" 'vertico-exit
+            "<backspace>" 'vertico-directory-delete-char
+            "C-<backspace>" 'vertico-directory-delete-word
+            "C-w" 'vertico-directory-delete-word
+            "RET" 'vertico-directory-enter)
+  (:keymaps 'minibuffer-local-map
+            "M-h" 'backward-kill-word))
 
-(use-package vertico-directory
-  :after vertico
-  ;; More convenient directory navigation commands
-  :bind (:map vertico-map
-              ("RET" . vertico-directory-enter)
-              ("DEL" . vertico-directory-delete-char)
-              ("M-DEL" . vertico-directory-delete-word))
-  ;; Tidy shadowed file names
-  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+;; (use-package vertico-directory
+;;   :after vertico
+;;   ;; More convenient directory navigation commands
+;;   :bind (:map vertico-map
+;;               ("RET" . vertico-directory-enter)
+;;               ("DEL" . vertico-directory-delete-char)
+;;               ("M-DEL" . vertico-directory-delete-word))
+;;   ;; Tidy shadowed file names
+;;   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 (use-package marginalia
   :ensure t
@@ -511,6 +527,11 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 ;; END EGLOT
 
 ;; PYTHON
+(defun zeds/pyenv-mode-versions ()
+  "List installed python versions."
+  (let ((versions (shell-command-to-string "pyenv versions --bare")))
+    (cons "system" (split-string versions))))
+
 (defvar zeds/pyenv--version nil)
 
 (defun zeds/python-pyenv-mode-set-auto-h ()
@@ -525,13 +546,13 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 (defun zeds/python-pyenv-read-version-from-file ()
   "Read pyenv version from .python-version file."
-  (when-let (root-path (projectile-locate-dominating-file default-directory ".python-version"))
+  (when-let (root-path (locate-dominating-file default-directory ".python-version"))
     (let* ((file-path (expand-file-name ".python-version" root-path))
            (version
             (with-temp-buffer
               (insert-file-contents-literally file-path)
               (string-trim (buffer-string)))))
-      (if (member version (pyenv-mode-versions))
+      (if (member version (zeds/pyenv-mode-versions))
           version  ;; return.
         (message "pyenv: version `%s' is not installed (set by `%s')."
                  version file-path)))))
