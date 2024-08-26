@@ -25,6 +25,12 @@
 
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(use-package exec-path-from-shell
+  :ensure t
+  :config (when (memq window-system '(mac ns x))
+            (exec-path-from-shell-initialize))
+  )
+
 ;; VARIABLES
 (defvar zeds/library-path "~/Documents/Library of Alexandria/"
   "Directory where my documents collection lives.")
@@ -38,7 +44,7 @@
 (defvar zeds/roam-dailies-path (concat zeds/notes-path "org-roam/dailies/")
   "Journal entries.")
 
-(defvar zeds/org-path (concat zeds/notes-path "org")
+(defvar zeds/org-path (concat zeds/notes-path "org/")
   "Org path.")
 ;; END VARIABLES
 
@@ -70,7 +76,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 (use-package emacs
   :demand t
   :init
-	    ;; BASICS
+	;; BASICS
 	(setq user-full-name "Zak Soliman"
 				user-mail-address "zakaria.soliman1@gmail.com"
 				enable-recursive-minibuffers t
@@ -90,14 +96,16 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 				    ;; less noise when compiling elisp
 				byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
 				native-comp-async-report-warnings-errors nil
-				load-prefer-newer t)
+				load-prefer-newer t
+        ;; Enable tab completion (see `corfu`)
+        tab-always-indent 'complete)
 
-	    ;; Modes I want by default
+	;; Modes I want by default
   (column-number-mode 1)
   (global-display-line-numbers-mode 1)
   (global-visual-line-mode t)
   (show-paren-mode t)
-      ;; Persist history over Emacs restarts.
+  ;; Persist history over Emacs restarts.
   (savehist-mode 1)
 	(menu-bar-mode -1)              ;; disables menubar
 	(tool-bar-mode -1)              ;; disables toolbar
@@ -108,34 +116,33 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
   ;; TABS
 	(setq-default tab-width 2
-                indent-tabs-mode nil
-                indent-line-function 'insert-tab)
+                indent-tabs-mode nil)
+  ;; indent-line-function 'insert-tab
+	;; (setq indent-tabs-mode nil
+	;; 			  ;; Enable indentation+completion using the TAB key.
+	;; 			  ;; `completion-at-point' is often bound to M-TAB.
+	;; 			;; tab-always-indent 'complete
+	;; 			)
 
-	  ;; (setq indent-tabs-mode nil
-	  ;; 			  ;; Enable indentation+completion using the TAB key.
-	  ;; 			  ;; `completion-at-point' is often bound to M-TAB.
-	  ;; 			;; tab-always-indent 'complete
-	  ;; 			)
+	;; COMPLETION
+	;; TAB cycle if there are only few candidates
+  ;; (setq completion-cycle-threshold 3)
 
-	    ;; COMPLETION
-	    ;; TAB cycle if there are only few candidates
-  (setq completion-cycle-threshold 3)
-
-	    ;; ALIASES
+	;; ALIASES
 	(defalias 'yes-or-no-p 'y-or-n-p) ;; life is too short
 
-	    ;; BACKUP
+	;; BACKUP
   (setq backup-by-copying t
 				version-control t
 				delete-old-versions t
-				    ;; keep backup and save files in a dedicated directory
+				;; keep backup and save files in a dedicated directory
 				backup-directory-alist
 				`((".*" . ,(concat user-emacs-directory "backups")))
 				auto-save-file-name-transforms
 				`((".*" ,(concat user-emacs-directory "backups") t)))
 
 
-	    ;; TEXT
+	;; TEXT
   (set-charset-priority 'unicode) ;; utf8 everywhere
 	(set-terminal-coding-system 'utf-8)
   (set-keyboard-coding-system 'utf-8)
@@ -147,11 +154,11 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
         coding-system-for-write 'utf-8
 				default-process-coding-system '(utf-8-unix . utf-8-unix))
 
-	    ;; GLOBAL KEY BINDINGS
+	;; GLOBAL KEY BINDINGS
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ;; escape quits everything
 
 
-      ;; Hide commands in M-x which don't work in the current mode
+  ;; Hide commands in M-x which don't work in the current mode
   (setq read-extended-command-predicate #'command-completion-default-include-p))
 ;; END EMACS DEFAULTS
 
@@ -363,14 +370,14 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   ;; ;; notes
   ;; ;; see 'citar' and 'org-roam'
   (zeds/leader-keys
-      "n" '(:ignore t :wk "notes")
-      ;; see org-roam and citar sections
-      "na" '(org-todo-list :wk "agenda todos")) ;; agenda
+    "n" '(:ignore t :wk "notes")
+    ;; see org-roam and citar sections
+    "na" '(org-todo-list :wk "agenda todos")) ;; agenda
 
   ;; ;; code
   ;; see 'flymake'
   (zeds/leader-keys
-      "c" '(:ignore t :wk "code"))
+    "c" '(:ignore t :wk "code"))
 
   ;; open
   (zeds/leader-keys
@@ -382,7 +389,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   ;; ;; search
   ;; ;; see 'consult'
   (zeds/leader-keys
-      "s" '(:ignore t :wk "search"))
+    "s" '(:ignore t :wk "search"))
 
   ;; ;; templating
   ;; ;; see 'tempel'
@@ -405,9 +412,47 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (which-key-setup-minibuffer))
 ;; END WHICH-KEY
 
+  ;; AVY
+(use-package avy
+  :demand t
+  :init
+  (defun zeds/avy-action-insert-newline (pt)
+    (save-excursion
+      (goto-char pt)
+      (newline))
+    (select-window
+     (cdr
+      (ring-ref avy-ring 0))))
+  (defun zeds/avy-action-kill-whole-line (pt)
+    (save-excursion
+      (goto-char pt)
+      (kill-whole-line))
+    (select-window
+     (cdr
+      (ring-ref avy-ring 0))))
+  (defun zeds/avy-action-embark (pt)
+    (unwind-protect
+        (save-excursion
+          (goto-char pt)
+          (embark-act))
+      (select-window
+       (cdr (ring-ref avy-ring 0))))
+    t) ;; adds an avy action for embark
+  :general
+  (general-def '(normal motion)
+    "s" 'evil-avy-goto-char-timer
+    "f" 'evil-avy-goto-char-in-line
+    "gl" 'evil-avy-goto-line ;; this rules
+    ";" 'avy-resume)
+  :config
+  (setf (alist-get ?. avy-dispatch-alist) 'zeds/avy-action-embark ;; embark integration
+        (alist-get ?i avy-dispatch-alist) 'zeds/avy-action-insert-newline
+        (alist-get ?K avy-dispatch-alist) 'zeds/avy-action-kill-whole-line)) ;; kill lines with avy
+;; END AVY
 
-;; COMPLETION - VERTICO/CONSULT
-;; Enable vertico
+
+  ;; COMPLETION - VERTICO/CONSULT
+  ;; Enable vertico
 (use-package vertico
   :demand t
   :ensure t
@@ -460,6 +505,61 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
         completion-category-overrides '((file (styles partial-completion)))))
 ;; END VERTICO
 
+;; Better Completion
+(use-package corfu
+  :ensure t
+  :demand t
+  :hook
+  (eval-expression-minibuffer-setup . corfu-mode)
+  :init
+  (global-corfu-mode)
+  :custom
+  (corfu-cycle t)  ;; allows cycling through candidates
+  (corfu-auto nil) ;; disables auto-completion
+  :bind
+  :general
+  (:keymaps 'corfu-map
+            "SPC" 'corfu-insert-separator)) ;; for compatibility with orderless
+
+(general-unbind
+  :ensure t
+  :states '(insert)
+  "C-k" ;; this was interfering with corfu completion
+  :states '(normal)
+  "C-;")
+
+(use-package cape
+  :ensure t
+  :demand t
+    ;; bindings for dedicated completion commands
+  :general
+  ("M-p p" 'completion-at-point ;; capf
+   "M-p t" 'complete-tag        ;; etags
+   "M-p d" 'cape-dabbrev        ;; dabbrev
+   "M-p h" 'cape-history
+   "M-p f" 'cape-file
+   "M-p k" 'cape-keyword
+   "M-p s" 'cape-symbol
+   "M-p a" 'cape-abbrev
+   "M-p i" 'cape-ispell
+   "M-p l" 'cape-line
+   "M-p w" 'cape-dict
+   "M-p \\" 'cape-tex
+   "M-p &" 'cape-sgml
+   "M-p r" 'cape-rfc1345)
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+
+(use-package company-reftex
+  :ensure t
+  :after cape
+  :init
+  (defun reftex-setup-capf ()
+    (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-reftex-labels)))
+  :hook
+  (LaTeX-mode . reftex-setup-capf))
+
 ;; CONSULT
 (use-package consult
   :ensure t
@@ -478,23 +578,221 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 		"sy" '(consult-yank-from-kill-ring :wk "consult yank from kill ring")
 		"i" '(consult-imenu :wk "consult imenu"))
   :config
-  ;; use project.el to retrieve the project root
+          ;; use project.el to retrieve the project root
   (setq consult-project-root-function
         (lambda ()
           (when-let (project (project-current))
             (car (project-roots project)))))
   :hook (completion-list-mode . consult-preview-at-point-mode)
 
-  ;; The :init configuration is always executed (Not lazy)
+          ;; The :init configuration is always executed (Not lazy)
   :init
-  ;; Optionally configure the register formatting. This improves the register
-  ;; preview for `consult-register', `consult-register-load',
-  ;; `consult-register-store' and the Emacs built-ins.
+          ;; Optionally configure the register formatting. This improves the register
+          ;; preview for `consult-register', `consult-register-load',
+          ;; `consult-register-store' and the Emacs built-ins.
   (setq register-preview-delay 0.5
         register-preview-function #'consult-register-format))
 ;; END CONSULT
 
-;; ORG ROAM
+;; EMBARK
+(use-package embark
+  :ensure t
+  :demand t
+  :general
+  (zeds/leader-keys
+   "." 'embark-act)    ;; easily accessible 'embark-act' binding.
+  ("C-." 'embark-act)  ;; overlaps with evil-repeat
+  ("C-;" 'embark-dwim) ;; overlaps with IEdit
+  (:keymaps 'vertico-map
+            "C-." 'embark-act) ;; embark on completion candidates
+  (:keymaps 'embark-heading-map
+            "l" 'org-id-store-link)
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+(use-package embark-consult
+  :ensure t
+  :after (embark consult)
+  :demand t                ; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+;; END EMBARK
+
+;; AFFE
+(use-package affe
+  :ensure t
+  :demand t
+  :after orderless
+  :general
+  (zeds/leader-keys
+    "sa" '(affe-grep :wk "affe grep")
+    "sw" '(affe-find :wk "affe find"))
+  :init
+  (defun affe-orderless-regexp-compiler (input _type _ignorecase)
+    (setq input (orderless-pattern-compiler input))
+    (cons input (lambda (str) (orderless--highlight input str))))
+  :config
+  (setq affe-regexp-compiler #'affe-orderless-regexp-compiler))
+;;  END AFFE
+
+;;  OLIVETTI Make writing prose nicer
+;; Might remove later
+(use-package olivetti
+  :ensure t
+  :demand t
+  :init
+  (setq olivetti-body-width 80)
+  (setq olivetti-style 'fancy)
+  (setq olivetti-minimum-body-width 50))
+;; END OLIVETTY
+
+;; HIGHLIGHT TODOs
+(use-package hl-todo
+  :ensure t
+  :demand t
+  :init
+  (global-hl-todo-mode))
+;; END HIGHLIGHT TODOs
+
+;; ORG MODE CONFIG
+(use-package org
+  :demand t
+  :init
+  ;; edit settings
+  (setq org-auto-align-tags nil
+        org-tags-column 0
+        org-catch-invisible-edits 'show-and-error
+        org-special-ctrl-a/e t ;; special navigation behaviour in headlines
+        org-insert-heading-respect-content t)
+
+  ;; styling, hide markup, etc.
+  (setq org-hide-emphasis-markers t
+        org-src-fontify-natively t ;; fontify source blocks natively
+        org-highlight-latex-and-related '(native) ;; fontify latex blocks natively
+        org-pretty-entities t
+        org-ellipsis "…")
+
+  ;; agenda styling
+  (setq org-agenda-tags-column 0
+        org-agenda-block-separator ?─
+        org-agenda-time-grid
+        '((daily today require-timed)
+          (800 1000 1200 1400 1600 1800 2000)
+          " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+        org-agenda-current-time-string
+        "⭠ now ─────────────────────────────────────────────────")
+
+  ;; todo setup
+  (setq org-todo-keywords
+        ;; it's extremely useful to distinguish between short-term goals and long-term projects
+        '((sequence "TODO(t)" "SOMEDAY(s)" "|" "DONE(d)")
+          (sequence "TO-READ(r)" "READING(R)" "|" "HAVE-READ(d)")
+          (sequence "PROJ(p)" "|" "COMPLETED(c)")))
+
+  (setq org-adapt-indentation nil) ;; interacts poorly with 'evil-open-below'
+
+  :custom
+  (org-agenda-files '("~/notes/todo.org" "~/notes/teaching.org" "~/notes/projects.org"))
+  ;; (org-cite-global-bibliography (list zeds/global-bib-file))
+  ;; handle citations using citar
+  ;; (org-cite-insert-processor 'citar)
+  ;; (org-cite-follow-processor 'citar)
+  ;; (org-cite-activate-processor 'citar)
+  ;; :general
+  (zeds/local-leader-keys
+    :keymaps 'org-mode-map
+    "a" '(org-archive-subtree :wk "archive")
+    "c" '(org-cite-insert :wk "insert citation")
+    "l" '(:ignore t :wk "link")
+    "ll" '(org-insert-link t :wk "link")
+    "lp" '(org-latex-preview t :wk "prev latex")
+    "h" '(consult-org-heading :wk "consult heading")
+    "d" '(org-cut-special :wk "org cut special")
+    "y" '(org-copy-special :wk "org copy special")
+    "p" '(org-paste-special :wk "org paste special")
+    "b" '(:keymap org-babel-map :wk "babel")
+    "t" '(org-todo :wk "todo")
+    "s" '(org-insert-structure-template :wk "template")
+    "e" '(org-edit-special :wk "edit")
+    "i" '(:ignore t :wk "insert")
+    "ih" '(org-insert-heading :wk "insert heading")
+    "is" '(org-insert-subheading :wk "insert heading")
+    "f" '(org-footnote-action :wk "footnote action")
+    ">" '(org-demote-subtree :wk "demote subtree")
+    "<" '(org-promote-subtree :wk "demote subtree"))
+  (:keymaps 'org-agenda-mode-map
+            "j" '(org-agenda-next-line)
+            "h" '(org-agenda-previous-line))
+
+  :hook
+  ;; (org-mode . olivetti-mode)
+  (org-mode . variable-pitch-mode)
+  (org-mode . (lambda () (electric-indent-local-mode -1))) ;; disable electric indentation
+
+  :config
+  (add-to-list 'org-latex-packages-alist '("" "braket" t))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((js . t)
+     (emacs-lisp . t)
+     (awk . t)))
+  ;; set up org paths
+  (setq org-directory zeds/org-path)
+  (setq org-default-notes-file (concat org-directory "/notes.org")))
+
+(use-package evil-org
+  :ensure t
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+;; (use-package org-auctex
+;; :ensure (:type git :host github :repo
+;;                  "karthink/org-auctex")
+;; :hook (org-mode . org-auctex-mode))
+
+(use-package org-transclusion
+  :ensure t
+  :after org
+  :general
+  (zeds/leader-keys
+    "nt" '(org-transclusion-mode :wk "transclusion mode")))
+
+(use-package org-appear
+  :ensure t
+  :after org
+  :init (setq org-appear-trigger 'manual)
+  :hook (org-mode . (lambda ()
+                      (add-hook 'evil-insert-state-entry-hook
+                                #'org-appear-manual-start
+                                nil t)
+                      (add-hook 'evil-insert-state-exit-hook
+                                #'org-appear-manual-stop
+                                nil t))))
+(use-package org-cliplink
+  :after org
+  :general
+  (zeds/local-leader-keys
+   :keymaps 'org-mode-map
+   "lc" '(org-cliplink :wk "cliplink")))
+
+(use-package org-modern
+  :ensure t
+  :after org
+  :config (global-org-modern-mode))
+;; END ORG CONFIG
+
+          ;; ORG ROAM
 (use-package org-roam
   :ensure t
   :demand t
@@ -514,7 +812,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq org-roam-directory zeds/roam-notes-path
         org-roam-dailies-directory zeds/roam-dailies-path)
   :config
-  ;; org-roam-buffer
+            ;; org-roam-buffer
   (add-to-list 'display-buffer-alist
                '("\\*org-roam\\*"
                  (display-buffer-in-direction)
@@ -554,7 +852,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
                               "#+title: ${title}\n#+filetags: :project:draft:\n")
            :unnarrowed t)))
 
-  ;; get tags to show up in 'org-roam-node-find':
+            ;; get tags to show up in 'org-roam-node-find':
   (cl-defmethod org-roam-node-type ((node org-roam-node))
     "Return the TYPE of NODE."
     (condition-case nil
@@ -574,18 +872,72 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (org-roam-db-autosync-mode) ;; ensures that org-roam is available on startup
 
 
-  ;; dailies config
+            ;; dailies config
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry "* %<%I:%M %p>: %?"
            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
-  ;; END ORG ROAM
+;; END ORG ROAM
 
-  (use-package electric
-    :demand t
-    :init
-    (electric-pair-mode 1) ;; automatically insert closing parens
-    (electric-indent-mode 1)
-    (setq electric-pair-preserve-balance nil)) ;; more annoying than useful
+;;  LATEX
+(use-package auctex
+  :ensure t
+  :defer t
+  :mode ("\\.tex\\'" . LaTeX-mode)
+  :init
+  (setq TeX-parse-self t                ; parse on load
+        reftex-plug-into-AUCTeX t
+        TeX-auto-save t                 ; parse on save
+        TeX-view-program-selection '((output-pdf "PDF Tools"))
+        TeX-source-correlate-mode t
+        TeX-source-correlate-method 'synctex
+        TeX-source-correlate-start-server t
+        TeX-electric-sub-and-superscript t
+        TeX-engine 'luatex ;; use lualatex by default
+        TeX-save-query nil
+        TeX-electric-math (cons "\\(" "\\)")) ;; '$' inserts an in-line equation '\(...\)'
+
+  (add-hook 'TeX-mode-hook #'reftex-mode)
+  (add-hook 'TeX-mode-hook #'olivetti-mode)
+  (add-hook 'TeX-mode-hook #'turn-on-auto-fill)
+  (add-hook 'TeX-mode-hook #'prettify-symbols-mode)
+  (add-hook 'TeX-after-compilation-finished-functions
+            #'TeX-revert-document-buffer)
+  (add-hook 'TeX-mode-hook #'outline-minor-mode)
+  :general
+  (zeds/local-leader-keys
+    :keymaps 'LaTeX-mode-map
+    ;; "TAB" 'TeX-complete-symbol ;; FIXME let's 'TAB' do autocompletion (but it's kind of useless to be honest)
+    "=" '(reftex-toc :wk "reftex toc")
+    "(" '(reftex-latex :wk "reftex label")
+    ")" '(reftex-reference :wk "reftex ref")
+    "m" '(LaTeX-macro :wk "insert macro")
+    "s" '(LaTeX-section :wk "insert section header")
+    "e" '(LaTeX-environment :wk "insert environment")
+    "p" '(preview-at-point :wk "preview at point")
+    "f" '(TeX-font :wk "font")
+    "c" '(TeX-command-run-all :wk "compile")))
+
+(use-package evil-tex
+  :ensure t
+  :after general
+  :hook (LaTeX-mode . evil-tex-mode)
+  :general
+  (:keymaps 'evil-tex-mode-map
+            "M-]" 'evil-tex-brace-movement)
+  :config
+  (unbind-key "M-n" 'evil-tex-mode-map)) ;; interfering with jinx
+
+;; END LATEX
+
+
+;; ELECTRIC
+(use-package electric
+  :demand t
+  :init
+  (electric-pair-mode 1) ;; automatically insert closing parens
+  ;; (electric-indent-mode 1)
+  (setq electric-pair-preserve-balance nil)) ;; more annoying than useful
+;; END ELECTRIC
 
 (use-package ediff
   :demand t
@@ -604,6 +956,8 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 		"hv" '(helpful-variable :wk "helpful variable")
 		"hk" '(helpful-key :wk "helpful key")))
 ;; END HELP
+
+;; PROGRAMMING STUFF :CODE
 
 ;; EGLOT LSP
 (use-package eglot
@@ -674,7 +1028,91 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 (use-package js2-mode
   :ensure t)
 
+;; LISP
+(use-package lispy
+  :ensure t
+  :general
+  (:keymaps 'lispy-mode-map
+            "TAB" 'indent-for-tab-command) ;; necessary for 'corfu'
+  :hook
+  (reb-lisp-mode . lispy-mode)
+  (emacs-lisp-mode . lispy-mode)
+  (racket-mode . lispy-mode)
+  (fennel-mode . lispy-mode))
 
+(use-package lispyville
+  :ensure t
+  :hook (lispy-mode . lispyville-mode)
+  :general
+  (:keymaps 'lispyville-mode-map
+            "TAB" 'indent-for-tab-command) ;; necessary for 'corfu'
+  ;; the following is necessary to retain tab completion in lispy mode
+  :config
+  ;; TODO play around with keythemes
+  (lispyville-set-key-theme '(operators c-w additional)))
+
+;; TOOLING
+
+;; RegEX
+(use-package re-builder
+  :general (zeds/leader-keys
+             "se" '(regexp-builder :wk "regex builder"))
+  :config (setq reb-re-syntax 'rx))
+
+;; SEARCHING
+(use-package deadgrep
+  :ensure t
+  :demand t
+  :general
+  (zeds/leader-keys
+    "sd" '(deadgrep :wk "deadgrep")))
+
+;; HTTP SERVER
+(use-package simple-httpd
+  :ensure t
+  :commands httpd-serve-directory)
+
+;; ESHELL
+(use-package eshell
+  :general
+  (zeds/leader-keys
+    "oe" '(eshell :wk "eshell")))
+
+;; COLORS
+(use-package rainbow-mode :ensure t)
+
+;; SNIPPETS
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-reload-all)
+  (add-to-list 'yas-snippet-dirs "~/.config/emacs/snippets")
+  (yas-global-mode 1))
+
+;; CHECKERS
+;; Flymake over flycheck
+(use-package flymake
+  :general
+  (zeds/leader-keys
+    :keymaps 'flymake-mode-map
+    "cf" '(consult-flymake :wk "consult flymake") ;; depends on consult
+    "cc" '(flymake-mode :wk "toggle flymake")) ;; depends on consult
+  :hook
+  (TeX-mode . flymake-mode) ;; this is now working
+  (emacs-lisp-mode . flymake-mode)
+  :custom
+  (flymake-no-changes-timeout nil)
+  :general
+  (general-nmap "] !" 'flymake-goto-next-error)
+  (general-nmap "[ !" 'flymake-goto-prev-error))
+
+(use-package recursion-indicator
+  :ensure t
+  :demand t
+  :config
+  (recursion-indicator-mode))
+
+;; PROJECT.EL
 (use-package project
   :general
   ;; assign built-in project.el bindings a new prefix
@@ -700,28 +1138,6 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :ensure t
   :demand t)
 
-(use-package lispy
-  :ensure t
-  :general
-  (:keymaps 'lispy-mode-map
-            "TAB" 'indent-for-tab-command) ;; necessary for 'corfu'
-  :hook
-  (reb-lisp-mode . lispy-mode)
-  (emacs-lisp-mode . lispy-mode)
-  (racket-mode . lispy-mode)
-  (fennel-mode . lispy-mode))
-
-(use-package lispyville
-  :ensure t
-  :hook (lispy-mode . lispyville-mode)
-  :general
-  (:keymaps 'lispyville-mode-map
-            "TAB" 'indent-for-tab-command) ;; necessary for 'corfu'
-  ;; the following is necessary to retain tab completion in lispy mode
-  :config
-  ;; TODO play around with keythemes
-  (lispyville-set-key-theme '(operators c-w additional)))
-
 
 ;; MARKDOWN
 (use-package markdown-mode
@@ -737,28 +1153,6 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq markdown-command "pandoc")
   (setq markdown-header-scaling t))
 :
-;; Better Completion
-(use-package corfu
-  :ensure t
-  :demand t
-  :hook
-  (eval-expression-minibuffer-setup . corfu-mode)
-  :init
-  (global-corfu-mode)
-  :custom
-  (corfu-cycle t)  ;; allows cycling through candidates
-  (corfu-auto nil) ;; disables auto-completion
-  :bind
-  :general
-  (:keymaps 'corfu-map
-            "SPC" 'corfu-insert-separator)) ;; for compatibility with orderless
-
-(general-unbind
-  :ensure t
-  :states '(insert)
-  "C-k" ;; this was interfering with corfu completion
-  :states '(normal)
-  "C-;")
 
 (use-package magit
   :ensure t
@@ -766,6 +1160,37 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (zeds/leader-keys
 		"g" '(:ignore t :wk "git")
 		"gg" '(magit-status :wk "status")))
+
+;; PDF SUPPORT
+(use-package pdf-tools
+  :ensure t
+  :defer t
+  :hook (TeX-after-compilation-finished . TeX-revert-document-buffer)
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :config
+  (require 'pdf-tools)
+  (require 'pdf-view)
+  (require 'pdf-misc)
+  (require 'pdf-occur)
+  (require 'pdf-util)
+  (require 'pdf-annot)
+  (require 'pdf-info)
+  (require 'pdf-isearch)
+  (require 'pdf-history)
+  (require 'pdf-links)
+  (require 'pdf-outline)
+  (require 'pdf-sync)
+  (pdf-tools-install))
+
+(use-package jinx
+  :ensure t
+  :demand t
+  ;; :init
+  ;; (setenv "PKG_CONFIG_PATH" (concat "/opt/homebrew/opt/glib/lib/pkgconfig/" (getenv "PKG_CONFIG_PATH")))
+  :hook (emacs-startup . global-jinx-mode)
+  :general
+  ("M-$" 'jinx-correct
+   "C-M-$" 'jinx-languages))
 
 (provide 'init)
 ;;; init.el ends here
