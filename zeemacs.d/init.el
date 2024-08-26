@@ -89,11 +89,11 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 				mouse-wheel-progressive-speed nil
 				scroll-conservatively 101
 				display-line-numbers-type 'relative
-				    ;; Don't persist a custom file
+				;; Don't persist a custom file
 				custom-file (make-temp-file "") ; use a temp file as a placeholder
 				custom-safe-themes t ; mark all themes as safe, since we can't persist now
 				enable-local-variables :all	; fix =defvar= warnings
-				    ;; less noise when compiling elisp
+				;; less noise when compiling elisp
 				byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
 				native-comp-async-report-warnings-errors nil
 				load-prefer-newer t
@@ -113,6 +113,9 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 	(pixel-scroll-precision-mode 1) ;; enable smooth scrolling
 	(recentf-mode 1)
 	(global-auto-revert-mode 1)
+
+  (add-to-list 'major-mode-remap-alist
+             '(python-mode . python-ts-mode))
 
   ;; TABS
 	(setq-default tab-width 2
@@ -964,9 +967,11 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :init (setq completion-category-overrides '((eglot (styles orderless))))
   :commands eglot
   :hook ((rust-mode
-					python-mode) . eglot-ensure)
+					python-mode
+          python-ts-mode) . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
+  (add-to-list 'eglot-server-programs '(python-ts-mode . ("pyright-langserver" "--stdio")))
 	)
 ;; (add-to-list 'eglot-server-programs '(haskell-mode . ("haskell-language-server" "--lsp"))))
 ;; END EGLOT
@@ -981,7 +986,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 (defun zeds/python-pyenv-mode-set-auto-h ()
   "Set pyenv-mode version from buffer-local variable."
-  (when (eq major-mode 'python-mode)
+  (when (memq major-mode '(python-ts-mode python-mode))
     (when (not (local-variable-p 'zeds/pyenv--version))
       (make-local-variable 'zeds/pyenv--version)
       (setq zeds/pyenv--version (zeds/python-pyenv-read-version-from-file)))
@@ -998,17 +1003,21 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
               (insert-file-contents-literally file-path)
               (string-trim (buffer-string)))))
       (if (member version (zeds/pyenv-mode-versions))
-          version  ;; return.
+          version ;; return.
         (message "pyenv: version `%s' is not installed (set by `%s')."
                  version file-path)))))
 
 (use-package python
-  :hook (python-mode . (lambda ()
-                         (message "In python mode!!!")
-												 (setq-local indent-tabs-mode t)
-												 (setq-local tab-width 4)
-												 (setq-local py-indent-tabs-mode t)))
-  )
+  :hook
+  (python-mode . (lambda ()
+									 (setq-local indent-tabs-mode t)
+									 (setq-local tab-width 4)
+									 (setq-local py-indent-tabs-mode t)))
+  (python-ts-mode . (lambda ()
+									    (setq-local indent-tabs-mode t)
+									    (setq-local tab-width 4)
+									    (setq-local py-indent-tabs-mode t))))
+
 (use-package pyenv-mode
   :after python
   :ensure t
@@ -1016,7 +1025,8 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (when (executable-find "pyenv")
     (pyenv-mode +1)
     (add-to-list 'exec-path (expand-file-name "shims" (or (getenv "PYENV_ROOT") "~/.pyenv"))))
-  :hook (python-mode . zeds/python-pyenv-mode-set-auto-h))
+  :hook ((python-mode
+          python-ts-mode) . zeds/python-pyenv-mode-set-auto-h))
 
 ;; RUST
 (use-package rustic
