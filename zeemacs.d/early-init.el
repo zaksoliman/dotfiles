@@ -19,18 +19,25 @@
 ;;
 ;;; Code:
 ;; minimal UI
-(menu-bar-mode -1) ;; disables menubar
-(tool-bar-mode -1) ;; disables toolbar
-(scroll-bar-mode -1) ;; disables scrollbar
-(pixel-scroll-precision-mode 1) ;; enable smooth scrolling
-(recentf-mode 1)
-(global-auto-revert-mode 1)
 
 (setq inhibit-splash-screen t) ;; no thanks
-        ;;use-file-dialog nil ;; don't use system file dialog
-        ;;tab-bar-new-button-show nil ;; don't show new tab button
-        ;;tab-bar-close-button-show nil ;; don't show tab close button
-        ;;tab-line-close-button-show nil) ;; don't show tab close button
+;;use-file-dialog nil ;; don't use system file dialog
+;;tab-bar-new-button-show nil ;; don't show new tab button
+;;tab-bar-close-button-show nil ;; don't show tab close button
+;;tab-line-close-button-show nil) ;; don't show tab close button
+;; FONTS
+;; This sets the default font on all graphical frames created after restarting Emacs.
+(add-to-list 'default-frame-alist '(font . "Fira Code-12"))
+
+;; Makes commented text and keywords italics.
+;; This is working in emacsclient but not emacs.
+;; Your font must have an italic face available.
+(set-face-attribute 'font-lock-comment-face nil
+                    :slant 'italic)
+(set-face-attribute 'font-lock-keyword-face nil
+                    :slant 'italic)
+;; Uncomment the following line if line spacing needs adjusting.
+;; (setq-default line-spacing 0.12)
 
 (provide 'early-init)
 ;;; early-init.el ends here
