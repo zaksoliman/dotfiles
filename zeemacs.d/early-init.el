@@ -18,9 +18,6 @@
 ;;
 ;;
 ;;; Code:
-
-(setq package-enable-at-startup nil)
-
 ;; minimal UI
 (menu-bar-mode -1) ;; disables menubar
 (tool-bar-mode -1) ;; disables toolbar

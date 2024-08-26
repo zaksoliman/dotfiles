@@ -23,6 +23,8 @@
 (when (version< emacs-version "29")
   (error "This requires Emacs 29 and above!"))
 
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 ;; VARIABLES
 (defvar zeds/library-path "~/Documents/Library of Alexandria/"
   "Directory where my documents collection lives.")
@@ -45,9 +47,6 @@
   "Close other windows to focus on this one.
 Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (interactive "P")
-  (when (and (bound-and-true-p +popup-mode)
-             (+popup-window-p))
-    (+popup/raise (selected-window)))
   (delete-other-windows))
 
 (defun zeds/window-maximize-vertically ()
@@ -67,76 +66,9 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
     (while (ignore-errors (windmove-right)) (delete-window))))
 ;; END FUNCTION DEFINITIONS
 
-
-;; Package Manager - ELPACA SETUP
-;;  When installing a package used in the init file itself,
-;;  e.g. a package which adds a use-package key word,
-;;  use the :wait recipe keyword to block until that package is installed/configured.
-;;   Expands to: (elpaca evil (use-package evil :demand t))
-;;   (use-package evil :ensure t :demand t)
-;;For example:
-;;(use-package general :ensure (:wait t) :demand t)
-
-;;(setq custom-file (location-user-emacs-file "custom-vars.el"))
-;;(load custom-file 'noerror 'nomessage)
-
-(defvar elpaca-installer-version 0.7)
-(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
-(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
-(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                       :ref nil :depth 1
-                       :files (:defaults "elpaca-test.el" (:exclude "extensions"))
-                       :build (:not elpaca--activate-package)))
-(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
-       (build (expand-file-name "elpaca/" elpaca-builds-directory))
-       (order (cdr elpaca-order))
-       (default-directory repo))
-  (add-to-list 'load-path (if (file-exists-p build) build repo))
-  (unless (file-exists-p repo)
-    (make-directory repo t)
-    (when (< emacs-major-version 28) (require 'subr-x))
-    (condition-case-unless-debug err
-        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-                 ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
-                                                 ,@(when-let ((depth (plist-get order :depth)))
-                                                     (list (format "--depth=%d" depth) "--no-single-branch"))
-                                                 ,(plist-get order :repo) ,repo))))
-                 ((zerop (call-process "git" nil buffer t "checkout"
-                                       (or (plist-get order :ref) "--"))))
-                 (emacs (concat invocation-directory invocation-name))
-                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-                 ((require 'elpaca))
-                 ((elpaca-generate-autoloads "elpaca" repo)))
-            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-          (error "%s" (with-current-buffer buffer (buffer-string))))
-      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
-  (unless (require 'elpaca-autoloads nil t)
-    (require 'elpaca)
-    (elpaca-generate-autoloads "elpaca" repo)
-    (load "./elpaca-autoloads")))
-(add-hook 'after-init-hook #'elpaca-process-queues)
-(elpaca `(,@elpaca-order))
-
-
-;; Install use-package support
-(elpaca elpaca-use-package
-        ;; Enable use-package :ensure support for Elpaca.
-        (elpaca-use-package-mode))
-
-;;Turns off elpaca-use-package-mode current declaration
-;;Note this will cause evaluate the declaration immediately. It is not deferred.
-;;Useful for configuring built-in emacs features.
-;; (use-package emacs :ensure nil :config (setq ring-bell-function #'ignore))
-
-;;END ELPACA SETUP
-
-
 ;; CHANGE BAD EMACS DEFAULTS
 (use-package emacs
   :demand t
-  :ensure nil
   :init
   (setq enable-recursive-minibuffers t)
   (setq backup-by-copying t)
@@ -148,10 +80,13 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq user-mail-address "zakaria.soliman1@gmail.com")
   (defalias 'yes-or-no-p 'y-or-n-p) ;; life is too short
   (setq indent-tabs-mode nil)
-  ;; Enable indentation+completion using the TAB key.
+    (setq version-control t)
+    (setq delete-old-versions t)
+    (setq create-lockfiles nil)
+   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
   (setq tab-always-indent 'complete)
-  ;; (setq indent-line-function 'insert-tab)
+  (setq indent-line-function 'insert-tab)
   ;; keep backup and save files in a dedicated directory
   (setq backup-directory-alist
         `((".*" . ,(concat user-emacs-directory "backups")))
@@ -188,7 +123,9 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq load-prefer-newer t)
 
   (show-paren-mode t)
-
+  (setq mouse-wheel-progressive-speed nil)
+  (setq scroll-conservatively 101)
+  (column-number-mode 1)
   (global-display-line-numbers-mode 1)
   (global-visual-line-mode t)
   (setq display-line-numbers-type 'relative)
@@ -216,17 +153,40 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 ;; THEME
 ;; https://protesilaos.com/emacs/standard-themes
-(use-package ef-themes
-  :ensure t
-  :demand t
-  :config
-  (load-theme 'ef-winter)
-  )
+;; (use-package ef-themes
+;;   :ensure t
+;;   :demand t
+;;   :config
+;;   (load-theme 'ef-winter)
+;;   )
 
 ;; Modeline
+;;(use-package doom-modeline
+;;  :ensure t
+;;  :init (doom-modeline-mode 1))
+
+(use-package doom-themes
+:ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
+        doom-themes-enable-italic t)
+                                        ; if nil, italics is universally disabled
+  ;; (load-theme 'doom-nord t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+(use-package solaire-mode
+:ensure t
+ :config
+ (solaire-global-mode 1))
+
 (use-package doom-modeline
   :ensure t
-  :init (doom-modeline-mode 1))
+  :hook (after-init . doom-modeline-mode))
 
 ;; ICONS
 (use-package all-the-icons
@@ -248,9 +208,6 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
   :init (all-the-icons-completion-mode))
 
-;;(use-package solaire-mode
-;;  :config
-;;  (solaire-global-mode 1))
 ;; END UI/DX
 
 ;; EVIL
@@ -258,22 +215,24 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :ensure t
   :demand t
   :init
-  (setq evil-want-integration t) ;; For evil-collection
-  (setq evil-want-keybinding nil) ;; For evil-collection
-  (setq evil-vsplit-window-right t)
-  (setq evil-split-window-below t)
-  (setq evil-respect-visual-line-mode t) ;; respect visual lines
-  (setq evil-search-module 'isearch) ;; use emacs' built-in search functionality.
-  (setq evil-want-C-u-scroll t) ;; allow scroll up with 'C-u'
-  (setq evil-want-C-d-scroll t) ;; allow scroll down with 'C-d'
-  (setq evil-want-C-i-jump nil) ;; hopefully this will fix weird tab behaviour
-  (setq evil-undo-system 'undo-redo) ;; undo via 'u', and redo the undone change via 'C-r'; only available in emacs 28+.
+  (setq evil-want-integration t ;; For evil-collection
+        evil-want-keybinding nil ;; For evil-collection
+        evil-vsplit-window-right t
+        evil-split-window-below t
+        evil-shift-width 2
+        evil-respect-visual-line-mode t ;; respect visual lines
+        evil-search-module 'isearch ;; use emacs' built-in search functionality.
+        evil-want-C-u-scroll t      ;; allow scroll up with 'C-u'
+        evil-want-C-d-scroll t      ;; allow scroll down with 'C-d'
+        evil-want-C-i-jump nil ;; hopefully this will fix weird tab behaviour
+        evil-undo-system 'undo-redo)
+
   (evil-mode)
-  ;; set the initial state for some kinds of buffers.
-  ;; (evil-set-initial-state 'messages-buffer-mode 'normal)
-  ;; (evil-set-initial-state 'dashboard-mode 'normal)
-  ;; (evil-set-initial-state 'magit-diff-mode 'insert)
-  )
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal)
+  ;; buffers in which I want to immediately start typing should be in 'insert' state by default.
+  (evil-set-initial-state 'eshell-mode 'insert)
+  (evil-set-initial-state 'magit-diff-mode 'insert))
 
 ;; https://github.com/emacs-evil/evil-collection
 (use-package evil-collection
@@ -287,6 +246,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   ;; (add-to-list 'evil-collection-mode-list '(pdf pdf-view)) ;; evilify pdf-view
   :config
   (setq evil-collection-mode-list '(dashboard dired ibuffer))
+  (add-to-list 'evil-collection-mode-list 'magit)
   (evil-collection-init))
 
 ;; https://github.com/linktohack/evil-commentary
@@ -301,11 +261,10 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :ensure t
   :after evil
   :hook ((org-mode . (lambda () (push '(?~ . ("~" . "~")) evil-surround-pairs-alist)))
-         (org-mode . (lambda () (push '(?$ . ("\\(" . "\\)")) evil-surround-pairs-alist)))
-         (LaTeX-mode . (lambda () (push '(?$ . ("\\(" . "\\)"))))))
+         (org-mode . (lambda () (push '(?$ . ("\\(" . "\\)")) evil-surround-pairs-alist))))
 
-  :config
-  (global-evil-surround-mode 1)) ;; globally enable evil-surround
+    :config
+    (global-evil-surround-mode 1)) ;; globally enable evil-surround
 
 
 ;; https://github.com/edkolev/evil-goggles
@@ -324,7 +283,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 ;; KEY BINDINGS - GENERAL.EL
 (use-package general
-  :ensure (:wait t)
+  :ensure t
   :demand t
   :config
   (general-evil-setup)
@@ -454,7 +413,6 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 (use-package vertico-directory
   :after vertico
-  :ensure nil
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
               ("RET" . vertico-directory-enter)
@@ -517,7 +475,6 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 (use-package electric
   :demand t
-  :ensure nil
   :init
   (electric-pair-mode 1) ;; automatically insert closing parens
   (electric-indent-mode 1)
@@ -525,7 +482,6 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 (use-package ediff
   :demand t
-  :ensure nil
   )
 
 ;; HELP
@@ -544,7 +500,6 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 ;; EGLOT LSP
 (use-package eglot
-  :ensure nil
   :init (setq completion-category-overrides '((eglot (styles orderless))))
   :commands eglot
   :hook ((rust-mode
@@ -582,11 +537,11 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
                  version file-path)))))
 
 (use-package python
-  :ensure nil
   :hook (python-mode . (lambda ()
-		    (setq-default indent-tabs-mode t)
-		    (setq-default tab-width 4)
-		    (setq-default py-indent-tabs-mode t)))
+                         (message "In python mode!!!")
+			 (setq-local indent-tabs-mode t)
+			 (setq-local tab-width 4)
+			 (setq-local py-indent-tabs-mode t)))
   )
 (use-package pyenv-mode
   :after python
@@ -595,8 +550,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (when (executable-find "pyenv")
     (pyenv-mode +1)
     (add-to-list 'exec-path (expand-file-name "shims" (or (getenv "PYENV_ROOT") "~/.pyenv"))))
-  (add-hook 'python-mode-local-vars-hook #'zeds/python-pyenv-mode-set-auto-h)
-  (add-hook 'doom-switch-buffer-hook #'zeds/python-pyenv-mode-set-auto-h))
+  :hook (python-mode . zeds/python-pyenv-mode-set-auto-h))
 
 ;; RUST
 (use-package rustic
@@ -610,13 +564,11 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 
 (use-package project
-  :ensure nil
   :general
   ;; assign built-in project.el bindings a new prefix
   (zeds/leader-keys "p" '(:keymap project-prefix-map :wk "project")))
 
 (use-package dired
-  :ensure nil
   :general
   (zeds/leader-keys
    "dd" '(dired :wk "dired") ;; open dired (in a directory)
@@ -636,27 +588,27 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :ensure t
   :demand t)
 
-(use-package lispy
-  :ensure t
-  :general
-  (:keymaps 'lispy-mode-map
-            "TAB" 'indent-for-tab-command) ;; necessary for 'corfu'
-  :hook
-  (reb-lisp-mode . lispy-mode)
-  (emacs-lisp-mode . lispy-mode)
-  (racket-mode . lispy-mode)
-  (fennel-mode . lispy-mode))
+;; (use-package lispy
+;;   :ensure t
+;;   :general
+;;   (:keymaps 'lispy-mode-map
+;;             "TAB" 'indent-for-tab-command) ;; necessary for 'corfu'
+;;   :hook
+;;   (reb-lisp-mode . lispy-mode)
+;;   (emacs-lisp-mode . lispy-mode)
+;;   (racket-mode . lispy-mode)
+;;   (fennel-mode . lispy-mode))
 
-(use-package lispyville
-  :ensure t
-  :hook (lispy-mode . lispyville-mode)
-  :general
-  (:keymaps 'lispyville-mode-map
-            "TAB" 'indent-for-tab-command) ;; necessary for 'corfu'
-  ;; the following is necessary to retain tab completion in lispy mode
-  :config
-  ;; TODO play around with keythemes
-  (lispyville-set-key-theme '(operators c-w additional)))
+;; (use-package lispyville
+;;   :ensure t
+;;   :hook (lispy-mode . lispyville-mode)
+;;   :general
+;;   (:keymaps 'lispyville-mode-map
+;;             "TAB" 'indent-for-tab-command) ;; necessary for 'corfu'
+;;   ;; the following is necessary to retain tab completion in lispy mode
+;;   :config
+;;   ;; TODO play around with keythemes
+;;   (lispyville-set-key-theme '(operators c-w additional)))
 
 
 ;; MARKDOWN

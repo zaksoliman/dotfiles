@@ -1,2 +1,3 @@
-/zeemacs.d/elpa/
-/zeemacs.d/elpa/
+elpa/*
+history
+recentf
