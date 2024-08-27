@@ -329,7 +329,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   ;; (add-to-list 'evil-collection-mode-list '(pdf pdf-view)) ;; evilify pdf-view
   :config
   (setq evil-collection-mode-list '(dashboard dired ibuffer))
-  (add-to-list 'evil-collection-mode-list 'magit)
+  (add-to-list 'evil-collection-mode-list 'magit 'compilation 'info)
   (evil-collection-init))
 
 ;; https://github.com/linktohack/evil-commentary
@@ -1151,10 +1151,30 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 ;;; TOOLING
 
+;;; VTERM
+(use-package vterm
+  :ensure t
+  :config
+  (defun turn-off-chrome ()
+    (hl-line-mode -1)
+    (display-line-numbers-mode -1))
+  :hook (vterm-mode . turn-off-chrome))
+
+(use-package vterm-toggle
+  :ensure t
+  :custom
+  (vterm-toggle-fullscreen-p nil "Open a vterm in another window.")
+  (vterm-toggle-scope 'project)
+  :general
+  (zeds/leader-keys
+    "ot" '(vterm-toggle :wk "Open vterm")
+    "oT" '(vterm :wk "Open vterm in window")
+    ))
+
 ;;; RegEX
 (use-package re-builder
   :general (zeds/leader-keys
-            "se" '(regexp-builder :wk "regex builder"))
+             "se" '(regexp-builder :wk "regex builder"))
   :config (setq reb-re-syntax 'rx))
 
 ;;; SEARCHING
