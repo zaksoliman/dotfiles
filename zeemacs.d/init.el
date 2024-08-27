@@ -7,9 +7,6 @@
 ;; Created: August 23, 2024
 ;; Modified: August 23, 2024
 ;; Version: 0.0.1
-;; Keywords: abbrev bib c calendar comm convenience data docs emulations extensions faces files frames games hardware help hypermedia i18n internal languages lisp local maint mail matching mouse multimedia news outlines processes terminals tex tools unix vc wp
-;; Homepage: https://github.com/zakaria/init
-;; Package-Requires: ((emacs "29"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -30,8 +27,10 @@
   :config (when (memq window-system '(mac ns x))
             (exec-path-from-shell-initialize))
   )
+;;; GLOBALS
+(setq gc-cons-threshold 100000000)
 
-;; VARIABLES
+;;; VARIABLES
 (defvar zeds/library-path "~/Documents/Library of Alexandria/"
   "Directory where my documents collection lives.")
 
@@ -48,7 +47,7 @@
   "Org path.")
 ;; END VARIABLES
 
-;; FUNCTION DEFINITIONS
+;;; FUNCTION DEFINITIONS
 (defun zeds/window-maximize-buffer (&optional arg)
   "Close other windows to focus on this one.
 Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
@@ -98,33 +97,58 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 ;;                    (or (doom-project-root) default-directory))
 ;; END FUNCTION DEFINITIONS
 
-;; CONFIGURE EMACS
+;;; CONFIGURE EMACS
 (use-package emacs
   :demand t
   :init
   ;; BASICS
   (setq user-full-name "Zak Soliman"
-	user-mail-address "zakaria.soliman1@gmail.com"
-	enable-recursive-minibuffers t
-	show-trailing-whitespace t
-	sentence-end-double-space nil
-	frame-inhibit-implied-resize t ;; useless for a tiling window manager
-	global-auto-revert-non-file-buffers t ;; Revert Dired and other buffers:
-	create-lockfiles nil
-	delete-by-moving-to-trash t ;; use trash-cli rather than rm when deleting files.
-	mouse-wheel-progressive-speed nil
-	scroll-conservatively 101
-	display-line-numbers-type 'relative
-	;; Don't persist a custom file
-	custom-file (make-temp-file "") ; use a temp file as a placeholder
-	custom-safe-themes t ; mark all themes as safe, since we can't persist now
-	enable-local-variables :all	; fix =defvar= warnings
-	;; less noise when compiling elisp
-	byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
-	native-comp-async-report-warnings-errors nil
-	load-prefer-newer t
+        user-mail-address "zakaria.soliman1@gmail.com"
+        enable-recursive-minibuffers t
+        show-trailing-whitespace t
+        sentence-end-double-space nil
+        frame-inhibit-implied-resize t ;; useless for a tiling window manager
+        global-auto-revert-non-file-buffers t ;; Revert Dired and other buffers:
+        create-lockfiles nil
+        delete-by-moving-to-trash t ;; use trash-cli rather than rm when deleting files.
+        mouse-wheel-progressive-speed nil
+        scroll-conservatively 101
+        display-line-numbers-type 'relative
+        ;; Don't persist a custom file
+        custom-file (make-temp-file "") ; use a temp file as a placeholder
+        custom-safe-themes t ; mark all themes as safe, since we can't persist now
+        enable-local-variables :all ; fix =defvar= warnings
+        ;; less noise when compiling elisp
+        byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
+        native-comp-async-report-warnings-errors nil
+        load-prefer-newer t
         ;; Enable tab completion (see `corfu`)
-        tab-always-indent 'complete)
+        tab-always-indent 'complete
+        initial-scratch-message nil
+        ring-bell-function 'ignore
+                                        ; Save existing clipboard text into the kill ring before replacing it.
+        save-interprogram-paste-before-kill t
+        ;; Prompts should go in the minibuffer, not in a GUI.
+        use-dialog-box nil
+        ;; Fix undo in commands affecting the mark.
+        mark-even-if-inactive nil
+        ;; Let C-k delete the whole line.
+        kill-whole-line t
+        ;; search should be case-sensitive by default
+        case-fold-search nil
+        ;; no need to prompt for the read command _every_ time
+        compilation-read-command nil
+        ;; scroll to first error
+        compilation-scroll-output 'first-error
+        ;; accept 'y' or 'n' instead of yes/no
+        ;; the documentation advises against setting this variable
+        ;; the documentation can get bent imo
+        use-short-answers t
+        ;; unicode ellipses are better
+        truncate-string-ellipsis "…"
+        ;; when I say to quit, I mean quit
+        confirm-kill-processes nil
+        )
 
   ;; Modes I want by default
   (column-number-mode 1)
@@ -133,16 +157,19 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (show-paren-mode t)
   ;; Persist history over Emacs restarts.
   (savehist-mode 1)
-  (menu-bar-mode -1)              ;; disables menubar
-  (tool-bar-mode -1)              ;; disables toolbar
-  (scroll-bar-mode -1)            ;; disables scrollbar
+  (menu-bar-mode -1)             ;; disables menubar
+  (tool-bar-mode -1)             ;; disables toolbar
+  (scroll-bar-mode -1)           ;; disables scrollbar
   (pixel-scroll-precision-mode 1) ;; enable smooth scrolling
   (recentf-mode 1)
   (global-auto-revert-mode 1)
 
   (add-to-list 'major-mode-remap-alist
                '(python-mode . python-ts-mode))
+  (add-to-list 'major-mode-remap-alist
+               '(rust-mode . rust-ts-mode))
 
+  (setq-default fill-column 80)
   ;; TABS
   (setq-default tab-width 2
                 indent-tabs-mode nil)
@@ -162,13 +189,13 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
   ;; BACKUP
   (setq backup-by-copying t
-	version-control t
-	delete-old-versions t
-	;; keep backup and save files in a dedicated directory
-	backup-directory-alist
-	`((".*" . ,(concat user-emacs-directory "backups")))
-	auto-save-file-name-transforms
-	`((".*" ,(concat user-emacs-directory "backups") t)))
+        version-control t
+        delete-old-versions t
+        ;; keep backup and save files in a dedicated directory
+        backup-directory-alist
+        `((".*" . ,(concat user-emacs-directory "backups")))
+        auto-save-file-name-transforms
+        `((".*" ,(concat user-emacs-directory "backups") t)))
 
 
   ;; TEXT
@@ -181,7 +208,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq locale-coding-system 'utf-8
         coding-system-for-read 'utf-8
         coding-system-for-write 'utf-8
-	default-process-coding-system '(utf-8-unix . utf-8-unix))
+        default-process-coding-system '(utf-8-unix . utf-8-unix))
 
   ;; GLOBAL KEY BINDINGS
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ;; escape quits everything
@@ -191,7 +218,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq read-extended-command-predicate #'command-completion-default-include-p))
 ;; END EMACS DEFAULTS
 
-;; THEME
+;;; THEME
 ;; https://protesilaos.com/emacs/standard-themes
 ;; (use-package ef-themes
 ;;   :ensure t
@@ -212,7 +239,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
         doom-themes-enable-italic t)
                                         ; if nil, italics is universally disabled
-  (load-theme 'doom-nord t)
+  (load-theme 'doom-one t)
   ;; (load-theme 'doom-city-lights t)
 
   ;; Enable flashing mode-line on errors
@@ -229,7 +256,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :ensure t
   :hook (after-init . doom-modeline-mode))
 
-;; ICONS
+;;; ICONS
 (use-package all-the-icons
   :ensure t
   :demand t)
@@ -251,12 +278,12 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 ;; END UI/DX
 
-;; EVIL
+;;; EVIL
 (use-package evil
   :ensure t
   :demand t
   :init
-  (setq evil-want-integration t ;; For evil-collection
+  (setq evil-want-integration t  ;; For evil-collection
         evil-want-keybinding nil ;; For evil-collection
         evil-vsplit-window-right t
         evil-split-window-below t
@@ -273,7 +300,22 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (evil-set-initial-state 'dashboard-mode 'normal)
   ;; buffers in which I want to immediately start typing should be in 'insert' state by default.
   (evil-set-initial-state 'eshell-mode 'insert)
-  (evil-set-initial-state 'magit-diff-mode 'insert))
+  (evil-set-initial-state 'magit-diff-mode 'insert)
+  ; Overload shifts so that they don't lose the selection
+  (define-key evil-visual-state-map (kbd ">") 'zeds/evil-shift-right-visual)
+  (define-key evil-visual-state-map (kbd "<") 'zeds/evil-shift-left-visual)
+
+  (defun zeds/evil-shift-left-visual ()
+    (interactive)
+    (evil-shift-left (region-beginning) (region-end))
+    (evil-normal-state)
+    (evil-visual-restore))
+
+  (defun zeds/evil-shift-right-visual ()
+    (interactive)
+    (evil-shift-right (region-beginning) (region-end))
+    (evil-normal-state)
+    (evil-visual-restore)))
 
 ;; https://github.com/emacs-evil/evil-collection
 (use-package evil-collection
@@ -322,7 +364,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 ;; END EVIL
 
-;; KEY BINDINGS - GENERAL.EL
+;;; KEY BINDINGS - GENERAL.EL
 (use-package general
   :ensure t
   :demand t
@@ -430,7 +472,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 ;; END KEY BINDINGS - GENERAL.EL
 
 
-;; WHICH-KEY
+;;; WHICH-KEY
 (use-package which-key
   :ensure t
   :after evil
@@ -442,7 +484,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (which-key-setup-minibuffer))
 ;; END WHICH-KEY
 
-;; AVY
+;;; AVY
 (use-package avy
   :demand t
   :init
@@ -481,7 +523,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 ;; END AVY
 
 
-;; COMPLETION - VERTICO/CONSULT
+;;; COMPLETION - VERTICO/CONSULT
 ;; Enable vertico
 (use-package vertico
   :demand t
@@ -535,7 +577,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
         completion-category-overrides '((file (styles partial-completion)))))
 ;; END VERTICO
 
-;; Better Completion
+;;; corfu -- Better Completion
 (use-package corfu
   :ensure t
   :demand t
@@ -550,7 +592,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :general
   (:keymaps 'corfu-map
             "SPC" 'corfu-insert-separator)) ;; for compatibility with orderless
-
+;;; keys unbound
 (general-unbind
   :ensure t
   :states '(insert)
@@ -558,6 +600,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :states '(normal)
   "C-;")
 
+;;; cape
 (use-package cape
   :ensure t
   :demand t
@@ -581,6 +624,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
+;;; company reftex
 (use-package company-reftex
   :ensure t
   :after cape
@@ -590,7 +634,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :hook
   (LaTeX-mode . reftex-setup-capf))
 
-;; CONSULT
+;;; CONSULT
 (use-package consult
   :ensure t
   :demand t
@@ -656,7 +700,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (embark-collect-mode . consult-preview-at-point-mode))
 ;; END EMBARK
 
-;; AFFE
+;;; AFFE
 (use-package affe
   :ensure t
   :demand t
@@ -673,7 +717,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq affe-regexp-compiler #'affe-orderless-regexp-compiler))
 ;;  END AFFE
 
-;;  OLIVETTI Make writing prose nicer
+;;;  OLIVETTI Make writing prose nicer
 ;; Might remove later
 (use-package olivetti
   :ensure t
@@ -684,7 +728,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq olivetti-minimum-body-width 50))
 ;; END OLIVETTY
 
-;; HIGHLIGHT TODOs
+;;; HIGHLIGHT TODOs
 (use-package hl-todo
   :ensure t
   :demand t
@@ -692,7 +736,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (global-hl-todo-mode))
 ;; END HIGHLIGHT TODOs
 
-;; ORG MODE CONFIG
+;;; ORG MODE CONFIG
 (use-package org
   :demand t
   :init
@@ -783,6 +827,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :after org
   :hook (org-mode . (lambda () evil-org-mode))
   :config
+  (setq evil-org-retain-visual-state-on-shift t)
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
@@ -822,7 +867,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :config (global-org-modern-mode))
 ;; END ORG CONFIG
 
-;; ORG ROAM
+;;; ORG ROAM
 (use-package org-roam
   :ensure t
   :demand t
@@ -908,7 +953,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
 ;; END ORG ROAM
 
-;;  LATEX
+;;;  LATEX
 (use-package auctex
   :ensure t
   :defer t
@@ -959,8 +1004,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
 ;; END LATEX
 
-
-;; ELECTRIC
+;;; ELECTRIC
 (use-package electric
   :demand t
   :init
@@ -973,37 +1017,39 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :demand t
   )
 
-;; HELP
+;;; HELP
 (use-package helpful
   :ensure t
   :demand t
   :general
   (zeds/leader-keys
-   "hc" '(helpful-command :wk "helpful command")
-   "hf" '(helpful-callable :wk "helpful callable")
-   "hh" '(helpful-at-point :wk "helpful at point")
-   "hF" '(helpful-function :wk "helpful function")
-   "hv" '(helpful-variable :wk "helpful variable")
-   "hk" '(helpful-key :wk "helpful key")))
+   "hc" '(helpful-command :wk "describe command")
+   "hf" '(helpful-callable :wk "describe callable")
+   "hh" '(helpful-at-point :wk "describe at point")
+   "hF" '(helpful-function :wk "describe function")
+   "hv" '(helpful-variable :wk "describe variable")
+   "hk" '(helpful-key :wk "describe key")))
 ;; END HELP
 
-;; PROGRAMMING STUFF :CODE
+;;; PROGRAMMING STUFF :CODE
 
-;; EGLOT LSP
+;;; EGLOT LSP
 (use-package eglot
+  :demand t
   :init (setq completion-category-overrides '((eglot (styles orderless))))
   :commands eglot
-  :hook ((rust-mode
-	  python-mode
-          python-ts-mode) . eglot-ensure)
-  :config
-  (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
-  (add-to-list 'eglot-server-programs '(python-ts-mode . ("pyright-langserver" "--stdio")))
-  )
-;; (add-to-list 'eglot-server-programs '(haskell-mode . ("haskell-language-server" "--lsp"))))
+  ;; :bind (:map eglot-mode-map
+  ;;             ("<f6>" . eglot-format-buffer))
+  :general
+  (zeds/leader-keys
+    "c?" '(eldoc :wk "docstring")
+    "cr" '(eglot-rename :wk "rename symbol")
+    "ca" '(eglot-code-actions :wk "code actions")
+    "cfd" '(xref-find-definitions-other-window :wk "find definitions")
+    "cfr" '(xref-find-references :wk "find references")))
 ;; END EGLOT
 
-;; PYTHON
+;;; PYTHON
 (defun zeds/pyenv-mode-versions ()
   "List installed python versions."
   (let ((versions (shell-command-to-string "pyenv versions --bare")))
@@ -1034,19 +1080,28 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
         (message "pyenv: version `%s' is not installed (set by `%s')."
                  version file-path)))))
 
-(use-package python
+;; (use-package python
+;;   :hook
+;;   ((python-mode . (lambda ()
+;;                        (setq-local indent-tabs-mode t)
+;;                        (setq-local tab-width 4)
+;;                        (setq-local py-indent-tabs-mode t)))
+;;    (python-mode . eglot-ensure))
+;;   :config
+;;   (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio"))))
+
+
+(use-package python-ts-mode
   :hook
-  (python-mode . (lambda ()
-		   (setq-local indent-tabs-mode t)
-		   (setq-local tab-width 4)
-		   (setq-local py-indent-tabs-mode t)))
-  (python-ts-mode . (lambda ()
-		      (setq-local indent-tabs-mode t)
-		      (setq-local tab-width 4)
-		      (setq-local py-indent-tabs-mode t))))
+  ((python-ts-mode . (lambda ()
+                       (setq-local indent-tabs-mode t)
+                       (setq-local tab-width 4)
+                       (setq-local py-indent-tabs-mode t)))
+   (python-ts-mode . eglot-ensure))
+  :config
+  (add-to-list 'eglot-server-programs '(python-ts-mode . ("pyright-langserver" "--stdio"))))
 
 (use-package pyenv-mode
-  :after python
   :ensure t
   :config
   (when (executable-find "pyenv")
@@ -1055,19 +1110,23 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :hook ((python-mode
           python-ts-mode) . zeds/python-pyenv-mode-set-auto-h))
 
-;; RUST
-(use-package rustic
+;;; RUST
+(use-package rust-ts-mode
   :ensure t
-  :mode ("\\.rs\\'" . rustic-mode)
-  :init
-  (setq rust-mode-treesitter-derive t)
-  :config (setq rustic-lsp-client 'eglot))
+  :after (eglot)
+  :mode ("\\.rs\\'" . rust-ts-mode)
+  :hook ((rust-ts-mode . eglot-ensure)
+	       (rust-ts-mode . (lambda ()
+			                     (eglot-inlay-hints-mode -1))))
+  :config
+  (add-to-list 'eglot-server-programs '(rust-ts-mode . ("rust-analyzer"))))
 
-;; WEB
+
+;;; WEB
 (use-package js2-mode
   :ensure t)
 
-;; LISP
+;;; LISP
 (use-package lispy
   :ensure t
   :general
@@ -1090,15 +1149,15 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   ;; TODO play around with keythemes
   (lispyville-set-key-theme '(operators c-w additional)))
 
-;; TOOLING
+;;; TOOLING
 
-;; RegEX
+;;; RegEX
 (use-package re-builder
   :general (zeds/leader-keys
             "se" '(regexp-builder :wk "regex builder"))
   :config (setq reb-re-syntax 'rx))
 
-;; SEARCHING
+;;; SEARCHING
 (use-package deadgrep
   :ensure t
   :demand t
@@ -1106,21 +1165,21 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (zeds/leader-keys
    "sd" '(deadgrep :wk "deadgrep")))
 
-;; HTTP SERVER
+;;; HTTP SERVER
 (use-package simple-httpd
   :ensure t
   :commands httpd-serve-directory)
 
-;; ESHELL
+;;; ESHELL
 (use-package eshell
   :general
   (zeds/leader-keys
-   "oe" '(eshell :wk "eshell")))
+    "oe" '(eshell :wk "eshell")))
 
-;; COLORS
+;;; COLORS
 (use-package rainbow-mode :ensure t)
 
-;; SNIPPETS
+;;; SNIPPETS
 (use-package yasnippet
   :ensure t
   :config
@@ -1128,8 +1187,8 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (add-to-list 'yas-snippet-dirs "~/.config/emacs/snippets")
   (yas-global-mode 1))
 
-;; CHECKERS
-;; Flymake over flycheck
+;;; CHECKERS
+;;; Flymake over flycheck
 (use-package flymake
   :general
   (zeds/leader-keys
@@ -1151,12 +1210,12 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :config
   (recursion-indicator-mode))
 
-;; PROJECT.EL
+;;; PROJECT.EL
 (use-package project
   :general
   ;; assign built-in project.el bindings a new prefix
   (zeds/leader-keys "p" '(:keymap project-prefix-map :wk "project")))
-
+;;; DIRED
 (use-package dired
   :general
   (zeds/leader-keys
@@ -1178,7 +1237,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :demand t)
 
 
-;; MARKDOWN
+;;; MARKDOWN
 (use-package markdown-mode
   :ensure t
   :hook ((markdown-mode . visual-line-mode)
@@ -1191,8 +1250,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :init
   (setq markdown-command "pandoc")
   (setq markdown-header-scaling t))
-:
-
+;;; MAGIT
 (use-package magit
   :ensure t
   :general
@@ -1200,7 +1258,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
    "g" '(:ignore t :wk "git")
    "gg" '(magit-status :wk "status")))
 
-;; PDF SUPPORT
+;;; PDF SUPPORT
 (use-package pdf-tools
   :ensure t
   :defer t
@@ -1221,6 +1279,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (require 'pdf-sync)
   (pdf-tools-install))
 
+;;; JINX
 (use-package jinx
   :ensure t
   :demand t
