@@ -100,6 +100,9 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 ;;; CONFIGURE EMACS
 (use-package emacs
   :demand t
+  :hook
+  ((prog-mode . hl-line-mode)
+   (text-mode . hl-line-mode))
   :init
   ;; BASICS
   (setq user-full-name "Zak Soliman"
@@ -117,7 +120,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
         ;; Don't persist a custom file
         custom-file (make-temp-file "") ; use a temp file as a placeholder
         custom-safe-themes t ; mark all themes as safe, since we can't persist now
-        enable-local-variables :all ; fix =defvar= warnings
+        enable-local-variables :all     ; fix =defvar= warnings
         ;; less noise when compiling elisp
         byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
         native-comp-async-report-warnings-errors nil
@@ -157,11 +160,10 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (show-paren-mode t)
   ;; Persist history over Emacs restarts.
   (savehist-mode 1)
-  (menu-bar-mode -1)             ;; disables menubar
-  (tool-bar-mode -1)             ;; disables toolbar
-  (scroll-bar-mode -1)           ;; disables scrollbar
+  (menu-bar-mode -1)              ;; disables menubar
+  (tool-bar-mode -1)              ;; disables toolbar
+  (scroll-bar-mode -1)            ;; disables scrollbar
   (pixel-scroll-precision-mode 1) ;; enable smooth scrolling
-  (recentf-mode 1)
   (global-auto-revert-mode 1)
 
   (add-to-list 'major-mode-remap-alist
@@ -188,7 +190,10 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (defalias 'yes-or-no-p 'y-or-n-p) ;; life is too short
 
   ;; BACKUP
-  (setq backup-by-copying t
+  (setq make-backup-files nil
+        auto-save-default nil
+        create-lockfiles nil
+        backup-by-copying t
         version-control t
         delete-old-versions t
         ;; keep backup and save files in a dedicated directory
@@ -218,6 +223,12 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq read-extended-command-predicate #'command-completion-default-include-p))
 ;; END EMACS DEFAULTS
 
+(use-package recentf
+  :config
+  (add-to-list 'recentf-exclude "\\elpa")
+  (add-to-list 'recentf-exclude "private/tmp")
+  (recentf-mode))
+
 ;;; THEME
 ;; https://protesilaos.com/emacs/standard-themes
 ;; (use-package ef-themes
@@ -236,7 +247,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :ensure t
   :config
   ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
+  (setq doom-themes-enable-bold t       ; if nil, bold is universally disabled
         doom-themes-enable-italic t)
                                         ; if nil, italics is universally disabled
   (load-theme 'doom-one t)
@@ -283,7 +294,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :ensure t
   :demand t
   :init
-  (setq evil-want-integration t  ;; For evil-collection
+  (setq evil-want-integration t ;; For evil-collection
         evil-want-keybinding nil ;; For evil-collection
         evil-vsplit-window-right t
         evil-split-window-below t
@@ -301,7 +312,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   ;; buffers in which I want to immediately start typing should be in 'insert' state by default.
   (evil-set-initial-state 'eshell-mode 'insert)
   (evil-set-initial-state 'magit-diff-mode 'insert)
-  ; Overload shifts so that they don't lose the selection
+                                        ; Overload shifts so that they don't lose the selection
   (define-key evil-visual-state-map (kbd ">") 'zeds/evil-shift-right-visual)
   (define-key evil-visual-state-map (kbd "<") 'zeds/evil-shift-left-visual)
 
@@ -324,12 +335,11 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :init
   (setq evil-collection-outline-bind-tab-p t) ;; '<TAB>' cycles visibility in 'outline-minor-mode'
   ;; If I want to incrementally enable evil-collection mode-by-mode, I can do something like the following:
-  (setq evil-collection-mode-list nil) ;; I don't like surprises
-  (add-to-list 'evil-collection-mode-list 'magit) ;; evilify magit
+  ;; (setq evil-collection-mode-list nil) ;; I don't like surprises
+  ;; (add-to-list 'evil-collection-mode-list 'magit) ;; evilify magit
   ;; (add-to-list 'evil-collection-mode-list '(pdf pdf-view)) ;; evilify pdf-view
   :config
-  (setq evil-collection-mode-list '(dashboard dired ibuffer))
-  (add-to-list 'evil-collection-mode-list 'magit 'compilation 'info)
+  ;; (setq evil-collection-mode-list '(dashboard dired ibuffer pdf magit compilation))
   (evil-collection-init))
 
 ;; https://github.com/linktohack/evil-commentary
@@ -1156,8 +1166,8 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :ensure t
   :config
   (defun turn-off-chrome ()
-    (hl-line-mode -1)
-    (display-line-numbers-mode -1))
+    (hl-line-mode nil)
+    (display-line-numbers-mode nil))
   :hook (vterm-mode . turn-off-chrome))
 
 (use-package vterm-toggle
@@ -1285,7 +1295,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :hook (TeX-after-compilation-finished . TeX-revert-document-buffer)
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :config
-  (require 'pdf-tools)
+  ;; (require 'pdf-tools)
   (require 'pdf-view)
   (require 'pdf-misc)
   (require 'pdf-occur)
@@ -1297,7 +1307,8 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (require 'pdf-links)
   (require 'pdf-outline)
   (require 'pdf-sync)
-  (pdf-tools-install))
+  (pdf-tools-install)
+  (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1))))
 
 ;;; JINX
 (use-package jinx
