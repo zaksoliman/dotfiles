@@ -70,84 +70,110 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (save-excursion
     (while (ignore-errors (windmove-left)) (delete-window))
     (while (ignore-errors (windmove-right)) (delete-window))))
+
+
+(defun zeds/macos-open-with (&optional app-name path)
+  "Send PATH to APP-NAME on OSX."
+  (interactive)
+  (let* ((path (expand-file-name
+                (replace-regexp-in-string
+                 "'" "\\'"
+                 (or path (if (derived-mode-p 'dired-mode)
+                              (dired-get-file-for-visit)
+                            (buffer-file-name)))
+                 nil t)))
+         (command (format "open %s"
+                          (if app-name
+                              (format "-a %s '%s'" (shell-quote-argument app-name) path)
+                            (format "'%s'" path)))))
+    (message "Running: %s" command)
+    (shell-command command)))
+
+(defun zeds/macos-reveal-in-finder ()
+  (interactive)
+  (zeds/macos-open-with "Finder" default-directory))
+
+;; ;;;###autoload (autoload '+macos/reveal-project-in-finder "os/macos/autoload" nil t)
+;; (zeds/macos--open-with reveal-project-in-finder "Finder"
+;;                    (or (doom-project-root) default-directory))
 ;; END FUNCTION DEFINITIONS
 
 ;; CONFIGURE EMACS
 (use-package emacs
   :demand t
   :init
-	;; BASICS
-	(setq user-full-name "Zak Soliman"
-				user-mail-address "zakaria.soliman1@gmail.com"
-				enable-recursive-minibuffers t
-				show-trailing-whitespace t
-				sentence-end-double-space nil
-				frame-inhibit-implied-resize t ;; useless for a tiling window manager
-				global-auto-revert-non-file-buffers t ;; Revert Dired and other buffers:
-				create-lockfiles nil
-				delete-by-moving-to-trash t ;; use trash-cli rather than rm when deleting files.
-				mouse-wheel-progressive-speed nil
-				scroll-conservatively 101
-				display-line-numbers-type 'relative
-				;; Don't persist a custom file
-				custom-file (make-temp-file "") ; use a temp file as a placeholder
-				custom-safe-themes t ; mark all themes as safe, since we can't persist now
-				enable-local-variables :all	; fix =defvar= warnings
-				;; less noise when compiling elisp
-				byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
-				native-comp-async-report-warnings-errors nil
-				load-prefer-newer t
+  ;; BASICS
+  (setq user-full-name "Zak Soliman"
+	user-mail-address "zakaria.soliman1@gmail.com"
+	enable-recursive-minibuffers t
+	show-trailing-whitespace t
+	sentence-end-double-space nil
+	frame-inhibit-implied-resize t ;; useless for a tiling window manager
+	global-auto-revert-non-file-buffers t ;; Revert Dired and other buffers:
+	create-lockfiles nil
+	delete-by-moving-to-trash t ;; use trash-cli rather than rm when deleting files.
+	mouse-wheel-progressive-speed nil
+	scroll-conservatively 101
+	display-line-numbers-type 'relative
+	;; Don't persist a custom file
+	custom-file (make-temp-file "") ; use a temp file as a placeholder
+	custom-safe-themes t ; mark all themes as safe, since we can't persist now
+	enable-local-variables :all	; fix =defvar= warnings
+	;; less noise when compiling elisp
+	byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
+	native-comp-async-report-warnings-errors nil
+	load-prefer-newer t
         ;; Enable tab completion (see `corfu`)
         tab-always-indent 'complete)
 
-	;; Modes I want by default
+  ;; Modes I want by default
   (column-number-mode 1)
   (global-display-line-numbers-mode 1)
   (global-visual-line-mode t)
   (show-paren-mode t)
   ;; Persist history over Emacs restarts.
   (savehist-mode 1)
-	(menu-bar-mode -1)              ;; disables menubar
-	(tool-bar-mode -1)              ;; disables toolbar
-	(scroll-bar-mode -1)            ;; disables scrollbar
-	(pixel-scroll-precision-mode 1) ;; enable smooth scrolling
-	(recentf-mode 1)
-	(global-auto-revert-mode 1)
+  (menu-bar-mode -1)              ;; disables menubar
+  (tool-bar-mode -1)              ;; disables toolbar
+  (scroll-bar-mode -1)            ;; disables scrollbar
+  (pixel-scroll-precision-mode 1) ;; enable smooth scrolling
+  (recentf-mode 1)
+  (global-auto-revert-mode 1)
 
   (add-to-list 'major-mode-remap-alist
-             '(python-mode . python-ts-mode))
+               '(python-mode . python-ts-mode))
 
   ;; TABS
-	(setq-default tab-width 2
+  (setq-default tab-width 2
                 indent-tabs-mode nil)
   ;; indent-line-function 'insert-tab
-	;; (setq indent-tabs-mode nil
-	;; 			  ;; Enable indentation+completion using the TAB key.
-	;; 			  ;; `completion-at-point' is often bound to M-TAB.
-	;; 			;; tab-always-indent 'complete
-	;; 			)
+  ;; (setq indent-tabs-mode nil
+  ;; 			  ;; Enable indentation+completion using the TAB key.
+  ;; 			  ;; `completion-at-point' is often bound to M-TAB.
+  ;; 			;; tab-always-indent 'complete
+  ;; 			)
 
-	;; COMPLETION
-	;; TAB cycle if there are only few candidates
+  ;; COMPLETION
+  ;; TAB cycle if there are only few candidates
   ;; (setq completion-cycle-threshold 3)
 
-	;; ALIASES
-	(defalias 'yes-or-no-p 'y-or-n-p) ;; life is too short
+  ;; ALIASES
+  (defalias 'yes-or-no-p 'y-or-n-p) ;; life is too short
 
-	;; BACKUP
+  ;; BACKUP
   (setq backup-by-copying t
-				version-control t
-				delete-old-versions t
-				;; keep backup and save files in a dedicated directory
-				backup-directory-alist
-				`((".*" . ,(concat user-emacs-directory "backups")))
-				auto-save-file-name-transforms
-				`((".*" ,(concat user-emacs-directory "backups") t)))
+	version-control t
+	delete-old-versions t
+	;; keep backup and save files in a dedicated directory
+	backup-directory-alist
+	`((".*" . ,(concat user-emacs-directory "backups")))
+	auto-save-file-name-transforms
+	`((".*" ,(concat user-emacs-directory "backups") t)))
 
 
-	;; TEXT
+  ;; TEXT
   (set-charset-priority 'unicode) ;; utf8 everywhere
-	(set-terminal-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8)
   (set-keyboard-coding-system 'utf-8)
   (set-selection-coding-system 'utf-8)
   (prefer-coding-system 'utf-8)
@@ -155,9 +181,9 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (setq locale-coding-system 'utf-8
         coding-system-for-read 'utf-8
         coding-system-for-write 'utf-8
-				default-process-coding-system '(utf-8-unix . utf-8-unix))
+	default-process-coding-system '(utf-8-unix . utf-8-unix))
 
-	;; GLOBAL KEY BINDINGS
+  ;; GLOBAL KEY BINDINGS
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ;; escape quits everything
 
 
@@ -180,7 +206,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 ;;  :init (doom-modeline-mode 1))
 
 (use-package doom-themes
-	:ensure t
+  :ensure t
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
@@ -195,9 +221,9 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (doom-themes-org-config))
 
 (use-package solaire-mode
-	:ensure t
-	:config
-	(solaire-global-mode 1))
+  :ensure t
+  :config
+  (solaire-global-mode 1))
 
 (use-package doom-modeline
   :ensure t
@@ -334,57 +360,58 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   ;;   "zr" ( :wk "Reload emacs configs"))
 
   (zeds/leader-keys
-    "SPC" '(execute-extended-command :wk "execute command") ;; an alternative to 'M-x'
-    "TAB" '(:keymap tab-prefix-map :wk "tab")) ;; remap tab bindings
+   "SPC" '(execute-extended-command :wk "execute command") ;; an alternative to 'M-x'
+   "TAB" '(:keymap tab-prefix-map :wk "tab")) ;; remap tab bindings
 
   (zeds/leader-keys
-    "w" '(:keymap evil-window-map :wk "window")
-    "wm" '(:ignore t  :wk "maximize")
-    "wmm" '(zeds/window-maximize-buffer :wk "maximize")
-    "wms" '(zeds/window-maximize-horizontally :wk "maximize horizontally")
-    "wmv" '(zeds/window-maximize-vertically :wk "maximize vertically")) ;; window bindings
+   "w" '(:keymap evil-window-map :wk "window")
+   "wm" '(:ignore t  :wk "maximize")
+   "wmm" '(zeds/window-maximize-buffer :wk "maximize")
+   "wms" '(zeds/window-maximize-horizontally :wk "maximize horizontally")
+   "wmv" '(zeds/window-maximize-vertically :wk "maximize vertically")) ;; window bindings
 
   ;; help
   ;; namespace mostly used by 'helpful'
   (zeds/leader-keys
-    "h" '(:ignore t :wk "help"))
+   "h" '(:ignore t :wk "help"))
 
   ;; file
   (zeds/leader-keys
-    "f" '(:ignore t :wk "file")
-    "ff" '(find-file :wk "find file") ;; gets overridden by consult
-    "fs" '(save-buffer :wk "save file")
-		"fr" '(recentf :wk "recent files"))
+   "f" '(:ignore t :wk "file")
+   "ff" '(find-file :wk "find file") ;; gets overridden by consult
+   "fs" '(save-buffer :wk "save file")
+   "fr" '(recentf :wk "recent files"))
 
   ;; buffer
   ;; see 'bufler' and 'popper'
   (zeds/leader-keys
-    "b" '(:ignore t :wk "buffer")
-    "bb" '(switch-to-buffer :wk "switch buffer") ;; gets overridden by consult
-    "bk" '(kill-this-buffer :wk "kill this buffer")
-    "br" '(revert-buffer :wk "reload buffer")
-    "bp" '(previous-buffer :wk "previous buffer")
-    "bn" '(next-buffer :wk "next buffer"))
+   "b" '(:ignore t :wk "buffer")
+   "bb" '(switch-to-buffer :wk "switch buffer") ;; gets overridden by consult
+   "bk" '(kill-this-buffer :wk "kill this buffer")
+   "br" '(revert-buffer :wk "reload buffer")
+   "bp" '(previous-buffer :wk "previous buffer")
+   "bn" '(next-buffer :wk "next buffer"))
 
   ;; universal argument
   (zeds/leader-keys
-    "u" '(universal-argument :wk "universal prefix"))
+   "u" '(universal-argument :wk "universal prefix"))
 
   ;; ;; notes
   ;; ;; see 'citar' and 'org-roam'
   (zeds/leader-keys
-    "n" '(:ignore t :wk "notes")
-    ;; see org-roam and citar sections
-    "na" '(org-todo-list :wk "agenda todos")) ;; agenda
+   "n" '(:ignore t :wk "notes")
+   ;; see org-roam and citar sections
+   "na" '(org-todo-list :wk "agenda todos")) ;; agenda
 
   ;; ;; code
   ;; see 'flymake'
   (zeds/leader-keys
-    "c" '(:ignore t :wk "code"))
+   "c" '(:ignore t :wk "code"))
 
   ;; open
   (zeds/leader-keys
     "o" '(:ignore t :wk "open")
+    "of" '(zeds/macos-reveal-in-finder :wk "open in finder")
     "os" '(speedbar t :wk "speedbar")
     "op" '(elpaca-log t :wk "elpaca"))
 
@@ -392,7 +419,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   ;; ;; search
   ;; ;; see 'consult'
   (zeds/leader-keys
-    "s" '(:ignore t :wk "search"))
+   "s" '(:ignore t :wk "search"))
 
   ;; ;; templating
   ;; ;; see 'tempel'
@@ -415,7 +442,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (which-key-setup-minibuffer))
 ;; END WHICH-KEY
 
-  ;; AVY
+;; AVY
 (use-package avy
   :demand t
   :init
@@ -454,22 +481,22 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 ;; END AVY
 
 
-  ;; COMPLETION - VERTICO/CONSULT
-  ;; Enable vertico
+;; COMPLETION - VERTICO/CONSULT
+;; Enable vertico
 (use-package vertico
   :demand t
   :ensure t
   :custom
-    ;; (vertico-scroll-margin 0) ;; Different scroll margin
+  ;; (vertico-scroll-margin 0) ;; Different scroll margin
   (vertico-count 20) ;; Show more candidates
-    ;; (vertico-resize t) ;; Grow and shrink the Vertico minibuffer
+  ;; (vertico-resize t) ;; Grow and shrink the Vertico minibuffer
   (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
   :init
   (vertico-mode)
   (setq vertico-cycle t) ;; enable cycling for 'vertico-next' and 'vertico-prev'
   :general
   (:keymaps 'vertico-map
-              ;; keybindings to cycle through vertico results.
+            ;; keybindings to cycle through vertico results.
             "C-j" 'vertico-next
             "C-k" 'vertico-previous
             "C-f" 'vertico-exit
@@ -534,7 +561,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 (use-package cape
   :ensure t
   :demand t
-    ;; bindings for dedicated completion commands
+  ;; bindings for dedicated completion commands
   :general
   ("M-p p" 'completion-at-point ;; capf
    "M-p t" 'complete-tag        ;; etags
@@ -569,30 +596,30 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :demand t
   :general
   (zeds/leader-keys
-		"bb" '(consult-buffer :wk "consult buffer")
-		"Bb" '(consult-bookmark :wk "consult bookmark")
-		"ht" '(consult-theme :wk "consult theme")
-		"sr" '(consult-ripgrep :wk "consult rg")
-		"sg" '(consult-grep :wk "consult grep")
-		"sG" '(consult-git-grep :wk "consult git grep")
-		"sf" '(consult-find :wk "consult find")
-		"sF" '(consult-locate :wk "consult locate")
-		"sl" '(consult-line :wk "consult line")
-		"sy" '(consult-yank-from-kill-ring :wk "consult yank from kill ring")
-		"i" '(consult-imenu :wk "consult imenu"))
+   "bb" '(consult-buffer :wk "consult buffer")
+   "Bb" '(consult-bookmark :wk "consult bookmark")
+   "ht" '(consult-theme :wk "consult theme")
+   "sr" '(consult-ripgrep :wk "consult rg")
+   "sg" '(consult-grep :wk "consult grep")
+   "sG" '(consult-git-grep :wk "consult git grep")
+   "sf" '(consult-find :wk "consult find")
+   "sF" '(consult-locate :wk "consult locate")
+   "sl" '(consult-line :wk "consult line")
+   "sy" '(consult-yank-from-kill-ring :wk "consult yank from kill ring")
+   "i" '(consult-imenu :wk "consult imenu"))
   :config
-          ;; use project.el to retrieve the project root
+  ;; use project.el to retrieve the project root
   (setq consult-project-root-function
         (lambda ()
           (when-let (project (project-current))
             (car (project-roots project)))))
   :hook (completion-list-mode . consult-preview-at-point-mode)
 
-          ;; The :init configuration is always executed (Not lazy)
+  ;; The :init configuration is always executed (Not lazy)
   :init
-          ;; Optionally configure the register formatting. This improves the register
-          ;; preview for `consult-register', `consult-register-load',
-          ;; `consult-register-store' and the Emacs built-ins.
+  ;; Optionally configure the register formatting. This improves the register
+  ;; preview for `consult-register', `consult-register-load',
+  ;; `consult-register-store' and the Emacs built-ins.
   (setq register-preview-delay 0.5
         register-preview-function #'consult-register-format))
 ;; END CONSULT
@@ -636,8 +663,8 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :after orderless
   :general
   (zeds/leader-keys
-    "sa" '(affe-grep :wk "affe grep")
-    "sw" '(affe-find :wk "affe find"))
+   "sa" '(affe-grep :wk "affe grep")
+   "sw" '(affe-find :wk "affe find"))
   :init
   (defun affe-orderless-regexp-compiler (input _type _ignorecase)
     (setq input (orderless-pattern-compiler input))
@@ -711,26 +738,26 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   ;; (org-cite-activate-processor 'citar)
   ;; :general
   (zeds/local-leader-keys
-    :keymaps 'org-mode-map
-    "a" '(org-archive-subtree :wk "archive")
-    "c" '(org-cite-insert :wk "insert citation")
-    "l" '(:ignore t :wk "link")
-    "ll" '(org-insert-link t :wk "link")
-    "lp" '(org-latex-preview t :wk "prev latex")
-    "h" '(consult-org-heading :wk "consult heading")
-    "d" '(org-cut-special :wk "org cut special")
-    "y" '(org-copy-special :wk "org copy special")
-    "p" '(org-paste-special :wk "org paste special")
-    "b" '(:keymap org-babel-map :wk "babel")
-    "t" '(org-todo :wk "todo")
-    "s" '(org-insert-structure-template :wk "template")
-    "e" '(org-edit-special :wk "edit")
-    "i" '(:ignore t :wk "insert")
-    "ih" '(org-insert-heading :wk "insert heading")
-    "is" '(org-insert-subheading :wk "insert heading")
-    "f" '(org-footnote-action :wk "footnote action")
-    ">" '(org-demote-subtree :wk "demote subtree")
-    "<" '(org-promote-subtree :wk "demote subtree"))
+   :keymaps 'org-mode-map
+   "a" '(org-archive-subtree :wk "archive")
+   "c" '(org-cite-insert :wk "insert citation")
+   "l" '(:ignore t :wk "link")
+   "ll" '(org-insert-link t :wk "link")
+   "lp" '(org-latex-preview t :wk "prev latex")
+   "h" '(consult-org-heading :wk "consult heading")
+   "d" '(org-cut-special :wk "org cut special")
+   "y" '(org-copy-special :wk "org copy special")
+   "p" '(org-paste-special :wk "org paste special")
+   "b" '(:keymap org-babel-map :wk "babel")
+   "t" '(org-todo :wk "todo")
+   "s" '(org-insert-structure-template :wk "template")
+   "e" '(org-edit-special :wk "edit")
+   "i" '(:ignore t :wk "insert")
+   "ih" '(org-insert-heading :wk "insert heading")
+   "is" '(org-insert-subheading :wk "insert heading")
+   "f" '(org-footnote-action :wk "footnote action")
+   ">" '(org-demote-subtree :wk "demote subtree")
+   "<" '(org-promote-subtree :wk "demote subtree"))
   (:keymaps 'org-agenda-mode-map
             "j" '(org-agenda-next-line)
             "h" '(org-agenda-previous-line))
@@ -769,7 +796,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :after org
   :general
   (zeds/leader-keys
-    "nt" '(org-transclusion-mode :wk "transclusion mode")))
+   "nt" '(org-transclusion-mode :wk "transclusion mode")))
 
 (use-package org-appear
   :ensure t
@@ -795,27 +822,27 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :config (global-org-modern-mode))
 ;; END ORG CONFIG
 
-          ;; ORG ROAM
+;; ORG ROAM
 (use-package org-roam
   :ensure t
   :demand t
   :general
   (zeds/leader-keys
-    "nr" '(:ignore t :wk "roam")
-    "nri" '(org-roam-node-insert t :wk "insert node")
-    "nrt" '(org-roam-buffer-toggle t :wk "roam buffer toggle")
-    "nrc" '(org-roam-capture t :wk "roam capture")
-    "nrf" '(org-roam-node-find :wk "find node")
-    "nrd" '(:ignore t :wk "dailies")
-    "nrdt" '(org-roam-dailies-goto-today :wk "today")
-    "nrdt" '(org-roam-dailies-goto-yesterday :wk "today")
-    "nrdT" '(org-roam-dailies-goto-tomorrow :wk "today")
-    "nrdd" '(org-roam-dailies-goto-date :wk "goto date"))
+   "nr" '(:ignore t :wk "roam")
+   "nri" '(org-roam-node-insert t :wk "insert node")
+   "nrt" '(org-roam-buffer-toggle t :wk "roam buffer toggle")
+   "nrc" '(org-roam-capture t :wk "roam capture")
+   "nrf" '(org-roam-node-find :wk "find node")
+   "nrd" '(:ignore t :wk "dailies")
+   "nrdt" '(org-roam-dailies-goto-today :wk "today")
+   "nrdt" '(org-roam-dailies-goto-yesterday :wk "today")
+   "nrdT" '(org-roam-dailies-goto-tomorrow :wk "today")
+   "nrdd" '(org-roam-dailies-goto-date :wk "goto date"))
   :init
   (setq org-roam-directory zeds/roam-notes-path
         org-roam-dailies-directory zeds/roam-dailies-path)
   :config
-            ;; org-roam-buffer
+  ;; org-roam-buffer
   (add-to-list 'display-buffer-alist
                '("\\*org-roam\\*"
                  (display-buffer-in-direction)
@@ -855,7 +882,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
                               "#+title: ${title}\n#+filetags: :project:draft:\n")
            :unnarrowed t)))
 
-            ;; get tags to show up in 'org-roam-node-find':
+  ;; get tags to show up in 'org-roam-node-find':
   (cl-defmethod org-roam-node-type ((node org-roam-node))
     "Return the TYPE of NODE."
     (condition-case nil
@@ -875,7 +902,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (org-roam-db-autosync-mode) ;; ensures that org-roam is available on startup
 
 
-            ;; dailies config
+  ;; dailies config
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry "* %<%I:%M %p>: %?"
            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
@@ -908,17 +935,17 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (add-hook 'TeX-mode-hook #'outline-minor-mode)
   :general
   (zeds/local-leader-keys
-    :keymaps 'LaTeX-mode-map
-    ;; "TAB" 'TeX-complete-symbol ;; FIXME let's 'TAB' do autocompletion (but it's kind of useless to be honest)
-    "=" '(reftex-toc :wk "reftex toc")
-    "(" '(reftex-latex :wk "reftex label")
-    ")" '(reftex-reference :wk "reftex ref")
-    "m" '(LaTeX-macro :wk "insert macro")
-    "s" '(LaTeX-section :wk "insert section header")
-    "e" '(LaTeX-environment :wk "insert environment")
-    "p" '(preview-at-point :wk "preview at point")
-    "f" '(TeX-font :wk "font")
-    "c" '(TeX-command-run-all :wk "compile")))
+   :keymaps 'LaTeX-mode-map
+   ;; "TAB" 'TeX-complete-symbol ;; FIXME let's 'TAB' do autocompletion (but it's kind of useless to be honest)
+   "=" '(reftex-toc :wk "reftex toc")
+   "(" '(reftex-latex :wk "reftex label")
+   ")" '(reftex-reference :wk "reftex ref")
+   "m" '(LaTeX-macro :wk "insert macro")
+   "s" '(LaTeX-section :wk "insert section header")
+   "e" '(LaTeX-environment :wk "insert environment")
+   "p" '(preview-at-point :wk "preview at point")
+   "f" '(TeX-font :wk "font")
+   "c" '(TeX-command-run-all :wk "compile")))
 
 (use-package evil-tex
   :ensure t
@@ -952,12 +979,12 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :demand t
   :general
   (zeds/leader-keys
-		"hc" '(helpful-command :wk "helpful command")
-		"hf" '(helpful-callable :wk "helpful callable")
-		"hh" '(helpful-at-point :wk "helpful at point")
-		"hF" '(helpful-function :wk "helpful function")
-		"hv" '(helpful-variable :wk "helpful variable")
-		"hk" '(helpful-key :wk "helpful key")))
+   "hc" '(helpful-command :wk "helpful command")
+   "hf" '(helpful-callable :wk "helpful callable")
+   "hh" '(helpful-at-point :wk "helpful at point")
+   "hF" '(helpful-function :wk "helpful function")
+   "hv" '(helpful-variable :wk "helpful variable")
+   "hk" '(helpful-key :wk "helpful key")))
 ;; END HELP
 
 ;; PROGRAMMING STUFF :CODE
@@ -967,12 +994,12 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :init (setq completion-category-overrides '((eglot (styles orderless))))
   :commands eglot
   :hook ((rust-mode
-					python-mode
+	  python-mode
           python-ts-mode) . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
   (add-to-list 'eglot-server-programs '(python-ts-mode . ("pyright-langserver" "--stdio")))
-	)
+  )
 ;; (add-to-list 'eglot-server-programs '(haskell-mode . ("haskell-language-server" "--lsp"))))
 ;; END EGLOT
 
@@ -1010,13 +1037,13 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 (use-package python
   :hook
   (python-mode . (lambda ()
-									 (setq-local indent-tabs-mode t)
-									 (setq-local tab-width 4)
-									 (setq-local py-indent-tabs-mode t)))
+		   (setq-local indent-tabs-mode t)
+		   (setq-local tab-width 4)
+		   (setq-local py-indent-tabs-mode t)))
   (python-ts-mode . (lambda ()
-									    (setq-local indent-tabs-mode t)
-									    (setq-local tab-width 4)
-									    (setq-local py-indent-tabs-mode t))))
+		      (setq-local indent-tabs-mode t)
+		      (setq-local tab-width 4)
+		      (setq-local py-indent-tabs-mode t))))
 
 (use-package pyenv-mode
   :after python
@@ -1032,6 +1059,8 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 (use-package rustic
   :ensure t
   :mode ("\\.rs\\'" . rustic-mode)
+  :init
+  (setq rust-mode-treesitter-derive t)
   :config (setq rustic-lsp-client 'eglot))
 
 ;; WEB
@@ -1066,7 +1095,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 ;; RegEX
 (use-package re-builder
   :general (zeds/leader-keys
-             "se" '(regexp-builder :wk "regex builder"))
+            "se" '(regexp-builder :wk "regex builder"))
   :config (setq reb-re-syntax 'rx))
 
 ;; SEARCHING
@@ -1075,7 +1104,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :demand t
   :general
   (zeds/leader-keys
-    "sd" '(deadgrep :wk "deadgrep")))
+   "sd" '(deadgrep :wk "deadgrep")))
 
 ;; HTTP SERVER
 (use-package simple-httpd
@@ -1086,7 +1115,7 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 (use-package eshell
   :general
   (zeds/leader-keys
-    "oe" '(eshell :wk "eshell")))
+   "oe" '(eshell :wk "eshell")))
 
 ;; COLORS
 (use-package rainbow-mode :ensure t)
@@ -1104,9 +1133,9 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 (use-package flymake
   :general
   (zeds/leader-keys
-    :keymaps 'flymake-mode-map
-    "cf" '(consult-flymake :wk "consult flymake") ;; depends on consult
-    "cc" '(flymake-mode :wk "toggle flymake")) ;; depends on consult
+   :keymaps 'flymake-mode-map
+   "cf" '(consult-flymake :wk "consult flymake") ;; depends on consult
+   "cc" '(flymake-mode :wk "toggle flymake")) ;; depends on consult
   :hook
   (TeX-mode . flymake-mode) ;; this is now working
   (emacs-lisp-mode . flymake-mode)
@@ -1131,14 +1160,14 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 (use-package dired
   :general
   (zeds/leader-keys
-		"dd" '(dired :wk "dired") ;; open dired (in a directory)
-		"dj" '(dired-jump :wk "dired jump")) ;; open direct in the current directory
+   "dd" '(dired :wk "dired") ;; open dired (in a directory)
+   "dj" '(dired-jump :wk "dired jump")) ;; open direct in the current directory
   ;; ranger like navigation
   (:keymaps 'dired-mode-map
-						:states 'normal
-						"h" 'dired-up-directory
-						"q" 'kill-current-buffer
-						"l" 'dired-find-file)
+   :states 'normal
+   "h" 'dired-up-directory
+   "q" 'kill-current-buffer
+   "l" 'dired-find-file)
   :hook
   (dired-mode . dired-hide-details-mode))
 
@@ -1168,8 +1197,8 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :ensure t
   :general
   (zeds/leader-keys
-		"g" '(:ignore t :wk "git")
-		"gg" '(magit-status :wk "status")))
+   "g" '(:ignore t :wk "git")
+   "gg" '(magit-status :wk "status")))
 
 ;; PDF SUPPORT
 (use-package pdf-tools
