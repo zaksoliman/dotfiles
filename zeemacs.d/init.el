@@ -46,11 +46,23 @@
 (defvar zeds/org-path (concat zeds/notes-path "org/")
   "Org path.")
 ;; END VARIABLES
-
 ;;; FUNCTION DEFINITIONS
+(defun zeds/open-init-dir ()
+  "Opens my emacs config directory."
+  (interactive)
+  (dired "~/dotfiles/zeemacs.d"))
+
+(defun zeds/open-init-file ()
+  "Open emacs init.el file."
+  (interactive)
+  (find-file "~/dotfiles/zeemacs.d/init.el"))
+
+(defun zeds/reload-init ()
+  (interactive)
+  (load-file "~/dotfiles/zeemacs.d/init.el"))
+
 (defun zeds/window-maximize-buffer (&optional arg)
-  "Close other windows to focus on this one.
-Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
+  "Close other windows to focus on this one."
   (interactive "P")
   (delete-other-windows))
 
@@ -69,7 +81,6 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (save-excursion
     (while (ignore-errors (windmove-left)) (delete-window))
     (while (ignore-errors (windmove-right)) (delete-window))))
-
 
 (defun zeds/macos-open-with (&optional app-name path)
   "Send PATH to APP-NAME on OSX."
@@ -97,12 +108,21 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 ;;                    (or (doom-project-root) default-directory))
 ;; END FUNCTION DEFINITIONS
 
+(defun zeds/setup-prog-modes ()
+  (display-line-numbers-mode 1)
+  (hl-line-mode 1))
+
+(defun zeds/setup-text-modes ()
+  (display-line-numbers-mode -1)
+  (hl-line-mode 1))
+
 ;;; CONFIGURE EMACS
 (use-package emacs
   :demand t
   :hook
-  ((prog-mode . hl-line-mode)
-   (text-mode . hl-line-mode))
+  ((prog-mode . zeds/setup-prog-modes)
+   (text-mode . zeds/setup-text-modes)
+   (vterm-mode . zeds/setup-text-modes))
   :init
   ;; BASICS
   (setq user-full-name "Zak Soliman"
@@ -155,11 +175,10 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 
   ;; Modes I want by default
   (column-number-mode 1)
-  (global-display-line-numbers-mode 1)
+  ;; (global-display-line-numbers-mode 1)
   (global-visual-line-mode t)
   (show-paren-mode t)
   ;; Persist history over Emacs restarts.
-  (savehist-mode 1)
   (menu-bar-mode -1)              ;; disables menubar
   (tool-bar-mode -1)              ;; disables toolbar
   (scroll-bar-mode -1)            ;; disables scrollbar
@@ -222,6 +241,12 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   ;; Hide commands in M-x which don't work in the current mode
   (setq read-extended-command-predicate #'command-completion-default-include-p))
 ;; END EMACS DEFAULTS
+
+(use-package saveplace
+  :init (save-place-mode 1))
+
+(use-package savehist
+  :init (savehist-mode 1))
 
 (use-package recentf
   :config
@@ -473,6 +498,12 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   (zeds/leader-keys
    "s" '(:ignore t :wk "search"))
 
+  ;; ;;Emacs Admin
+  (zeds/leader-keys
+    "e" '(:ignore t :wk "Emacs Admin")
+    "er" '(zeds/reload-init :wk "Reload configs")
+    "ei" '(zeds/open-init-file :wk "Open init file")
+    "ed" '(zeds/open-init-dir :wk "Open config directory"))
   ;; ;; templating
   ;; ;; see 'tempel'
   ;; (zeds/leader-keys
@@ -593,15 +624,24 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :demand t
   :hook
   (eval-expression-minibuffer-setup . corfu-mode)
+  ;; ((prog-mode . corfu-mode)
   :init
   (global-corfu-mode)
   :custom
   (corfu-cycle t)  ;; allows cycling through candidates
   (corfu-auto nil) ;; disables auto-completion
+  ;; (corfu-separator ?\s)          ;; Orderless field separator
+  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
+  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+  (corfu-scroll-margin 5)        ;; Use scroll margin
   :bind
   :general
   (:keymaps 'corfu-map
             "SPC" 'corfu-insert-separator)) ;; for compatibility with orderless
+
 ;;; keys unbound
 (general-unbind
   :ensure t
@@ -819,7 +859,8 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :hook
   ;; (org-mode . olivetti-mode)
   (org-mode . variable-pitch-mode)
-  (org-mode . (lambda () (electric-indent-local-mode -1))) ;; disable electric indentation
+  (org-mode . (lambda () (electric-indent-local-mode -1)
+                (display-line-numbers-mode -1))) ;; disable electric indentation
 
   :config
   (add-to-list 'org-latex-packages-alist '("" "braket" t))
@@ -1046,7 +1087,13 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 ;;; EGLOT LSP
 (use-package eglot
   :demand t
-  :init (setq completion-category-overrides '((eglot (styles orderless))))
+  :init
+  (setq completion-category-overrides '((eglot (styles orderless))))
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-noninterruptible)
+  (fset #'jsonrpc--log-event #'ignore)
+  (setq eglot-events-buffer-size 0)
+  (setq eglot-autoshutdown t)
   :commands eglot
   ;; :bind (:map eglot-mode-map
   ;;             ("<f6>" . eglot-format-buffer))
@@ -1129,7 +1176,12 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
 	       (rust-ts-mode . (lambda ()
 			                     (eglot-inlay-hints-mode -1))))
   :config
-  (add-to-list 'eglot-server-programs '(rust-ts-mode . ("rust-analyzer"))))
+  (add-to-list 'eglot-server-programs '(rust-ts-mode . ("rust-analyzer")))
+  :general
+  (zeds/local-leader-keys
+    :keymap eglot-mode-map
+    "h" '(eglot-inlay-hints-mode :wk "Display eglot hints"))
+  )
 
 
 ;;; WEB
@@ -1228,8 +1280,9 @@ Use `winner-undo' to undo this. Alternatively, use `doom/window-enlargen'."
   :hook
   (TeX-mode . flymake-mode) ;; this is now working
   (emacs-lisp-mode . flymake-mode)
-  :custom
-  (flymake-no-changes-timeout nil)
+  (prog-mode . flymake-mode)
+  ;; :init
+  ;; (flymake-no-changes-timeout nil)
   :general
   (general-nmap "] !" 'flymake-goto-next-error)
   (general-nmap "[ !" 'flymake-goto-prev-error))
