@@ -110,7 +110,8 @@
 
 (defun zeds/setup-prog-modes ()
   (display-line-numbers-mode 1)
-  (hl-line-mode 1))
+  (hl-line-mode 1)
+  (hs-minor-mode 1))
 
 (defun zeds/setup-text-modes ()
   (display-line-numbers-mode -1)
@@ -171,6 +172,8 @@
         truncate-string-ellipsis "…"
         ;; when I say to quit, I mean quit
         confirm-kill-processes nil
+        browse-url-firefox-program "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox"
+        browse-url-browser-function #'browse-url-firefox
         )
 
   ;; Modes I want by default
@@ -189,6 +192,8 @@
                '(python-mode . python-ts-mode))
   (add-to-list 'major-mode-remap-alist
                '(rust-mode . rust-ts-mode))
+  (add-to-list 'major-mode-remap-alist
+               '(c-mode . c-ts-mode))
 
   (setq-default fill-column 80)
   ;; TABS
@@ -467,7 +472,8 @@
    "bk" '(kill-this-buffer :wk "kill this buffer")
    "br" '(revert-buffer :wk "reload buffer")
    "bp" '(previous-buffer :wk "previous buffer")
-   "bn" '(next-buffer :wk "next buffer"))
+   "bn" '(next-buffer :wk "next buffer")
+   "bx" '(scratch-buffer :wk "Switch to scratch buffer"))
 
   ;; universal argument
   (zeds/leader-keys
