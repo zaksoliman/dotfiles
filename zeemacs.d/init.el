@@ -253,6 +253,9 @@
 (use-package savehist
   :init (savehist-mode 1))
 
+(use-package hideshow
+  :init (hs-minor-mode 1))
+
 (use-package recentf
   :config
   (add-to-list 'recentf-exclude "\\elpa")
