@@ -110,6 +110,7 @@
 
 (defun zeds/setup-prog-modes ()
   (display-line-numbers-mode 1)
+  (hs-minor-mode 1)
   (hl-line-mode 1)
   (hs-minor-mode 1))
 
@@ -188,6 +189,8 @@
   (pixel-scroll-precision-mode 1) ;; enable smooth scrolling
   (global-auto-revert-mode 1)
 
+  (add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
+
   (add-to-list 'major-mode-remap-alist
                '(python-mode . python-ts-mode))
   (add-to-list 'major-mode-remap-alist
@@ -252,9 +255,6 @@
 
 (use-package savehist
   :init (savehist-mode 1))
-
-(use-package hideshow
-  :init (hs-minor-mode 1))
 
 (use-package recentf
   :config
@@ -1161,6 +1161,7 @@
   :hook
   ((python-ts-mode . (lambda ()
                        (setq-local indent-tabs-mode t)
+                       (setq-local python-indent-offset 4)
                        (setq-local tab-width 4)
                        (setq-local py-indent-tabs-mode t)))
    (python-ts-mode . eglot-ensure))
@@ -1249,12 +1250,12 @@
   :config (setq reb-re-syntax 'rx))
 
 ;;; SEARCHING
-(use-package deadgrep
-  :ensure t
-  :demand t
-  :general
-  (zeds/leader-keys
-   "sd" '(deadgrep :wk "deadgrep")))
+;; (use-package deadgrep
+;;   :ensure t
+;;   :demand t
+;;   :general
+;;   (zeds/leader-keys
+;;    "sd" '(deadgrep :wk "deadgrep")))
 
 ;;; HTTP SERVER
 (use-package simple-httpd
