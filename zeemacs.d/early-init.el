@@ -18,9 +18,38 @@
 ;;
 ;;
 ;;; Code:
-;; minimal UI
+
+;; Startup speed, annoyance suppression
+(setq gc-cons-threshold 10000000)
+(setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
+;; (setq byte-compile-warnings '(not obsolete))
+(setq warning-suppress-log-types '((comp) (bytecomp)))
+ ;; less noise when compiling elisp
+(setq native-comp-async-report-warnings-errors 'silent)
 
 (setq inhibit-splash-screen t) ;; no thanks
+
+;; Silence stupid startup message
+(setq inhibit-startup-echo-area-message (user-login-name))
+
+;; Default frame configuration: full screen, good-looking title bar on macOS
+(setq frame-resize-pixelwise t)
+(menu-bar-mode -1)              ;; disables menubar
+
+(tool-bar-mode -1)                      ; All these tools are in the menu-bar anyway
+(setq default-frame-alist '((fullscreen . maximized)
+
+                            ;; You can turn off scroll bars by uncommenting these lines:
+                            ;; (vertical-scroll-bars . nil)
+                            ;; (horizontal-scroll-bars . nil)
+
+                            ;; Setting the face in here prevents flashes of
+                            ;; color as the theme gets activated
+                            (background-color . "#000000")
+                            (foreground-color . "#ffffff")
+                            (ns-appearance . dark)
+                            (ns-transparent-titlebar . t)))
+
 ;;use-file-dialog nil ;; don't use system file dialog
 ;;tab-bar-new-button-show nil ;; don't show new tab button
 ;;tab-bar-close-button-show nil ;; don't show tab close button

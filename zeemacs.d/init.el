@@ -27,8 +27,6 @@
   :config (when (memq window-system '(mac ns x))
             (exec-path-from-shell-initialize))
   )
-;;; GLOBALS
-(setq gc-cons-threshold 100000000)
 
 ;;; VARIABLES
 (defvar zeds/library-path "~/Documents/Library of Alexandria/"
@@ -143,9 +141,6 @@
         custom-file (make-temp-file "") ; use a temp file as a placeholder
         custom-safe-themes t ; mark all themes as safe, since we can't persist now
         enable-local-variables :all     ; fix =defvar= warnings
-        ;; less noise when compiling elisp
-        byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
-        native-comp-async-report-warnings-errors nil
         load-prefer-newer t
         ;; Enable tab completion (see `corfu`)
         tab-always-indent 'complete
@@ -175,6 +170,7 @@
         confirm-kill-processes nil
         browse-url-firefox-program "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox"
         browse-url-browser-function #'browse-url-firefox
+        treesit-font-lock-level 4
         )
 
   ;; Modes I want by default
@@ -183,8 +179,6 @@
   (global-visual-line-mode t)
   (show-paren-mode t)
   ;; Persist history over Emacs restarts.
-  (menu-bar-mode -1)              ;; disables menubar
-  (tool-bar-mode -1)              ;; disables toolbar
   (scroll-bar-mode -1)            ;; disables scrollbar
   (pixel-scroll-precision-mode 1) ;; enable smooth scrolling
   (global-auto-revert-mode 1)
@@ -272,9 +266,15 @@
 ;;   )
 
 ;; Modeline
-;;(use-package doom-modeline
-;;  :ensure t
-;;  :init (doom-modeline-mode 1))
+(use-package mood-line
+  :ensure t
+  ;; Enable mood-line
+  :config
+  (mood-line-mode)
+
+  ;; Use pretty Fira Code-compatible glyphs
+  :custom
+  (mood-line-glyph-alist mood-line-glyphs-fira-code))
 
 (use-package doom-themes
   :ensure t
@@ -296,9 +296,9 @@
   :config
   (solaire-global-mode 1))
 
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :hook (after-init . doom-modeline-mode))
 
 ;;; ICONS
 (use-package all-the-icons
@@ -1162,7 +1162,6 @@
   ((python-ts-mode . (lambda ()
                        (setq-local indent-tabs-mode t)
                        (setq-local python-indent-offset 4)
-                       (setq-local tab-width 4)
                        (setq-local py-indent-tabs-mode t)))
    (python-ts-mode . eglot-ensure))
   :config
