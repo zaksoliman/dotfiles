@@ -20,6 +20,7 @@
 ;;; Code:
 
 ;; Startup speed, annoyance suppression
+;; (setq use-package-always-defer t)
 (setq gc-cons-threshold 10000000)
 (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
 ;; (setq byte-compile-warnings '(not obsolete))
