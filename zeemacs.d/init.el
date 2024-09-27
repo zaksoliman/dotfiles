@@ -1095,8 +1095,8 @@
   (setq completion-category-overrides '((eglot (styles orderless))))
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-noninterruptible)
-  (fset #'jsonrpc--log-event #'ignore)
-  (setq eglot-events-buffer-size 0)
+  ;; (fset #'jsonrpc--log-event #'ignore)
+  ;; (setq eglot-events-buffer-size 0)
   (setq eglot-autoshutdown t)
   :commands eglot
   ;; :bind (:map eglot-mode-map
@@ -1107,7 +1107,19 @@
     "cr" '(eglot-rename :wk "rename symbol")
     "ca" '(eglot-code-actions :wk "code actions")
     "cfd" '(xref-find-definitions-other-window :wk "find definitions")
-    "cfr" '(xref-find-references :wk "find references")))
+    "cfr" '(xref-find-references :wk "find references"))
+  :config
+  (setq-default eglot-workspace-configuration
+                '(
+                  (:pylsp . (:configurationSources ["pycodestyle"]
+                             :plugins (:black (:enabled t
+                                               :line_length 88
+                                               :cache_config t)
+                                       :pylsp_mypy (:enabled :json-false
+                                                     :ignore_missing_imports t
+                                                     :strict nil)
+                                        ;; TODO: Figure out how to get the virtual env dir dynamically
+                                       :jedi (:environment "/Users/zakaria/.pyenv/versions/3.11.10/envs/event-platform")))))))
 
 ;;; PYTHON
 (defun zeds/pyenv-mode-versions ()
