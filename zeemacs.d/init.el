@@ -184,7 +184,8 @@
   (global-auto-revert-mode 1)
 
   (add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
-
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
   (add-to-list 'major-mode-remap-alist
                '(python-mode . python-ts-mode))
   (add-to-list 'major-mode-remap-alist
@@ -925,7 +926,6 @@
   :ensure t
   :after org
   :config (global-org-modern-mode))
-;; END ORG CONFIG
 
 ;;; ORG ROAM
 (use-package org-roam
@@ -1011,7 +1011,6 @@
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry "* %<%I:%M %p>: %?"
            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
-;; END ORG ROAM
 
 ;;;  LATEX
 (use-package auctex
@@ -1062,8 +1061,6 @@
   :config
   (unbind-key "M-n" 'evil-tex-mode-map)) ;; interfering with jinx
 
-;; END LATEX
-
 ;;; ELECTRIC
 (use-package electric
   :demand t
@@ -1071,13 +1068,12 @@
   (electric-pair-mode 1) ;; automatically insert closing parens
   ;; (electric-indent-mode 1)
   (setq electric-pair-preserve-balance nil)) ;; more annoying than useful
-;; END ELECTRIC
 
 (use-package ediff
   :demand t
   )
 
-;;; HELP
+;;; HELP (helpful)
 (use-package helpful
   :ensure t
   :demand t
@@ -1089,7 +1085,6 @@
    "hF" '(helpful-function :wk "describe function")
    "hv" '(helpful-variable :wk "describe variable")
    "hk" '(helpful-key :wk "describe key")))
-;; END HELP
 
 ;;; PROGRAMMING STUFF :CODE
 
@@ -1113,7 +1108,6 @@
     "ca" '(eglot-code-actions :wk "code actions")
     "cfd" '(xref-find-definitions-other-window :wk "find definitions")
     "cfr" '(xref-find-references :wk "find references")))
-;; END EGLOT
 
 ;;; PYTHON
 (defun zeds/pyenv-mode-versions ()
@@ -1160,12 +1154,11 @@
 (use-package python-ts-mode
   :hook
   ((python-ts-mode . (lambda ()
-                       (setq-local indent-tabs-mode t)
+                       (setq-local indent-tabs-mode nil)
                        (setq-local python-indent-offset 4)
                        (setq-local py-indent-tabs-mode t)))
    (python-ts-mode . eglot-ensure))
-  :config
-  (add-to-list 'eglot-server-programs '(python-ts-mode . ("pyright-langserver" "--stdio"))))
+  )
 
 (use-package pyenv-mode
   :ensure t
@@ -1371,6 +1364,14 @@
   (require 'pdf-sync)
   (pdf-tools-install)
   (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1))))
+
+(use-package pdf-view-restore
+  :ensure t
+  :after pdf-tools
+  :config
+  (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
+  :init
+  (setq pdf-view-restore-filename "~/.pdf-view-restore"))
 
 ;;; JINX
 (use-package jinx
