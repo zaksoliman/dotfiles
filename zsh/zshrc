@@ -130,3 +130,6 @@ export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="$HOME/.local/Emacs.app/Contents/MacOS/bin:$PATH"
 export PATH="$HOME/.local/Emacs/Emacs.app/Contents/MacOS/bin:$PATH"
 export PATH="$HOME/.emacs.d/bin:$PATH"
+
+# Created by `pipx` on 2024-10-04 19:23:08
+export PATH="$PATH:/Users/zakaria/.local/bin"
