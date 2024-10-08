@@ -146,7 +146,7 @@
         tab-always-indent 'complete
         initial-scratch-message nil
         ring-bell-function 'ignore
-                                        ; Save existing clipboard text into the kill ring before replacing it.
+        ;; Save existing clipboard text into the kill ring before replacing it.
         save-interprogram-paste-before-kill t
         ;; Prompts should go in the minibuffer, not in a GUI.
         use-dialog-box nil
@@ -176,8 +176,8 @@
   ;; Modes I want by default
   (column-number-mode 1)
   ;; (global-display-line-numbers-mode 1)
-  (global-visual-line-mode t)
-  (show-paren-mode t)
+  (global-visual-line-mode 1)
+  (show-paren-mode 1)
   ;; Persist history over Emacs restarts.
   (scroll-bar-mode -1)            ;; disables scrollbar
   (pixel-scroll-precision-mode 1) ;; enable smooth scrolling
@@ -1089,6 +1089,8 @@
 ;;; PROGRAMMING STUFF :CODE
 
 ;;; EGLOT LSP
+
+
 (use-package eglot
   :demand t
   :init
@@ -1108,20 +1110,14 @@
     "ca" '(eglot-code-actions :wk "code actions")
     "cfd" '(xref-find-definitions-other-window :wk "find definitions")
     "cfr" '(xref-find-references :wk "find references"))
-  :config
-  (setq-default eglot-workspace-configuration
-                '(
-                  (:pylsp . (:configurationSources ["pycodestyle"]
-                             :plugins (:black (:enabled t
-                                               :line_length 88
-                                               :cache_config t)
-                                       :pylsp_mypy (:enabled :json-false
-                                                     :ignore_missing_imports t
-                                                     :strict nil)
-                                        ;; TODO: Figure out how to get the virtual env dir dynamically
-                                       :jedi (:environment "/Users/zakaria/.pyenv/versions/3.11.10/envs/event-platform")))))))
+  )
 
 ;;; PYTHON
+(defun zeds/eglot-python-workspace-config ()
+  (let ((venv-path (pyenv-mode-full-path zeds/pyenv--version)))
+    (list  (cons :pylsp  (list :configurationSources ["pycodestyle"]
+                                            :plugins (list :jedi (list :environment venv-path)))))))
+
 (defun zeds/pyenv-mode-versions ()
   "List installed python versions."
   (let ((versions (shell-command-to-string "pyenv versions --bare")))
@@ -1178,8 +1174,8 @@
   (when (executable-find "pyenv")
     (pyenv-mode +1)
     (add-to-list 'exec-path (expand-file-name "shims" (or (getenv "PYENV_ROOT") "~/.pyenv"))))
-  :hook ((python-mode
-          python-ts-mode) . zeds/python-pyenv-mode-set-auto-h))
+  :hook (python-ts-mode . (lambda ()
+                            (zeds/python-pyenv-mode-set-auto-h))))
 
 ;;; RUST
 (use-package rust-ts-mode
