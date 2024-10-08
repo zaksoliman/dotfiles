@@ -1132,7 +1132,10 @@
       (make-local-variable 'zeds/pyenv--version)
       (setq zeds/pyenv--version (zeds/python-pyenv-read-version-from-file)))
     (if zeds/pyenv--version
-        (pyenv-mode-set zeds/pyenv--version)
+        (progn
+          (pyenv-mode-set zeds/pyenv--version)
+          (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
+          (eglot-ensure))
       (pyenv-mode-unset))))
 
 (defun zeds/python-pyenv-read-version-from-file ()
@@ -1160,13 +1163,12 @@
 
 
 (use-package python-ts-mode
-  :hook
-  ((python-ts-mode . (lambda ()
+  :ensure nil
+  :mode ("\\.py\\'" . python-ts-mode)
+  :hook ((python-ts-mode . (lambda ()
                        (setq-local indent-tabs-mode nil)
                        (setq-local python-indent-offset 4)
-                       (setq-local py-indent-tabs-mode t)))
-   (python-ts-mode . eglot-ensure))
-  )
+                       (setq-local py-indent-tabs-mode t)))))
 
 (use-package pyenv-mode
   :ensure t
