@@ -448,54 +448,54 @@
   ;;   "zr" ( :wk "Reload emacs configs"))
 
   (zeds/leader-keys
-   "SPC" '(execute-extended-command :wk "execute command") ;; an alternative to 'M-x'
-   "TAB" '(:keymap tab-prefix-map :wk "tab")) ;; remap tab bindings
+    "SPC" '(execute-extended-command :wk "execute command") ;; an alternative to 'M-x'
+    "TAB" '(:keymap tab-prefix-map :wk "tab")) ;; remap tab bindings
 
   (zeds/leader-keys
-   "w" '(:keymap evil-window-map :wk "window")
-   "wm" '(:ignore t  :wk "maximize")
-   "wmm" '(zeds/window-maximize-buffer :wk "maximize")
-   "wms" '(zeds/window-maximize-horizontally :wk "maximize horizontally")
-   "wmv" '(zeds/window-maximize-vertically :wk "maximize vertically")) ;; window bindings
+    "w" '(:keymap evil-window-map :wk "window")
+    "wm" '(:ignore t  :wk "maximize")
+    "wmm" '(zeds/window-maximize-buffer :wk "maximize")
+    "wms" '(zeds/window-maximize-horizontally :wk "maximize horizontally")
+    "wmv" '(zeds/window-maximize-vertically :wk "maximize vertically")) ;; window bindings
 
   ;; help
   ;; namespace mostly used by 'helpful'
   (zeds/leader-keys
-   "h" '(:ignore t :wk "help"))
+    "h" '(:ignore t :wk "help"))
 
   ;; file
   (zeds/leader-keys
-   "f" '(:ignore t :wk "file")
-   "ff" '(find-file :wk "find file") ;; gets overridden by consult
-   "fs" '(save-buffer :wk "save file")
-   "fr" '(recentf :wk "recent files"))
+    "f" '(:ignore t :wk "file")
+    "ff" '(find-file :wk "find file") ;; gets overridden by consult
+    "fs" '(save-buffer :wk "save file")
+    "fr" '(recentf :wk "recent files"))
 
   ;; buffer
   ;; see 'bufler' and 'popper'
   (zeds/leader-keys
-   "b" '(:ignore t :wk "buffer")
-   "bb" '(switch-to-buffer :wk "switch buffer") ;; gets overridden by consult
-   "bk" '(kill-this-buffer :wk "kill this buffer")
-   "br" '(revert-buffer :wk "reload buffer")
-   "bp" '(previous-buffer :wk "previous buffer")
-   "bn" '(next-buffer :wk "next buffer")
-   "bx" '(scratch-buffer :wk "Switch to scratch buffer"))
+    "b" '(:ignore t :wk "buffer")
+    "bb" '(switch-to-buffer :wk "switch buffer") ;; gets overridden by consult
+    "bk" '(kill-this-buffer :wk "kill this buffer")
+    "br" '(revert-buffer :wk "reload buffer")
+    "bp" '(previous-buffer :wk "previous buffer")
+    "bn" '(next-buffer :wk "next buffer")
+    "bx" '(scratch-buffer :wk "Switch to scratch buffer"))
 
   ;; universal argument
   (zeds/leader-keys
-   "u" '(universal-argument :wk "universal prefix"))
+    "u" '(universal-argument :wk "universal prefix"))
 
   ;; ;; notes
   ;; ;; see 'citar' and 'org-roam'
   (zeds/leader-keys
-   "n" '(:ignore t :wk "notes")
-   ;; see org-roam and citar sections
-   "na" '(org-todo-list :wk "agenda todos")) ;; agenda
+    "n" '(:ignore t :wk "notes")
+    ;; see org-roam and citar sections
+    "na" '(org-todo-list :wk "agenda todos")) ;; agenda
 
   ;; ;; code
   ;; see 'flymake'
   (zeds/leader-keys
-   "c" '(:ignore t :wk "code"))
+    "c" '(:ignore t :wk "code"))
 
   ;; open
   (zeds/leader-keys
@@ -508,7 +508,7 @@
   ;; ;; search
   ;; ;; see 'consult'
   (zeds/leader-keys
-   "s" '(:ignore t :wk "search"))
+    "s" '(:ignore t :wk "search"))
 
   ;; ;;Emacs Admin
   (zeds/leader-keys
@@ -702,18 +702,18 @@
   :demand t
   :general
   (zeds/leader-keys
-   "bb" '(consult-buffer :wk "consult buffer")
-   "Bb" '(consult-bookmark :wk "consult bookmark")
-   "ht" '(consult-theme :wk "consult theme")
-   "sr" '(consult-ripgrep :wk "consult rg")
-   "sg" '(consult-grep :wk "consult grep")
-   "sG" '(consult-git-grep :wk "consult git grep")
-   "sf" '(consult-find :wk "consult find")
-   "sF" '(consult-locate :wk "consult locate")
-   "sl" '(consult-line :wk "consult line")
-   "sy" '(consult-yank-from-kill-ring :wk "consult yank from kill ring")
-   "i" '(consult-imenu :wk "consult imenu")
-   "so" '(consult-outline :wk "consult outline"))
+    "bb" '(consult-buffer :wk "consult buffer")
+    "Bb" '(consult-bookmark :wk "consult bookmark")
+    "ht" '(consult-theme :wk "consult theme")
+    "sr" '(consult-ripgrep :wk "consult rg")
+    "sg" '(consult-grep :wk "consult grep")
+    "sG" '(consult-git-grep :wk "consult git grep")
+    "sf" '(consult-find :wk "consult find")
+    "sF" '(consult-locate :wk "consult locate")
+    "sl" '(consult-line :wk "consult line")
+    "sy" '(consult-yank-from-kill-ring :wk "consult yank from kill ring")
+    "i" '(consult-imenu :wk "consult imenu")
+    "so" '(consult-outline :wk "consult outline"))
   :config
   ;; use project.el to retrieve the project root
   (setq consult-project-root-function
@@ -737,7 +737,7 @@
   :demand t
   :general
   (zeds/leader-keys
-   "." 'embark-act)    ;; easily accessible 'embark-act' binding.
+    "." 'embark-act)    ;; easily accessible 'embark-act' binding.
   ("C-." 'embark-act)  ;; overlaps with evil-repeat
   ("C-;" 'embark-dwim) ;; overlaps with IEdit
   (:keymaps 'vertico-map
@@ -770,8 +770,8 @@
   :after orderless
   :general
   (zeds/leader-keys
-   "sa" '(affe-grep :wk "affe grep")
-   "sw" '(affe-find :wk "affe find"))
+    "sa" '(affe-grep :wk "affe grep")
+    "sw" '(affe-find :wk "affe find"))
   :init
   (defun affe-orderless-regexp-compiler (input _type _ignorecase)
     (setq input (orderless-pattern-compiler input))
@@ -845,26 +845,26 @@
   ;; (org-cite-activate-processor 'citar)
   ;; :general
   (zeds/local-leader-keys
-   :keymaps 'org-mode-map
-   "a" '(org-archive-subtree :wk "archive")
-   "c" '(org-cite-insert :wk "insert citation")
-   "l" '(:ignore t :wk "link")
-   "ll" '(org-insert-link t :wk "link")
-   "lp" '(org-latex-preview t :wk "prev latex")
-   "h" '(consult-org-heading :wk "consult heading")
-   "d" '(org-cut-special :wk "org cut special")
-   "y" '(org-copy-special :wk "org copy special")
-   "p" '(org-paste-special :wk "org paste special")
-   "b" '(:keymap org-babel-map :wk "babel")
-   "t" '(org-todo :wk "todo")
-   "s" '(org-insert-structure-template :wk "template")
-   "e" '(org-edit-special :wk "edit")
-   "i" '(:ignore t :wk "insert")
-   "ih" '(org-insert-heading :wk "insert heading")
-   "is" '(org-insert-subheading :wk "insert heading")
-   "f" '(org-footnote-action :wk "footnote action")
-   ">" '(org-demote-subtree :wk "demote subtree")
-   "<" '(org-promote-subtree :wk "demote subtree"))
+    :keymaps 'org-mode-map
+    "a" '(org-archive-subtree :wk "archive")
+    "c" '(org-cite-insert :wk "insert citation")
+    "l" '(:ignore t :wk "link")
+    "ll" '(org-insert-link t :wk "link")
+    "lp" '(org-latex-preview t :wk "prev latex")
+    "h" '(consult-org-heading :wk "consult heading")
+    "d" '(org-cut-special :wk "org cut special")
+    "y" '(org-copy-special :wk "org copy special")
+    "p" '(org-paste-special :wk "org paste special")
+    "b" '(:keymap org-babel-map :wk "babel")
+    "t" '(org-todo :wk "todo")
+    "s" '(org-insert-structure-template :wk "template")
+    "e" '(org-edit-special :wk "edit")
+    "i" '(:ignore t :wk "insert")
+    "ih" '(org-insert-heading :wk "insert heading")
+    "is" '(org-insert-subheading :wk "insert heading")
+    "f" '(org-footnote-action :wk "footnote action")
+    ">" '(org-demote-subtree :wk "demote subtree")
+    "<" '(org-promote-subtree :wk "demote subtree"))
   (:keymaps 'org-agenda-mode-map
             "j" '(org-agenda-next-line)
             "h" '(org-agenda-previous-line))
@@ -905,7 +905,7 @@
   :after org
   :general
   (zeds/leader-keys
-   "nt" '(org-transclusion-mode :wk "transclusion mode")))
+    "nt" '(org-transclusion-mode :wk "transclusion mode")))
 
 (use-package org-appear
   :ensure t
@@ -922,8 +922,8 @@
   :after org
   :general
   (zeds/local-leader-keys
-   :keymaps 'org-mode-map
-   "lc" '(org-cliplink :wk "cliplink")))
+    :keymaps 'org-mode-map
+    "lc" '(org-cliplink :wk "cliplink")))
 
 (use-package org-modern
   :ensure t
@@ -936,16 +936,16 @@
   :demand t
   :general
   (zeds/leader-keys
-   "nr" '(:ignore t :wk "roam")
-   "nri" '(org-roam-node-insert t :wk "insert node")
-   "nrt" '(org-roam-buffer-toggle t :wk "roam buffer toggle")
-   "nrc" '(org-roam-capture t :wk "roam capture")
-   "nrf" '(org-roam-node-find :wk "find node")
-   "nrd" '(:ignore t :wk "dailies")
-   "nrdt" '(org-roam-dailies-goto-today :wk "today")
-   "nrdt" '(org-roam-dailies-goto-yesterday :wk "today")
-   "nrdT" '(org-roam-dailies-goto-tomorrow :wk "today")
-   "nrdd" '(org-roam-dailies-goto-date :wk "goto date"))
+    "nr" '(:ignore t :wk "roam")
+    "nri" '(org-roam-node-insert t :wk "insert node")
+    "nrt" '(org-roam-buffer-toggle t :wk "roam buffer toggle")
+    "nrc" '(org-roam-capture t :wk "roam capture")
+    "nrf" '(org-roam-node-find :wk "find node")
+    "nrd" '(:ignore t :wk "dailies")
+    "nrdt" '(org-roam-dailies-goto-today :wk "today")
+    "nrdt" '(org-roam-dailies-goto-yesterday :wk "today")
+    "nrdT" '(org-roam-dailies-goto-tomorrow :wk "today")
+    "nrdd" '(org-roam-dailies-goto-date :wk "goto date"))
   :init
   (setq org-roam-directory zeds/roam-notes-path
         org-roam-dailies-directory zeds/roam-dailies-path)
@@ -1042,17 +1042,17 @@
   (add-hook 'TeX-mode-hook #'outline-minor-mode)
   :general
   (zeds/local-leader-keys
-   :keymaps 'LaTeX-mode-map
-   ;; "TAB" 'TeX-complete-symbol ;; FIXME let's 'TAB' do autocompletion (but it's kind of useless to be honest)
-   "=" '(reftex-toc :wk "reftex toc")
-   "(" '(reftex-latex :wk "reftex label")
-   ")" '(reftex-reference :wk "reftex ref")
-   "m" '(LaTeX-macro :wk "insert macro")
-   "s" '(LaTeX-section :wk "insert section header")
-   "e" '(LaTeX-environment :wk "insert environment")
-   "p" '(preview-at-point :wk "preview at point")
-   "f" '(TeX-font :wk "font")
-   "c" '(TeX-command-run-all :wk "compile")))
+    :keymaps 'LaTeX-mode-map
+    ;; "TAB" 'TeX-complete-symbol ;; FIXME let's 'TAB' do autocompletion (but it's kind of useless to be honest)
+    "=" '(reftex-toc :wk "reftex toc")
+    "(" '(reftex-latex :wk "reftex label")
+    ")" '(reftex-reference :wk "reftex ref")
+    "m" '(LaTeX-macro :wk "insert macro")
+    "s" '(LaTeX-section :wk "insert section header")
+    "e" '(LaTeX-environment :wk "insert environment")
+    "p" '(preview-at-point :wk "preview at point")
+    "f" '(TeX-font :wk "font")
+    "c" '(TeX-command-run-all :wk "compile")))
 
 (use-package evil-tex
   :ensure t
@@ -1082,12 +1082,12 @@
   :demand t
   :general
   (zeds/leader-keys
-   "hc" '(helpful-command :wk "describe command")
-   "hf" '(helpful-callable :wk "describe callable")
-   "hh" '(helpful-at-point :wk "describe at point")
-   "hF" '(helpful-function :wk "describe function")
-   "hv" '(helpful-variable :wk "describe variable")
-   "hk" '(helpful-key :wk "describe key")))
+    "hc" '(helpful-command :wk "describe command")
+    "hf" '(helpful-callable :wk "describe callable")
+    "hh" '(helpful-at-point :wk "describe at point")
+    "hF" '(helpful-function :wk "describe function")
+    "hv" '(helpful-variable :wk "describe variable")
+    "hk" '(helpful-key :wk "describe key")))
 
 ;;; PROGRAMMING STUFF :CODE
 
@@ -1172,12 +1172,12 @@
   :ensure nil
   :mode ("\\.py\\'" . python-ts-mode)
   :hook ((python-ts-mode . (lambda ()
-                       (setq-local indent-tabs-mode nil)
-                       (setq-local python-indent-offset 4)
-                       (setq-local py-indent-tabs-mode t)
-                       (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
-                      (eglot-ensure)
-                       ))))
+                             (setq-local indent-tabs-mode nil)
+                             (setq-local python-indent-offset 4)
+                             (setq-local py-indent-tabs-mode t)
+                             (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
+                             (eglot-ensure)
+                             ))))
 
 (use-package pyenv-mode
   :ensure t
@@ -1295,9 +1295,9 @@
 (use-package flymake
   :general
   (zeds/leader-keys
-   :keymaps 'flymake-mode-map
-   "cf" '(consult-flymake :wk "consult flymake") ;; depends on consult
-   "cc" '(flymake-mode :wk "toggle flymake")) ;; depends on consult
+    :keymaps 'flymake-mode-map
+    "cf" '(consult-flymake :wk "consult flymake") ;; depends on consult
+    "cc" '(flymake-mode :wk "toggle flymake")) ;; depends on consult
   :hook
   (TeX-mode . flymake-mode) ;; this is now working
   (emacs-lisp-mode . flymake-mode)
@@ -1323,14 +1323,14 @@
 (use-package dired
   :general
   (zeds/leader-keys
-   "dd" '(dired :wk "dired") ;; open dired (in a directory)
-   "dj" '(dired-jump :wk "dired jump")) ;; open direct in the current directory
+    "dd" '(dired :wk "dired") ;; open dired (in a directory)
+    "dj" '(dired-jump :wk "dired jump")) ;; open direct in the current directory
   ;; ranger like navigation
   (:keymaps 'dired-mode-map
-   :states 'normal
-   "h" 'dired-up-directory
-   "q" 'kill-current-buffer
-   "l" 'dired-find-file)
+            :states 'normal
+            "h" 'dired-up-directory
+            "q" 'kill-current-buffer
+            "l" 'dired-find-file)
   :hook
   (dired-mode . dired-hide-details-mode))
 
@@ -1359,8 +1359,8 @@
   :ensure t
   :general
   (zeds/leader-keys
-   "g" '(:ignore t :wk "git")
-   "gg" '(magit-status :wk "status")))
+    "g" '(:ignore t :wk "git")
+    "gg" '(magit-status :wk "status")))
 
 ;;; PDF SUPPORT
 (use-package pdf-tools
