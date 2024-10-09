@@ -186,6 +186,7 @@
   (add-to-list 'auto-mode-alist '("\\.hql\\'" . sql-mode))
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
+
   (add-to-list 'major-mode-remap-alist
                '(python-mode . python-ts-mode))
   (add-to-list 'major-mode-remap-alist
@@ -346,6 +347,7 @@
   ;; buffers in which I want to immediately start typing should be in 'insert' state by default.
   (evil-set-initial-state 'eshell-mode 'insert)
   (evil-set-initial-state 'magit-diff-mode 'insert)
+  (evil-set-initial-state 'Info-mode 'insert)
                                         ; Overload shifts so that they don't lose the selection
   (define-key evil-visual-state-map (kbd ">") 'zeds/evil-shift-right-visual)
   (define-key evil-visual-state-map (kbd "<") 'zeds/evil-shift-left-visual)
@@ -710,7 +712,8 @@
    "sF" '(consult-locate :wk "consult locate")
    "sl" '(consult-line :wk "consult line")
    "sy" '(consult-yank-from-kill-ring :wk "consult yank from kill ring")
-   "i" '(consult-imenu :wk "consult imenu"))
+   "i" '(consult-imenu :wk "consult imenu")
+   "so" '(consult-outline :wk "consult outline"))
   :config
   ;; use project.el to retrieve the project root
   (setq consult-project-root-function
@@ -1114,9 +1117,11 @@
 
 ;;; PYTHON
 (defun zeds/eglot-python-workspace-config ()
-  (let ((venv-path (pyenv-mode-full-path zeds/pyenv--version)))
+  (let ((venv-path (string-trim (shell-command-to-string "pyenv prefix"))))
     (list  (cons :pylsp  (list :configurationSources ["pycodestyle"]
-                                            :plugins (list :jedi (list :environment venv-path)))))))
+                               :plugins (list
+                                         :jedi (list
+                                                :environment venv-path)))))))
 
 (defun zeds/pyenv-mode-versions ()
   "List installed python versions."
@@ -1134,8 +1139,9 @@
     (if zeds/pyenv--version
         (progn
           (pyenv-mode-set zeds/pyenv--version)
-          (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
-          (eglot-ensure))
+          ;; (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
+          ;; (eglot-ensure)
+          )
       (pyenv-mode-unset))))
 
 (defun zeds/python-pyenv-read-version-from-file ()
@@ -1168,7 +1174,10 @@
   :hook ((python-ts-mode . (lambda ()
                        (setq-local indent-tabs-mode nil)
                        (setq-local python-indent-offset 4)
-                       (setq-local py-indent-tabs-mode t)))))
+                       (setq-local py-indent-tabs-mode t)
+                       (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
+                      (eglot-ensure)
+                       ))))
 
 (use-package pyenv-mode
   :ensure t
