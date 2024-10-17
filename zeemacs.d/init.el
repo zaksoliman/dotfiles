@@ -27,6 +27,14 @@
   :config (when (memq window-system '(mac ns x))
             (exec-path-from-shell-initialize))
   )
+(setopt package-install-upgrade-built-in t)
+;; Automatically reread from disk if the underlying file changes
+(setopt auto-revert-avoid-polling t)
+(setopt auto-revert-interval 5)
+(setopt auto-revert-check-vc-info t)
+(global-auto-revert-mode)
+;; Show help buffer after startup
+(add-hook 'after-init-hook 'help-quick)
 
 ;;; VARIABLES
 (defvar zeds/library-path "~/Documents/Library of Alexandria/"
@@ -45,6 +53,74 @@
   "Org path.")
 ;; END VARIABLES
 ;;; FUNCTION DEFINITIONS
+(defun zeds/eglot-python-workspace-config (server)
+  ;; Default values in accordance with
+  ;; https://github.com/python-lsp/python-lsp-server/blob/v1.10.0/CONFIGURATION.md
+  ;; (or commit 2a5a953).  A value of null means we do not set a value and
+  ;; therefore use the plugin's default value.
+
+  ;; The recommended format for the `eglot-workspace-configuration' variable
+  ;; value is a property list (plist for short):
+  ;;
+  ;; (:server plist…)
+  ;;
+  ;; Here :server identifies a particular language server and plist is the
+  ;; corresponding keyword-value property list of one or more parameter
+  ;; settings for that server, serialized by Eglot as a JSON object.
+  ;; plist may be arbitrarily complex, generally containing other
+  ;; keyword-value property sublists corresponding to JSON subobjects.
+
+  ;; The JSON values are represented by Emacs Lisp values as follows:
+
+  ;; JSON                         | Emacs Lisp
+  ;; ------------------------------------------------
+  ;; :true i.e. true              | t
+  ;; :false i.e. false            | :json-false
+  ;; :null i.e. null              | nil
+  ;; :[] i.e. [] the empty array  | []*
+  ;; :{} i.e. {} the empty object | eglot-{}**
+
+  ;; * Lisp array elements should not be comma separated as they are in a
+  ;; JSON array.
+  ;; ** Must be evaluated via a backquote or `list'
+  ;; e.g. `(:pylsp (:plugins (:jedi (:env_vars ,eglot-{})))) or
+  ;;       (list :pylsp (list :plugins (list :jedi (list :env_vars eglot-{}))))
+  (let ((venv-path (string-trim (shell-command-to-string "pyenv prefix"))))
+    `(:pylsp  
+      (:plugins (
+                 :pylsp_mypy (
+                              :enabled t
+                              :ignore_missing_imports :json-false)
+                 :jedi (:environment ,venv-path)
+                 :jedi_completion (
+                                   :cache_for ["pandas" "numpy" "tensorflow" "matplotlib"] ; string array: ["pandas", "numpy", "tensorflow", "matplotlib"] (default)
+                                   :eager :json-false ; boolean: true or false (default)
+                                   :enabled t ; boolean: true (default) or false
+                                   :fuzzy :json-false ; boolean: true or false (default)
+                                   :include_class_objects :json-false ; boolean: true or false (default)
+                                   :include_function_objects :json-false ; boolean: true or false (default)
+                                   :include_params t ; boolean: true (default) or false
+                                   :resolve_at_most 25)
+                 :jedi_definition
+                 (:enabled t ; boolean: true (default) or false
+                           :follow_builtin_definitions t ; boolean: true (default) or false
+                           :follow_builtin_imports t ; boolean: true (default) or false
+                           :follow_imports t) ; boolean: true (default) or false
+                 :jedit_hover
+                 (:enabled t) ; boolean: true (default) or false
+                 :jedi_references
+                 (:enabled t) ; boolean: true (default) or false
+                 :jedi_signature_help
+                 (:enabled t) ; boolean: true (default) or false
+                 :jedi_symbols
+                 (:all_scopes t ; boolean: true (default) or false
+                              :enabled t ; boolean: true (default) or false
+                              :include_import_symbols t) ; boolean: true (default) or false
+                 :ruff (
+                        :enabled t
+                        :line_length 88
+                        :cache_config t))))))
+
 (defun zeds/open-init-dir ()
   "Opens my emacs config directory."
   (interactive)
@@ -190,7 +266,7 @@
   (add-to-list 'major-mode-remap-alist
                '(python-mode . python-ts-mode))
   (add-to-list 'major-mode-remap-alist
-               '(rust-mode . rust-ts-mode))
+               '(rustic-mode . rust-mode))
   (add-to-list 'major-mode-remap-alist
                '(c-mode . c-ts-mode))
 
@@ -272,11 +348,13 @@
   :ensure t
   ;; Enable mood-line
   :config
-  (mood-line-mode)
-
-  ;; Use pretty Fira Code-compatible glyphs
-  :custom
-  (mood-line-glyph-alist mood-line-glyphs-fira-code))
+  (mood-line-mode))
+;;(use-package doom-modeline
+;;  :ensure t
+;;  :init (doom-modeline-mode 1))
+;;  ;; Use pretty Fira Code-compatible glyphs
+;;  :custom
+;;  (mood-line-glyph-alist mood-line-glyphs-fira-code))
 
 (use-package doom-themes
   :ensure t
@@ -641,14 +719,14 @@
   (global-corfu-mode)
   :custom
   (corfu-cycle t)  ;; allows cycling through candidates
-  (corfu-auto nil) ;; disables auto-completion
+  ;; (corfu-auto nil) ;; disables auto-completion
   ;; (corfu-separator ?\s)          ;; Orderless field separator
   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
   ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
   ;; (corfu-preview-current nil)    ;; Disable current candidate preview
   ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-  (corfu-scroll-margin 5)        ;; Use scroll margin
+  ;; (corfu-scroll-margin 5)        ;; Use scroll margin
   :bind
   :general
   (:keymaps 'corfu-map
@@ -1092,8 +1170,6 @@
 ;;; PROGRAMMING STUFF :CODE
 
 ;;; EGLOT LSP
-
-
 (use-package eglot
   :demand t
   :init
@@ -1103,9 +1179,10 @@
   ;; (fset #'jsonrpc--log-event #'ignore)
   ;; (setq eglot-events-buffer-size 0)
   (setq eglot-autoshutdown t)
-  :commands eglot
-  ;; :bind (:map eglot-mode-map
-  ;;             ("<f6>" . eglot-format-buffer))
+  (setq eglot-workspace-configuration #'zeds/eglot-python-workspace-config)
+  ;;  :commands eglot
+  ;;  :bind (:map eglot-mode-map
+  ;; ;;             ("<f6>" . eglot-format-buffer))
   :general
   (zeds/leader-keys
     "c?" '(eldoc :wk "docstring")
@@ -1116,12 +1193,11 @@
   )
 
 ;;; PYTHON
-(defun zeds/eglot-python-workspace-config ()
-  (let ((venv-path (string-trim (shell-command-to-string "pyenv prefix"))))
-    (list  (cons :pylsp  (list :configurationSources ["pycodestyle"]
-                               :plugins (list
-                                         :jedi (list
-                                                :environment venv-path)))))))
+;; (dir-locals-set-class-variables 'unwritable-directory
+;;                                 (zeds/eglot-python-workspace-config))
+
+;; (dir-locals-set-directory-class
+;;    "/Users/zakaria/Projects/BIT/" 'unwritable-directory)
 
 (defun zeds/pyenv-mode-versions ()
   "List installed python versions."
@@ -1129,20 +1205,6 @@
     (cons "system" (split-string versions))))
 
 (defvar zeds/pyenv--version nil)
-
-(defun zeds/python-pyenv-mode-set-auto-h ()
-  "Set pyenv-mode version from buffer-local variable."
-  (when (memq major-mode '(python-ts-mode python-mode))
-    (when (not (local-variable-p 'zeds/pyenv--version))
-      (make-local-variable 'zeds/pyenv--version)
-      (setq zeds/pyenv--version (zeds/python-pyenv-read-version-from-file)))
-    (if zeds/pyenv--version
-        (progn
-          (pyenv-mode-set zeds/pyenv--version)
-          ;; (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
-          ;; (eglot-ensure)
-          )
-      (pyenv-mode-unset))))
 
 (defun zeds/python-pyenv-read-version-from-file ()
   "Read pyenv version from .python-version file."
@@ -1156,6 +1218,23 @@
           version ;; return.
         (message "pyenv: version `%s' is not installed (set by `%s')."
                  version file-path)))))
+
+(defun zeds/python-pyenv-mode-set-auto-h ()
+  "Set pyenv-mode version from buffer-local variable."
+  (when (memq major-mode '(python-ts-mode python-mode))
+    (when (not (local-variable-p 'zeds/pyenv--version))
+      (make-local-variable 'zeds/pyenv--version)
+      (setq-local zeds/pyenv--version (zeds/python-pyenv-read-version-from-file)))
+    (if zeds/pyenv--version
+        (progn
+          (pyenv-mode-set zeds/pyenv--version)
+          ;; (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
+
+          ;; (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
+          ;; (eglot-ensure)
+          )
+      (pyenv-mode-unset))))
+
 
 ;; (use-package python
 ;;   :hook
@@ -1175,27 +1254,43 @@
                              (setq-local indent-tabs-mode nil)
                              (setq-local python-indent-offset 4)
                              (setq-local py-indent-tabs-mode t)
-                             (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
-                             (eglot-ensure)
-                             ))))
+                             ;; (eglot-ensure)
+                             )))
+  :config
+  (add-hook 'window-selection-change-functions (lambda (w)
+                                                 (message "Changed window")
+                                                 (message w)))
+  )
+
+;; (use-package pet
+;;   :ensure t
+;;   :hook ((python-ts-mode . (lambda ()
+;;                              (setq-local python-shell-interpreter (pet-executable-find "python")
+;;                                          python-shell-virtualenv-root (pet-virtualenv-root)
+;;                                          )
+;;                              (eglot-ensure)))))
 
 (use-package pyenv-mode
-  :ensure t
-  :config
-  (when (executable-find "pyenv")
-    (pyenv-mode +1)
-    (add-to-list 'exec-path (expand-file-name "shims" (or (getenv "PYENV_ROOT") "~/.pyenv"))))
-  :hook (python-ts-mode . (lambda ()
-                            (zeds/python-pyenv-mode-set-auto-h))))
+    :ensure t
+    :config
+    (when (executable-find "pyenv")
+      (pyenv-mode +1)
+      (add-to-list 'exec-path (expand-file-name "shims" (or (getenv "PYENV_ROOT") "~/.pyenv"))))
+    :hook (python-ts-mode . (lambda ()
+                              (zeds/python-pyenv-mode-set-auto-h)
+                              (eglot-ensure))))
 
 ;;; RUST
-(use-package rust-ts-mode
+(use-package rust-mode
   :ensure t
   :after (eglot)
-  :mode ("\\.rs\\'" . rust-ts-mode)
-  :hook ((rust-ts-mode . eglot-ensure)
-	       (rust-ts-mode . (lambda ()
-			                     (eglot-inlay-hints-mode -1))))
+  :mode ("\\.rs\\'" . rust-mode)
+  :init
+  (setq rust-mode-treesitter-derive t)
+  :hook ((rust-mode . (lambda ()
+                        (setq indent-tabs-mode nil)
+                        (eglot-ensure)
+			                  (eglot-inlay-hints-mode -1))))
   :config
   (add-to-list 'eglot-server-programs '(rust-ts-mode . ("rust-analyzer")))
   :general
@@ -1210,6 +1305,10 @@
   :ensure t)
 
 ;;; LISP
+(use-package elisp-mode
+  :init
+  (setq lisp-indent-function 'common-lisp-indent-function))
+
 (use-package lispy
   :ensure t
   :general
