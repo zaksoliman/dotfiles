@@ -51,7 +51,7 @@
 
 (defvar zeds/org-path (concat zeds/notes-path "org/")
   "Org path.")
-;; END VARIABLES
+
 ;;; FUNCTION DEFINITIONS
 (defun zeds/eglot-python-workspace-config (server)
   ;; Default values in accordance with
@@ -180,7 +180,6 @@
 ;; ;;;###autoload (autoload '+macos/reveal-project-in-finder "os/macos/autoload" nil t)
 ;; (zeds/macos--open-with reveal-project-in-finder "Finder"
 ;;                    (or (doom-project-root) default-directory))
-;; END FUNCTION DEFINITIONS
 
 (defun zeds/setup-prog-modes ()
   (display-line-numbers-mode 1)
@@ -385,7 +384,6 @@
   :ensure t
   :demand t)
 
-
 ;; prettify dired with icons
 (use-package all-the-icons-dired
   :ensure t
@@ -451,7 +449,7 @@
   ;; If I want to incrementally enable evil-collection mode-by-mode, I can do something like the following:
   ;; (setq evil-collection-mode-list nil) ;; I don't like surprises
   ;; (add-to-list 'evil-collection-mode-list 'magit) ;; evilify magit
-  ;; (add-to-list 'evil-collection-mode-list '(pdf pdf-view)) ;; evilify pdf-view
+  ;; (add-to-list 'evil-collectio n-mode-list '(pdf pdf-view)) ;; evilify pdf-view
   :config
   ;; (setq evil-collection-mode-list '(dashboard dired ibuffer pdf magit compilation))
   (evil-collection-init))
@@ -860,14 +858,14 @@
 
 ;;;  OLIVETTI Make writing prose nicer
 ;; Might remove later
-(use-package olivetti
-  :ensure t
-  :demand t
-  :init
-  (setq olivetti-body-width 80)
-  (setq olivetti-style 'fancy)
-  (setq olivetti-minimum-body-width 50))
-;; END OLIVETTY
+;; (use-package olivetti
+;;   :ensure t
+;;   :demand t
+;;   :init
+;;   (setq olivetti-body-width 80)
+;;   (setq olivetti-style 'fancy)
+;;   (setq olivetti-minimum-body-width 50))
+;; ;; END OLIVETTY
 
 ;;; HIGHLIGHT TODOs
 (use-package hl-todo
@@ -892,7 +890,7 @@
   (setq org-hide-emphasis-markers t
         org-src-fontify-natively t ;; fontify source blocks natively
         org-highlight-latex-and-related '(native) ;; fontify latex blocks natively
-        org-pretty-entities t
+        ;; org-pretty-entities t
         org-ellipsis "…")
 
   ;; agenda styling
@@ -921,7 +919,7 @@
   ;; (org-cite-insert-processor 'citar)
   ;; (org-cite-follow-processor 'citar)
   ;; (org-cite-activate-processor 'citar)
-  ;; :general
+  :general
   (zeds/local-leader-keys
     :keymaps 'org-mode-map
     "a" '(org-archive-subtree :wk "archive")
@@ -949,7 +947,7 @@
 
   :hook
   ;; (org-mode . olivetti-mode)
-  (org-mode . variable-pitch-mode)
+  ;; (org-mode . variable-pitch-mode)
   (org-mode . (lambda () (electric-indent-local-mode -1)
                 (display-line-numbers-mode -1))) ;; disable electric indentation
 
@@ -1168,7 +1166,6 @@
     "hk" '(helpful-key :wk "describe key")))
 
 ;;; PROGRAMMING STUFF :CODE
-
 ;;; EGLOT LSP
 (use-package eglot
   :demand t
@@ -1191,6 +1188,40 @@
     "cfd" '(xref-find-definitions-other-window :wk "find definitions")
     "cfr" '(xref-find-references :wk "find references"))
   )
+
+;;; OCAML
+(use-package tuareg
+    :ensure t
+    :init
+ (add-hook 'tuareg-mode-hook
+            (lambda() (setq tuareg-mode-name "🐫")))
+ (add-hook 'tuareg-mode-hook
+            (lambda()
+              (setq-local comment-style 'multi-line)
+              (setq-local comment-continue "   ")))
+(add-hook 'tuareg-mode-hook
+            (lambda()
+              (when (functionp 'prettify-symbols-mode)
+                (prettify-symbols-mode))))
+)
+
+(use-package merlin
+    :ensure t
+    :init
+    (let ((opam-share (ignore-errors (car (process-lines "opam" "var" "share")))))
+      (when (and opam-share (file-directory-p opam-share))
+        ;; Register Merlin
+        (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
+        (autoload 'merlin-mode "merlin" nil t nil)
+        ;; Automatically start it in OCaml buffers
+        (add-hook 'tuareg-mode-hook 'merlin-mode t)
+        ;; Use opam switch to lookup ocamlmerlin binary
+        (setq merlin-command 'opam)
+        ;; To easily change opam switches within a given Emacs session, you can
+        ;; install the minor mode https://github.com/ProofGeneral/opam-switch-mode
+        ;; and use one of its "OPSW" menus.
+        ))
+    )
 
 ;;; PYTHON
 ;; (dir-locals-set-class-variables 'unwritable-directory
@@ -1254,12 +1285,9 @@
                              (setq-local indent-tabs-mode nil)
                              (setq-local python-indent-offset 4)
                              (setq-local py-indent-tabs-mode t)
+                             (setq-local tab-width 4)
                              ;; (eglot-ensure)
                              )))
-  :config
-  (add-hook 'window-selection-change-functions (lambda (w)
-                                                 (message "Changed window")
-                                                 (message w)))
   )
 
 ;; (use-package pet
@@ -1332,7 +1360,6 @@
   (lispyville-set-key-theme '(operators c-w additional)))
 
 ;;; TOOLING
-
 ;;; VTERM
 (use-package vterm
   :ensure t
@@ -1502,5 +1529,38 @@
   ("M-$" 'jinx-correct
    "C-M-$" 'jinx-languages))
 
+;;; Co-Pilot (copilot)
+;; Based on: https://tony-zorman.com/posts/package-vc-install.html
+(cl-defun zeds/vc-install (&key (fetcher "github") repo name rev backend)
+  "Install a package from a remote if it's not already installed.
+This is a thin wrapper around `package-vc-install' in order to
+make non-interactive usage more ergonomic.  Takes the following
+named arguments:
+
+- FETCHER the remote where to get the package (e.g., \"gitlab\").
+  If omitted, this defaults to \"github\".
+
+- REPO should be the name of the repository (e.g.,
+  \"slotThe/arXiv-citation\".
+
+- NAME, REV, and BACKEND are as in `package-vc-install' (which
+  see)."
+  (let* ((url (format "https://www.%s.com/%s" fetcher repo))
+         (iname (when name (intern name)))
+         (pac-name (or iname (intern (file-name-base repo)))))
+    (unless (package-installed-p pac-name)
+      (package-vc-install url iname rev backend))))
+
+
+(use-package copilot
+    :init (zeds/vc-install :fetcher "github" :repo "copilot-emacs/copilot.el")
+    :general (:keymaps 'copilot-completion-map
+            ;; keybindings to cycle through vertico results.
+            "C-<tab>" 'copilot-accept-completion
+            ))
+
 (provide 'init)
 ;;; init.el ends here
+;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
+(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
+;; ## end of OPAM user-setup addition for emacs / base ## keep this line

@@ -133,3 +133,12 @@ export PATH="$HOME/.emacs.d/bin:$PATH"
 
 # Created by `pipx` on 2024-10-04 19:23:08
 export PATH="$PATH:/Users/zakaria/.local/bin"
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/Users/zakaria/.opam/opam-init/init.zsh' ]] || source '/Users/zakaria/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration
