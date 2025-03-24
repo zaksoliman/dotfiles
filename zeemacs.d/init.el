@@ -20,29 +20,17 @@
 (when (version< emacs-version "29")
   (error "This requires Emacs 29 and above!"))
 
-(setq package-archives
-	  '(("GNU ELPA"     . "https://elpa.gnu.org/packages/")
-		("MELPA"        . "https://melpa.org/packages/")
-		("ORG"          . "https://orgmode.org/elpa/")
-		("MELPA Stable" . "https://stable.melpa.org/packages/")
-		("nongnu"       . "https://elpa.nongnu.org/nongnu/"))
-	  package-archive-priorities
-	  '(("GNU ELPA"     . 20)
-		("MELPA"        . 15)
-		("ORG"          . 10)
-		("MELPA Stable" . 5)
-		("nongnu"       . 0)))
+;; (setq package-check-signature nil) 
+;; Add lisp directory to load path
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lisp/core" user-emacs-directory))
+;; (add-to-list 'load-path (expand-file-name "lisp/langs" user-emacs-directory))
+;; (add-to-list 'load-path (expand-file-name "lisp/tools" user-emacs-directory))
 
-(package-initialize)
+(require 'core/package-setup)
+(require 'core/variables)
+(require 'core/functions)
 
-
-;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(use-package exec-path-from-shell
-  :ensure t
-  :config (when (memq window-system '(mac ns x))
-            (exec-path-from-shell-initialize))
-  )
-(setopt package-install-upgrade-built-in t)
 ;; Automatically reread from disk if the underlying file changes
 (setopt auto-revert-avoid-polling t)
 (setopt auto-revert-interval 5)
@@ -51,42 +39,6 @@
 ;; Show help buffer after startup
 (add-hook 'after-init-hook 'help-quick)
 
-;;; VARIABLES
-(defvar zeds/library-path "~/Documents/Library of Alexandria/"
-  "Directory where my documents collection lives.")
-
-(defvar zeds/notes-path "~/Documents/Library of Alexandria/notes/"
-  "General Notes.")
-
-(defvar zeds/roam-notes-path (concat zeds/notes-path "org-roam/zettels/")
-  "Org-Roam Zettlekasten")
-
-(defvar zeds/roam-dailies-path (concat zeds/notes-path "org-roam/dailies/")
-  "Journal entries.")
-
-(defvar zeds/org-path (concat zeds/notes-path "org/")
-  "Org path.")
-
-;;; FUNCTION DEFINITIONS
-(cl-defun zeds/vc-install (&key (fetcher "github") repo name rev backend)
-  "Install a package from a remote if it's not already installed.
-This is a thin wrapper around `package-vc-install' in order to
-make non-interactive usage more ergonomic.  Takes the following
-named arguments:
-
-- FETCHER the remote where to get the package (e.g., \"gitlab\").
-  If omitted, this defaults to \"github\".
-
-- REPO should be the name of the repository (e.g.,
-  \"slotThe/arXiv-citation\".
-
-- NAME, REV, and BACKEND are as in `package-vc-install' (which
-  see)."
-  (let* ((url (format "https://www.%s.com/%s" fetcher repo))
-         (iname (when name (intern name)))
-         (pac-name (or iname (intern (file-name-base repo)))))
-    (unless (package-installed-p pac-name)
-      (package-vc-install url iname rev backend))))
 
 (defun zeds/eglot-python-workspace-config (server)
   ;; Default values in accordance with
@@ -151,82 +103,14 @@ named arguments:
                  (:all_scopes t ; boolean: true (default) or false
                               :enabled t ; boolean: true (default) or false
                               :include_import_symbols t) ; boolean: true (default) or false
-                 :ruff (
-                        :enabled t
-                        :line_length 88
-                        :cache_config t)))
+                 :pylint (:enabled :json-false)
+                 :ruff
+                  (:enabled t)
+                 ))
       ;; :ccls (:initializationOptions (:clang (:extraArgs ["-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"])))
 
       )))
 
-(defun zeds/open-init-dir ()
-  "Opens my emacs config directory."
-  (interactive)
-  (dired "~/dotfiles/zeemacs.d"))
-
-(defun zeds/open-init-file ()
-  "Open emacs init.el file."
-  (interactive)
-  (find-file "~/dotfiles/zeemacs.d/init.el"))
-
-(defun zeds/reload-init ()
-  (interactive)
-  (load-file "~/dotfiles/zeemacs.d/init.el"))
-
-(defun zeds/window-maximize-buffer (&optional arg)
-  "Close other windows to focus on this one."
-  (interactive "P")
-  (delete-other-windows))
-
-(defun zeds/window-maximize-vertically ()
-  "Delete all windows above and below the current window."
-  (interactive)
-  (require 'windmove)
-  (save-excursion
-    (while (ignore-errors (windmove-up)) (delete-window))
-    (while (ignore-errors (windmove-down)) (delete-window))))
-
-(defun zeds/window-maximize-horizontally ()
-  "Delete all windows to the left and right of the current window."
-  (interactive)
-  (require 'windmove)
-  (save-excursion
-    (while (ignore-errors (windmove-left)) (delete-window))
-    (while (ignore-errors (windmove-right)) (delete-window))))
-
-(defun zeds/macos-open-with (&optional app-name path)
-  "Send PATH to APP-NAME on OSX."
-  (interactive)
-  (let* ((path (expand-file-name
-                (replace-regexp-in-string
-                 "'" "\\'"
-                 (or path (if (derived-mode-p 'dired-mode)
-                              (dired-get-file-for-visit)
-                            (buffer-file-name)))
-                 nil t)))
-         (command (format "open %s"
-                          (if app-name
-                              (format "-a %s '%s'" (shell-quote-argument app-name) path)
-                            (format "'%s'" path)))))
-    (message "Running: %s" command)
-    (shell-command command)))
-
-(defun zeds/macos-reveal-in-finder ()
-  (interactive)
-  (zeds/macos-open-with "Finder" default-directory))
-
-;; ;;;###autoload (autoload '+macos/reveal-project-in-finder "os/macos/autoload" nil t)
-;; (zeds/macos--open-with reveal-project-in-finder "Finder"
-;;                    (or (doom-project-root) default-directory))
-(defun zeds/setup-prog-modes ()
-  (display-line-numbers-mode 1)
-  (hs-minor-mode 1)
-  (hl-line-mode 1)
-  (hs-minor-mode 1))
-
-(defun zeds/setup-text-modes ()
-  (display-line-numbers-mode -1)
-  (hl-line-mode 1))
 
 ;;; CONFIGURE EMACS
 (use-package emacs
@@ -299,6 +183,8 @@ named arguments:
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+  (add-to-list 'auto-mode-alist '("\\.h\\'" . c-ts-mode))
+
 
   (add-hook 'c-mode-common-hook
           (lambda ()
@@ -454,8 +340,11 @@ named arguments:
         evil-jump-map
         evil-option-map
         evil-search-map
+        evil-code-map
+        evil-notes-map
         evil-help-map
         evil-dir-map
+        evil-project-map
         evil-tab-map))
 
 (defvar zeeds-project-map
@@ -518,10 +407,13 @@ named arguments:
     ("SPC" . execute-extended-command)
     ("a" . evil-application-map)
     ("b" . evil-buffer-map)
+    ("c" . evil-code-map)
     ("f" . evil-file-map)
     ("g" . evil-git-map)
     ("j" . evil-jump-map)
+    ("n" . evil-notes-map)
     ("o" . evil-option-map)
+    ("p" . evil-project-map)
     ("s" . evil-search-map)
     ("u" . universal-argument)
     ("w" . evil-window-map)
@@ -989,21 +881,34 @@ named arguments:
 
 ;;;  OLIVETTI Make writing prose nicer
 ;; Might remove later
-;; (use-package olivetti
-;;   :ensure t
-;;   :demand t
-;;   :init
-;;   (setq olivetti-body-width 80)
-;;   (setq olivetti-style 'fancy)
-;;   (setq olivetti-minimum-body-width 50))
-;; ;; END OLIVETTY
+(use-package olivetti
+  :ensure t
+  :demand t
+  :init
+  (setq olivetti-body-width 80)
+  (setq olivetti-style 'fancy)
+  (setq olivetti-minimum-body-width 50))
+;; END OLIVETTY
 
 ;;; HIGHLIGHT TODOs
 (use-package hl-todo
   :ensure t
   :demand t
   :init
-  (global-hl-todo-mode))
+  (global-hl-todo-mode)
+  :config
+    (setq hl-todo-highlight-punctuation ":"
+        hl-todo-keyword-faces
+        '(("TODO"       . "#FF7B00")
+          ("FIXME"      . "#FF0000")
+          ("DEBUG"      . "#A020F0")
+          ("GOTCHA"     . "#FF4500")
+          ("STUB"       . "#1E90FF")
+          ("SECTION"    . "#007BFF")
+          ("NOTE"       . "#33FFDA")
+          ("REVIEW"     . "#1E90FF")
+          ("DEPRECATED" . "#1E90FF")))
+   )
 ;; END HIGHLIGHT TODOs
 
 ;;; ORG MODE CONFIG
@@ -1015,7 +920,8 @@ named arguments:
         org-tags-column 0
         org-catch-invisible-edits 'show-and-error
         org-special-ctrl-a/e t ;; special navigation behaviour in headlines
-        org-insert-heading-respect-content t)
+        org-insert-heading-respect-content t
+        org-return-follows-link  t)
 
   ;; styling, hide markup, etc.
   (setq org-hide-emphasis-markers t
@@ -1144,18 +1050,22 @@ named arguments:
 (use-package org-roam
   :ensure t
   :demand t
-  ;; :general
-  ;; (zeds/leader-keys
-  ;;   "nr" '(:ignore t :wk "roam")
-  ;;   "nri" '(org-roam-node-insert t :wk "insert node")
-  ;;   "nrt" '(org-roam-buffer-toggle t :wk "roam buffer toggle")
-  ;;   "nrc" '(org-roam-capture t :wk "roam capture")
-  ;;   "nrf" '(org-roam-node-find :wk "find node")
-  ;;   "nrd" '(:ignore t :wk "dailies")
-  ;;   "nrdt" '(org-roam-dailies-goto-today :wk "today")
-  ;;   "nrdt" '(org-roam-dailies-goto-yesterday :wk "today")
-  ;;   "nrdT" '(org-roam-dailies-goto-tomorrow :wk "today")
-  ;;   "nrdd" '(org-roam-dailies-goto-date :wk "goto date"))
+  :bind (:map evil-notes-map
+              :prefix "r"
+              :prefix-map org-roam-map
+              ("i" . org-roam-node-insert)
+              ("t" . org-roam-buffer-toggle)
+              ("c" . org-roam-capture)
+              ("f" . org-roam-node-find)
+              ("t" . org-roam-tag-add)
+              ("T" . org-roam-tag-remove)
+              :prefix "d"
+              :prefix-map org-roam-daily-map
+              ("t" . org-roam-dailies-goto-today)
+              ("y" . org-roam-dailies-goto-yesterday)
+              ("T" . org-roam-dailies-goto-tomorrow)
+              ("d" . org-roam-dailies-goto-date)
+              )
   :init
   (setq org-roam-directory zeds/roam-notes-path
         org-roam-dailies-directory zeds/roam-dailies-path)
@@ -1318,12 +1228,13 @@ named arguments:
    :commands eglot
   :bind (:map eglot-mode-map
               ("<f6>" . eglot-format-buffer)
-              :map evil-global-leader-map
-              ("c?" . eldoc)
-              ("cr" . eglot-rename)
-              ("ca" . eglot-code-actions)
-              ("cfd" . xref-find-definitions-other-window)
-              ("cfr" . xref-find-references)))
+              :map evil-code-map
+              ("?" . eldoc)
+              ("r" . eglot-rename)
+              ("a" . eglot-code-actions)
+              ("sd" . xref-find-definitions-other-window)
+              ("sr" . xref-find-references)))
+
 
 ;;; OCAML
 ;; (use-package tuareg
@@ -1402,7 +1313,21 @@ named arguments:
           )
       (pyenv-mode-unset))))
 
-
+(defun zeds/activate-project-venv ()
+  "Activate pyenv or pyvenv virtualenv for the current project."
+  (when-let ((proj (project-current)))
+    (let* ((root (project-root proj))
+           (venv (expand-file-name ".venv" root))
+           (pyenv-version-file (expand-file-name ".python-version" root)))
+      (cond
+       ((file-exists-p venv)
+        (pyvenv-activate venv))
+       ((file-exists-p pyenv-version-file)
+        (let ((version (string-trim
+                        (with-temp-buffer
+                          (insert-file-contents pyenv-version-file)
+                          (buffer-string)))))
+          (pyenv-mode-set version)))))))
 ;; (use-package python
 ;;   :hook
 ;;   ((python-mode . (lambda ()
@@ -1417,14 +1342,14 @@ named arguments:
 (use-package python-ts-mode
   :ensure nil
   :mode ("\\.py\\'" . python-ts-mode)
+  :interpreter "ipython"
   :hook ((python-ts-mode . (lambda ()
                              (setq-local indent-tabs-mode nil)
                              (setq-local python-indent-offset 4)
                              (setq-local py-indent-tabs-mode t)
                              (setq-local tab-width 4)
                              (eglot-ensure)
-                             )))
-  )
+                             ))))
 
 
 (use-package pyenv-mode
@@ -1436,15 +1361,51 @@ named arguments:
     :hook (python-ts-mode . (lambda ()
                               (zeds/python-pyenv-mode-set-auto-h)
                               (eglot-ensure))))
-;;; C
+;;; C LANG
 (use-package c-ts-mode
     :ensure nil
     :after (eglot)
     :hook ((c-ts-mode . (lambda ()
-                       (eglot-ensure))))
+                          (eglot-ensure))))
+    :custom
+      (c-offsets-alist '((inline-open           . 0)
+                        (brace-list-open       . 0)
+                        (inextern-lang         . 0)
+                        (statement-case-open   . 4)
+                        (access-label          . -)
+                        (case-label            . 0)
+                        (member-init-intro     . +)
+                        (topmost-intro         . 0)
+                        (inlambda              . 0) ;; better indentation for lambda
+                        (innamespace           . 0) ;; no indentation after namespace
+                         (arglist-cont-nonempty . +)))
+      :bind (:map evil-code-map
+                  ("c" . compile))
     :config
+    (setq c-default-style "linux"
+          c-basic-offset 4)
+    ;; Based on: https://github.com/MaskRay/ccls/issues/191#issuecomment-606339964
     (add-to-list 'eglot-server-programs
-                 '(c-ts-mode . ("ccls" "--init" "{\"clang\":{\"extraArgs\":[\"-isystem/usr/local/include\",\"-isystem/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1\",\"-isystem/Library/Developer/CommandLineTools/usr/lib/clang/16.0.0/include\",\"-isystem/Library/Developer/CommandLineTools/usr/include\",\"-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include\",\"-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks\"],\"resourceDir\":\"/Library/Developer/CommandLineTools/usr/lib/clang/16.0.0\"}}"))))
+                 '(c-ts-mode . ("ccls"
+                                "--init"
+                                "{\"clang\":
+                                    {
+                                    \"extraArgs\":[
+                                      \"-isystem/usr/local/include\",
+                                      \"-isystem/Library/Developer/CommandLineTools/usr/lib/clang/16.0.0/include\",
+                                      \"-isystem/Library/Developer/CommandLineTools/usr/include\",
+                                      \"-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include\",
+                                      \"-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks\"
+                                    ],
+                                    \"resourceDir\":\"/Library/Developer/CommandLineTools/usr/lib/clang/16.0.0\"}}"))))
+
+(use-package rmsbolt
+    :ensure t
+    :after (c-ts-mode)
+    :bind (:map evil-code-map
+                ("D" . rmsbolt)
+                ))
+
 
 ;;; RUST
 (use-package rust-mode
@@ -1565,31 +1526,31 @@ named arguments:
 ;;; SNIPPETS
 (use-package yasnippet
   :ensure t
+  :bind (:map yas-minor-mode-map
+          ("TAB" . nil)
+          ("<tab>" . nil))
   :config
   (yas-reload-all)
   (add-to-list 'yas-snippet-dirs "~/.config/emacs/snippets")
   (yas-global-mode 1))
 
 ;;; CHECKERS
-;;; Flymake over flycheck
-;; (use-package flymake
-;;   :ensure t
-;;   ;; :general
-;;   ;; (zeds/leader-keys
-;;   ;;   :keymaps 'flymake-mode-map
-;;   ;;   "cf" '(consult-flymake :wk "consult flymake") ;; depends on consult
-;;   ;;   "cc" '(flymake-mode :wk "toggle flymake"))
-;;   ;; depends on consult
-;;   :hook
-;;   (TeX-mode . flymake-mode) ;; this is now working
-;;   (emacs-lisp-mode . flymake-mode)
-;;   (prog-mode . flymake-mode)
-;;   :init
-;;   (flymake-no-changes-timeout nil)
-;;   ;; :general
-;;   ;; (general-nmap "] !" 'flymake-goto-next-error)
-;;   ;; (general-nmap "[ !" 'flymake-goto-prev-error)
-;;   )
+;;; Builtin Flymake over flycheck
+(use-package flymake
+  :ensure t
+  :bind (:map evil-code-map
+              ("f" . consult-flymake))
+  ;; depends on consult
+  :hook
+  (TeX-mode . flymake-mode)
+  (emacs-lisp-mode . flymake-mode)
+  (prog-mode . flymake-mode)
+  :config
+  (setq flymake-no-changes-timeout 1)
+  ;; :general
+  ;; (general-nmap "] !" 'flymake-goto-next-error)
+  ;; (general-nmap "[ !" 'flymake-goto-prev-error)
+  )
 
 (use-package recursion-indicator
   :ensure t
@@ -1599,10 +1560,10 @@ named arguments:
 
 ;;; PROJECT.EL
 (use-package project
-  ;; :general
-  ;; assign built-in project.el bindings a new prefix
-  ;; (zeds/leader-keys "p" '(:keymap project-prefix-map :wk "project"))
+    :init
+    (set-keymap-parent evil-project-map project-prefix-map)
     )
+
 ;;; DIRED
 (use-package dired
     :bind (:map evil-dir-map
@@ -1635,6 +1596,15 @@ named arguments:
   :init
   (setq markdown-command "pandoc")
   (setq markdown-header-scaling t))
+
+(use-package nov
+    :ensure t
+  :mode ("\\.epub\\'" . nov-mode)
+  :config
+  (add-hook 'nov-mode-hook 'visual-line-mode)
+  (add-hook 'nov-mode-hook 'olivetti-mode)
+  (add-hook 'nov-mode-hook 'variable-pitch-mode))
+
 ;;; MAGIT
 (use-package magit
     :ensure t
@@ -1644,33 +1614,53 @@ named arguments:
 ;;; PDF SUPPORT
 (use-package pdf-tools
   :ensure t
-  :hook (TeX-after-compilation-finished . TeX-revert-document-buffer)
   :mode ("\\.pdf\\'" . pdf-view-mode)
- :config
-  (require 'pdf-tools)
-   (pdf-tools-install)
-   (require 'pdf-info)
-  (require 'pdf-view)
-  (require 'pdf-misc)
-  (require 'pdf-occur)
-  (require 'pdf-util)
-  (require 'pdf-annot)
-  (require 'pdf-isearch)
-  (require 'pdf-history)
-  (require 'pdf-links)
-  (require 'pdf-outline)
-  (require 'pdf-sync)
-  (setq pdf-view-use-scaling t)
+  :config
+  (pdf-tools-install)
+  ;; Automatically annotate highlights
+  (setq pdf-annot-activate-created-annotations t
+        pdf-view-use-scaling t)
+  (add-hook 'pdf-view-mode-hook 'pdf-outline-minor-mode)
+  ;; Use isearch instead of swiper
+ ;; (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
   (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1))))
 
+(with-eval-after-load 'pdf-view
+  (evil-define-key 'normal pdf-view-mode-map
+    "j" 'pdf-view-next-line-or-next-page
+    "k" 'pdf-view-previous-line-or-previous-page
+    "gg" 'pdf-view-first-page
+    "G" 'pdf-view-last-page
+    "h" 'image-backward-hscroll
+    "l" 'image-forward-hscroll))
+;; (use-package pdf-tools
+;;   :ensure t
+;;   :hook (TeX-after-compilation-finished . TeX-revert-document-buffer)
+;;   :mode ("\\.pdf\\'" . pdf-view-mode)
+;;  :config
+;;    (pdf-tools-install)
+;;    (require 'pdf-info)
+;;   (require 'pdf-view)
+;;   (require 'pdf-misc)
+;;   (require 'pdf-occur)
+;;   (require 'pdf-util)
+;;   (require 'pdf-annot)
+;;   (require 'pdf-isearch)
+;;   (require 'pdf-history)
+;;   (require 'pdf-links)
+;;   (require 'pdf-outline)
+;;   (require 'pdf-sync)
+;;   (setq pdf-view-use-scaling t)
+;;   (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1))))
 
-(use-package pdf-view-restore
-  :ensure t
-  :after pdf-tools
-  :config
-  (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
-  :init
-  (setq pdf-view-restore-filename "~/.pdf-view-restore"))
+
+;; (use-package pdf-view-restore
+;;   :ensure t
+;;   :after pdf-tools
+;;   :config
+;;   (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
+;;   :init
+;;   (setq pdf-view-restore-filename "~/.pdf-view-restore"))
 
 ;;; JINX
 (use-package jinx
@@ -1685,17 +1675,45 @@ named arguments:
   )
 
 ;;; Co-Pilot (copilot)
-;; Based on: https://tony-zorman.com/posts/package-vc-install.html
-(use-package copilot
-    :init (zeds/vc-install :fetcher "github" :repo "copilot-emacs/copilot.el")
-    ;; :general (:keymaps 'copilot-completion-map
-            ;; ;; keybindings to cycle through vertico results.
-            ;; "C-<tab>" 'copilot-accept-completion
-    ;; )
-    )
+;; (use-package copilot
+;;   :init (zeds/vc-install :fetcher "github" :repo "copilot-emacs/copilot.el")
+;;   :ensure t
+;;   :after evil
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;               ("C-l" . copilot-accept-completion)
+;;               ("C-j" . copilot-next-completion)
+;;               ("C-k" . copilot-previous-completion)
+;;               ("M-l" . copilot-accept-completion-by-line))
+;;   :init
+;;   (setq copilot-backend 'copilot-node) ;; Use the NodeJS backend for better performance
+;;   ;; (setq copilot-node-command "/opt/homebrew/bin/node") ;; If the command is not in your exec-path
+;;   :config
+;;   (setq copilot-completion-at-point-functions '(copilot-completion-at-point))
+;;   (add-to-list 'copilot-indentation-alist '(prog-mode . 4))
+;;   (add-to-list 'copilot-indentation-alist '(org-mode . 4))
+;;   (add-to-list 'copilot-indentation-alist '(text-mode . 4))
+;;   (add-to-list 'copilot-indentation-alist '(closure-mode . 4))
+;;   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . 4)))
+
+;; (use-package copilot-chat
+;;   ;; :init (zeds/vc-install :fetcher "github" :repo "chep/copilot-chat.el")
+;;   :ensure t
+;;   :after copilot
+;;   :config (setq copilot-chat-model "claude-3.7-sonnet"))
+
+;; Benchmarking
+;; (use-package benchmark-init
+;;   :ensure t
+;;   :config
+;;   ;; To disable collection of benchmark data after init is done.
+;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+;; ;; Emacs startup profiler to identify slow-loading packages
+;; (use-package esup
+;;   :ensure t
+;;   :commands (esup))
+
 
 (provide 'init)
 ;;; init.el ends here
-;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
-(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
-;; ## end of OPAM user-setup addition for emacs / base ## keep this line
