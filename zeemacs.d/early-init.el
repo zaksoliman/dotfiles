@@ -20,11 +20,20 @@
 ;;; Code:
 
 ;; Startup speed, annoyance suppression
+
 ;; (setq use-package-always-defer t)
-(setq gc-cons-threshold 10000000)
+
+;; Defer garbage collection further back in the startup process
+(setq gc-cons-threshold most-positive-fixnum)
+
+;; (setq gc-cons-threshold 10000000)
+
 ;; (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
+
 (setq byte-compile-warnings '(not obsolete))
+
 (setq warning-suppress-log-types '((comp) (bytecomp)))
+
  ;; less noise when compiling elisp
 (setq native-comp-async-report-warnings-errors 'silent)
 
@@ -35,8 +44,16 @@
 
 ;; Default frame configuration: full screen, good-looking title bar on macOS
 (setq frame-resize-pixelwise t)
+
 (menu-bar-mode -1)   ; disables menubar
+
 (tool-bar-mode -1)   ; All these tools are in the menu-bar anyway
+
+;; Faster to disable these here (before they've been initialized)
+(push '(menu-bar-lines . 0) default-frame-alist)
+(push '(tool-bar-lines . 0) default-frame-alist)
+(push '(vertical-scroll-bars) default-frame-alist)
+
 (setq default-frame-alist '((fullscreen . maximized)
 
                             ;; You can turn off scroll bars by uncommenting these lines:
