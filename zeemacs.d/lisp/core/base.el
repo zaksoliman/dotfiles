@@ -137,6 +137,104 @@
   ;; Hide commands in M-x which don't work in the current mode
   (setq read-extended-command-predicate #'command-completion-default-include-p))
 
+(use-package saveplace
+  :init (save-place-mode 1))
+
+(use-package savehist
+  :init (savehist-mode 1))
+
+(use-package recentf
+  :config
+  (add-to-list 'recentf-exclude "\\elpa")
+  (add-to-list 'recentf-exclude "private/tmp")
+  (recentf-mode))
+
+;;; THEME
+;; https://protesilaos.com/emacs/standard-themes
+;; (use-package ef-themes
+;;   :ensure t
+;;   :demand t
+;;   :config
+;;   (load-theme 'ef-winter)
+;;   )
+
+;; Modeline
+(use-package mood-line
+  :ensure t
+  ;; Enable mood-line
+  :config
+  (mood-line-mode))
+;;(use-package doom-modeline
+;;  :ensure t
+;;  :init (doom-modeline-mode 1))
+;;  ;; Use pretty Fira Code-compatible glyphs
+;;  :custom
+;;  (mood-line-glyph-alist mood-line-glyphs-fira-code))
+
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t       ; if nil, bold is universally disabled
+        doom-themes-enable-italic t)
+                                        ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+  ;; (load-theme 'doom-city-lights t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+(use-package solaire-mode
+  :ensure t
+  :config
+  (solaire-global-mode 1))
+
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :hook (after-init . doom-modeline-mode))
+
+;;; ICONS
+(use-package all-the-icons
+  :ensure t
+  :demand t)
+
+;; prettify dired with icons
+(use-package all-the-icons-dired
+  :ensure t
+  :demand t
+  :hook
+  (dired-mode . all-the-icons-dired-mode))
+
+(use-package all-the-icons-completion
+  :ensure t
+  :after (marginalia all-the-icons)
+  :demand t
+  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
+  :init (all-the-icons-completion-mode))
+
+;;; HIGHLIGHT TODOs
+(use-package hl-todo
+  :ensure t
+  :demand t
+  :init
+  (global-hl-todo-mode)
+  :config
+    (setq hl-todo-highlight-punctuation ":"
+        hl-todo-keyword-faces
+        '(("TODO"       . "#FF7B00")
+          ("FIXME"      . "#FF0000")
+          ("DEBUG"      . "#A020F0")
+          ("GOTCHA"     . "#FF4500")
+          ("STUB"       . "#1E90FF")
+          ("SECTION"    . "#007BFF")
+          ("NOTE"       . "#33FFDA")
+          ("REVIEW"     . "#1E90FF")
+          ("DEPRECATED" . "#1E90FF")))
+   )
+;; END HIGHLIGHT TODOs
+
 
 (provide 'core/base)
 ;;; core/base.el ends here

@@ -34,14 +34,16 @@
 
 ;; Add lisp directory to load path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "lisp/core" user-emacs-directory))
+;; (add-to-list 'load-path (expand-file-name "lisp/core" user-emacs-directory))
 ;; (add-to-list 'load-path (expand-file-name "lisp/langs" user-emacs-directory))
-;; (add-to-list 'load-path (expand-file-name "lisp/tools" user-emacs-directory))
+;; ;; (add-to-list 'load-path (expand-file-name "lisp/tools" user-emacs-directory))
 
 (require 'core/package-setup)
 (require 'core/variables)
 (require 'core/functions)
 (require 'core/base)
+(require 'langs/rust)
+
 
 
 
@@ -115,83 +117,6 @@
       ;; :ccls (:initializationOptions (:clang (:extraArgs ["-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"])))
 
       )))
-
-(use-package saveplace
-  :init (save-place-mode 1))
-
-(use-package savehist
-  :init (savehist-mode 1))
-
-(use-package recentf
-  :config
-  (add-to-list 'recentf-exclude "\\elpa")
-  (add-to-list 'recentf-exclude "private/tmp")
-  (recentf-mode))
-
-;;; THEME
-;; https://protesilaos.com/emacs/standard-themes
-;; (use-package ef-themes
-;;   :ensure t
-;;   :demand t
-;;   :config
-;;   (load-theme 'ef-winter)
-;;   )
-
-;; Modeline
-(use-package mood-line
-  :ensure t
-  ;; Enable mood-line
-  :config
-  (mood-line-mode))
-;;(use-package doom-modeline
-;;  :ensure t
-;;  :init (doom-modeline-mode 1))
-;;  ;; Use pretty Fira Code-compatible glyphs
-;;  :custom
-;;  (mood-line-glyph-alist mood-line-glyphs-fira-code))
-
-(use-package doom-themes
-  :ensure t
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t       ; if nil, bold is universally disabled
-        doom-themes-enable-italic t)
-                                        ; if nil, italics is universally disabled
-  (load-theme 'doom-one t)
-  ;; (load-theme 'doom-city-lights t)
-
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
-
-(use-package solaire-mode
-  :ensure t
-  :config
-  (solaire-global-mode 1))
-
-;; (use-package doom-modeline
-;;   :ensure t
-;;   :hook (after-init . doom-modeline-mode))
-
-;;; ICONS
-(use-package all-the-icons
-  :ensure t
-  :demand t)
-
-;; prettify dired with icons
-(use-package all-the-icons-dired
-  :ensure t
-  :demand t
-  :hook
-  (dired-mode . all-the-icons-dired-mode))
-
-(use-package all-the-icons-completion
-  :ensure t
-  :after (marginalia all-the-icons)
-  :demand t
-  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
-  :init (all-the-icons-completion-mode))
 
 ;;; EVIL
 (mapc #'define-prefix-command
@@ -370,121 +295,6 @@
   ;; some red color (as defined by the color theme)
   ;; other faces such as `diff-added` will be used for other actions
   (evil-goggles-use-diff-faces))
-
-;;; KEY BINDINGS - GENERAL.EL
-;; (use-package general
-;;   :ensure t
-;;   :demand t
-;;   :config
-;;   (general-evil-setup)
-;;   ;; integrate general with evil
-
-;;   ;; set up 'SPC' as the global leader key
-;;   (general-create-definer zeds/leader-keys
-;;     :states '(normal insert visual emacs)
-;;     :keymaps 'override
-;;     :prefix "SPC"           ;; set leader
-;;     :global-prefix "M-SPC") ;; access leader in insert mode
-
-;;   ;; set up ',' as the local leader key
-;;   (general-create-definer zeds/local-leader-keys
-;;     :states '(normal insert visual emacs)
-;;     :keymaps 'override
-;;     :prefix ","           ;; set local leader
-;;     :global-prefix "M-,") ;; access local leader in insert mode
-
-;;   (general-define-key
-;;    :states 'insert
-;;    "C-g" 'evil-normal-state) ;; don't stretch for ESC
-
-;;   ;; unbind some annoying default bindings
-;;   (general-unbind
-;;     "C-x C-r"    ;; unbind find file read only
-;;     "C-x C-z"    ;; unbind suspend frame
-;;     "C-x C-d"    ;; unbind list directory
-;;     "<mouse-2>") ;; pasting with mouse wheel click
-
-;;   ;; (zeds/leader-keys
-;;   ;;   "z" (:ignore t :wk "Zeeds Emacs")
-;;   ;;   "zr" ( :wk "Reload emacs configs"))
-
-;;   (zeds/leader-keys
-;;     "SPC" '(execute-extended-command :wk "execute command") ;; an alternative to 'M-x'
-;;     "TAB" '(:keymap tab-prefix-map :wk "tab")) ;; remap tab bindings
-
-;;   (zeds/leader-keys
-;;     "w" '(:keymap evil-window-map :wk "window")
-;;     "wm" '(:ignore t  :wk "maximize")
-;;     "wmm" '(zeds/window-maximize-buffer :wk "maximize")
-;;     "wms" '(zeds/window-maximize-horizontally :wk "maximize horizontally")
-;;     "wmv" '(zeds/window-maximize-vertically :wk "maximize vertically")) ;; window bindings
-
-;;   ;; help
-;;   ;; namespace mostly used by 'helpful'
-;;   (zeds/leader-keys
-;;     "h" '(:ignore t :wk "help"))
-
-;;   ;; file
-;;   (zeds/leader-keys
-;;     "f" '(:ignore t :wk "file")
-;;     "ff" '(find-file :wk "find file") ;; gets overridden by consult
-;;     "fs" '(save-buffer :wk "save file")
-;;     "fr" '(recentf :wk "recent files"))
-
-;;   ;; buffer
-;;   ;; see 'bufler' and 'popper'
-;;   (zeds/leader-keys
-;;     "b" '(:ignore t :wk "buffer")
-;;     "bb" '(switch-to-buffer :wk "switch buffer") ;; gets overridden by consult
-;;     "bk" '(kill-this-buffer :wk "kill this buffer")
-;;     "br" '(revert-buffer :wk "reload buffer")
-;;     "bp" '(previous-buffer :wk "previous buffer")
-;;     "bn" '(next-buffer :wk "next buffer")
-;;     "bx" '(scratch-buffer :wk "Switch to scratch buffer"))
-
-;;   ;; universal argument
-;;   (zeds/leader-keys
-;;     "u" '(universal-argument :wk "universal prefix"))
-
-;;   ;; ;; notes
-;;   ;; ;; see 'citar' and 'org-roam'
-;;   (zeds/leader-keys
-;;     "n" '(:ignore t :wk "notes")
-;;     ;; see org-roam and citar sections
-;;     "na" '(org-todo-list :wk "agenda todos")) ;; agenda
-
-;;   ;; ;; code
-;;   ;; see 'flymake'
-;;   (zeds/leader-keys
-;;     "c" '(:ignore t :wk "code"))
-
-;;   ;; open
-;;   (zeds/leader-keys
-;;     "o" '(:ignore t :wk "open")
-;;     "of" '(zeds/macos-reveal-in-finder :wk "open in finder")
-;;     "os" '(speedbar t :wk "speedbar")
-;;     "op" '(elpaca-log t :wk "elpaca"))
-
-
-;;   ;; ;; search
-;;   ;; ;; see 'consult'
-;;   (zeds/leader-keys
-;;     "s" '(:ignore t :wk "search"))
-
-;;   ;; ;;Emacs Admin
-;;   (zeds/leader-keys
-;;     "e" '(:ignore t :wk "Emacs Admin")
-;;     "er" '(zeds/reload-init :wk "Reload configs")
-;;     "ei" '(zeds/open-init-file :wk "Open init file")
-;;     "ed" '(zeds/open-init-dir :wk "Open config directory"))
-;;   ;; ;; templating
-;;   ;; ;; see 'tempel'
-;;   ;; (zeds/leader-keys
-;;   ;;     "t" '(:ignore t :wk "template")
-;;   )
-
-;; END KEY BINDINGS - GENERAL.EL
-
 
 ;;; WHICH-KEY
 (use-package which-key
@@ -755,26 +565,6 @@
   (setq olivetti-minimum-body-width 50))
 ;; END OLIVETTY
 
-;;; HIGHLIGHT TODOs
-(use-package hl-todo
-  :ensure t
-  :demand t
-  :init
-  (global-hl-todo-mode)
-  :config
-    (setq hl-todo-highlight-punctuation ":"
-        hl-todo-keyword-faces
-        '(("TODO"       . "#FF7B00")
-          ("FIXME"      . "#FF0000")
-          ("DEBUG"      . "#A020F0")
-          ("GOTCHA"     . "#FF4500")
-          ("STUB"       . "#1E90FF")
-          ("SECTION"    . "#007BFF")
-          ("NOTE"       . "#33FFDA")
-          ("REVIEW"     . "#1E90FF")
-          ("DEPRECATED" . "#1E90FF")))
-   )
-;; END HIGHLIGHT TODOs
 
 ;;; ORG MODE CONFIG
 (use-package org
@@ -1272,21 +1062,6 @@
                 ))
 
 
-;;; RUST
-(use-package rust-mode
-  :ensure t
-  :after (eglot)
-  :mode ("\\.rs\\'" . rust-mode)
-  :init
-  (setq rust-mode-treesitter-derive t)
-  :hook ((rust-mode . (lambda ()
-                        (setq indent-tabs-mode nil)
-                        (eglot-ensure)
-			                  (eglot-inlay-hints-mode -1))))
-  :config
-  (add-to-list 'eglot-server-programs '(rust-ts-mode . ("rust-analyzer")))
-  (evil-define-key 'normal eglot-mode-map (kbd "<localleader>h") 'eglot-inlay-hints-mode)
-  )
 
 
 ;;; WEB
@@ -1540,36 +1315,38 @@
   )
 
 ;;; Co-Pilot (copilot)
-(use-package copilot
-  :init (zeds/vc-install :fetcher "github" :repo "copilot-emacs/copilot.el")
-  :ensure t
-  :after evil
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("C-l" . copilot-accept-completion)
-              ("C-j" . copilot-next-completion)
-              ("C-k" . copilot-previous-completion)
-              ("M-l" . copilot-accept-completion-by-line))
-  :init
-  (setq copilot-backend 'copilot-node) ;; Use the NodeJS backend for better performance
-  ;; (setq copilot-node-command "/opt/homebrew/bin/node") ;; If the command is not in your exec-path
-  :config
-  (setq copilot-completion-at-point-functions '(copilot-completion-at-point))
-  (add-to-list 'copilot-indentation-alist '(prog-mode . 4))
-  (add-to-list 'copilot-indentation-alist '(org-mode . 4))
-  (add-to-list 'copilot-indentation-alist '(text-mode . 4))
-  (add-to-list 'copilot-indentation-alist '(closure-mode . 4))
-  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . 4)))
+;; (use-package copilot
+;;   :init (zeds/vc-install :fetcher "github" :repo "copilot-emacs/copilot.el")
+;;   :ensure t
+;;   :after evil
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;               ("C-l" . copilot-accept-completion)
+;;               ("C-j" . copilot-next-completion)
+;;               ("C-k" . copilot-previous-completion)
+;;               ("M-l" . copilot-accept-completion-by-line))
+;;   :init
+;;   (setq copilot-backend 'copilot-node) ;; Use the NodeJS backend for better performance
+;; (setq copilot-indent-offset-warning-disable t)
+;;   ;; (setq copilot-node-command "/opt/homebrew/bin/node") ;; If the command is not in your exec-path
+;;   :config
+;;   (setq copilot-completion-at-point-functions '(copilot-completion-at-point))
+;;    (add-to-list 'copilot-indentation-alist '(js-json-mode . 2))
+;;  (add-to-list 'copilot-indentation-alist '(prog-mode . 4))
+;;   (add-to-list 'copilot-indentation-alist '(org-mode . 4))
+;;   (add-to-list 'copilot-indentation-alist '(text-mode . 4))
+;;   (add-to-list 'copilot-indentation-alist '(closure-mode . 4))
+;;   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . 4)))
 
-(use-package copilot-chat
-  :init (zeds/vc-install :fetcher "github" :repo "chep/copilot-chat.el")
-  :ensure t
-  :after copilot
-  :bind (:map global-map
-              ("C-c C-y" . copilot-chat-yank)
-              ("C-c C-m" . copilot-chat-yank-pop)
-              ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
-  :config (setq copilot-chat-model "claude-3.7-sonnet"))
+;; (use-package copilot-chat
+;;   :init (zeds/vc-install :fetcher "github" :repo "chep/copilot-chat.el")
+;;   :ensure t
+;;   :after copilot
+;;   :bind (:map global-map
+;;               ("C-c C-y" . copilot-chat-yank)
+;;               ("C-c C-m" . copilot-chat-yank-pop)
+;;               ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
+;;   :config (setq copilot-chat-model "claude-3.7-sonnet-thought"))
 
 ;;; Benchmarking
 ;; (use-package benchmark-init
