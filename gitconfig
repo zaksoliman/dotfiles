@@ -2,11 +2,11 @@
 	name = Zak Soliman
 	email = zakaria.soliman1@gmail.com
 [credential]
-    helper = cache --timeout 14400
+  helper = cache --timeout 14400
 [diff]
-    tool=vimdiff
+  tool=vimdiff
 [core]
-    excludesfile = ~/.cvsignore
+  excludesfile = ~/.cvsignore
 	editor = vim
 [alias]
   gone = ! "git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" {print $1}' | xargs -r git branch -D"

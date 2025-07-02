@@ -34,8 +34,8 @@
 
 ;; Add lisp directory to load path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-;; (add-to-list 'load-path (expand-file-name "lisp/core" user-emacs-directory))
-;; (add-to-list 'load-path (expand-file-name "lisp/langs" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lisp/core" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lisp/langs" user-emacs-directory))
 ;; ;; (add-to-list 'load-path (expand-file-name "lisp/tools" user-emacs-directory))
 
 (require 'core/package-setup)
@@ -1273,6 +1273,7 @@
     "G" 'pdf-view-last-page
     "h" 'image-backward-hscroll
     "l" 'image-forward-hscroll))
+
 ;; (use-package pdf-tools
 ;;   :ensure t
 ;;   :hook (TeX-after-compilation-finished . TeX-revert-document-buffer)
@@ -1303,16 +1304,16 @@
 ;;   (setq pdf-view-restore-filename "~/.pdf-view-restore"))
 
 ;;; JINX
-(use-package jinx
-  :ensure t
-  :demand t
-  ;; :init
-  ;; (setenv "PKG_CONFIG_PATH" (concat "/opt/homebrew/opt/glib/lib/pkgconfig/" (getenv "PKG_CONFIG_PATH")))
-  :hook (emacs-startup . global-jinx-mode)
-  ;; :general
-  ;; ("M-$" 'jinx-correct
-  ;;  "C-M-$" 'jinx-languages)
-  )
+;; (use-package jinx
+;;   :ensure t
+;;   :demand t
+;;   ;; :init
+;;   ;; (setenv "PKG_CONFIG_PATH" (concat "/opt/homebrew/opt/glib/lib/pkgconfig/" (getenv "PKG_CONFIG_PATH")))
+;;   :hook (emacs-startup . global-jinx-mode)
+;;   ;; :general
+;;   ;; ("M-$" 'jinx-correct
+;;   ;;  "C-M-$" 'jinx-languages)
+;;   )
 
 ;;; Co-Pilot (copilot)
 ;; (use-package copilot
