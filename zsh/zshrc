@@ -115,24 +115,24 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+alias zshconfig="mate ~/.zshrc"
+alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export PATH="$HOME/.local/Emacs.app/Contents/MacOS/bin:$PATH"
-export PATH="$HOME/.local/Emacs/Emacs.app/Contents/MacOS/bin:$PATH"
-export PATH="$HOME/.emacs.d/bin:$PATH"
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+#export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+#export PATH="$HOME/.local/Emacs.app/Contents/MacOS/bin:$PATH"
+#export PATH="$HOME/.local/Emacs/Emacs.app/Contents/MacOS/bin:$PATH"
+#export PATH="$HOME/.emacs.d/bin:$PATH"
+
+if [ -d "/Applications/Emacs.app/Contents/MacOS/bin" ]; then
+  export PATH="/Applications/Emacs.app/Contents/MacOS/bin:$PATH"
+fi
 
 # Created by `pipx` on 2024-10-04 19:23:08
-export PATH="$PATH:/Users/zakaria/.local/bin"
+#export PATH="$PATH:/Users/zakaria/.local/bin"
 
 
 # BEGIN opam configuration
@@ -140,5 +140,8 @@ export PATH="$PATH:/Users/zakaria/.local/bin"
 #   - the correct directories to the PATH
 #   - auto-completion for the opam binary
 # This section can be safely removed at any time if needed.
-[[ ! -r '/Users/zakaria/.opam/opam-init/init.zsh' ]] || source '/Users/zakaria/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+#[[ ! -r '/Users/zakaria/.opam/opam-init/init.zsh' ]] || source '/Users/zakaria/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
+
+
+. "$HOME/.local/bin/env"
