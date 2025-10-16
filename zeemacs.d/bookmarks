@@ -3,9 +3,9 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored"
- (filename . "~/Documents/Library of Alexandria/notes/org-roam/zettels/work/20250514095249-bit_festival_tags.org")
- (front-context-string)
- (rear-context-string . "letags: :draft:\n")
- (position . 115)
- (last-modified 26660 41011 978824 0))
+ (filename . "~/Documents/notes/org-roam/zettels/work/20250703123734-3_3_3_presentation_notes.org")
+ (front-context-string . "\n* Objective\n\nTh")
+ (rear-context-string . " :osedea:draft:\n")
+ (position . 129)
+ (last-modified 26726 45632 411234 0))
 )

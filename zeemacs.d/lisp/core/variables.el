@@ -1,10 +1,10 @@
 ;;; core/variables.el -*- lexical-binding: t; -*-
 
 ;;; VARIABLES
-(defvar zeds/library-path "~/Documents/Library of Alexandria/"
+(defvar zeds/library-path "~/Documents/"
   "Directory where my documents collection lives.")
 
-(defvar zeds/notes-path "~/Documents/Library of Alexandria/notes/"
+(defvar zeds/notes-path "~/Documents/notes/"
   "General Notes.")
 
 (defvar zeds/roam-notes-path (concat zeds/notes-path "org-roam/zettels/")
@@ -16,4 +16,4 @@
 (defvar zeds/org-path (concat zeds/notes-path "org/")
   "Org path.")
 
-(provide 'core/variables)
+(provide 'variables)

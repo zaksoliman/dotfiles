@@ -38,85 +38,20 @@
 (add-to-list 'load-path (expand-file-name "lisp/langs" user-emacs-directory))
 ;; ;; (add-to-list 'load-path (expand-file-name "lisp/tools" user-emacs-directory))
 
-(require 'core/package-setup)
-(require 'core/variables)
-(require 'core/functions)
-(require 'core/base)
-(require 'langs/rust)
+(require 'package-setup)
+(require 'variables)
+(require 'functions)
+(require 'base)
+(require 'ai)
+(require 'rust)
+(require 'python-lang)
 
 
+(use-package direnv
+  :ensure t
+  :config
+  (direnv-mode))
 
-
-(defun zeds/eglot-python-workspace-config (server)
-  ;; Default values in accordance with
-  ;; https://github.com/python-lsp/python-lsp-server/blob/v1.10.0/CONFIGURATION.md
-  ;; (or commit 2a5a953).  A value of null means we do not set a value and
-  ;; therefore use the plugin's default value.
-
-  ;; The recommended format for the `eglot-workspace-configuration' variable
-  ;; value is a property list (plist for short):
-  ;;
-  ;; (:server plist…)
-  ;;
-  ;; Here :server identifies a particular language server and plist is the
-  ;; corresponding keyword-value property list of one or more parameter
-  ;; settings for that server, serialized by Eglot as a JSON object.
-  ;; plist may be arbitrarily complex, generally containing other
-  ;; keyword-value property sublists corresponding to JSON subobjects.
-
-  ;; The JSON values are represented by Emacs Lisp values as follows:
-
-  ;; JSON                         | Emacs Lisp
-  ;; ------------------------------------------------
-  ;; :true i.e. true              | t
-  ;; :false i.e. false            | :json-false
-  ;; :null i.e. null              | nil
-  ;; :[] i.e. [] the empty array  | []*
-  ;; :{} i.e. {} the empty object | eglot-{}**
-
-  ;; * Lisp array elements should not be comma separated as they are in a
-  ;; JSON array.
-  ;; ** Must be evaluated via a backquote or `list'
-  ;; e.g. `(:pylsp (:plugins (:jedi (:env_vars ,eglot-{})))) or
-  ;;       (list :pylsp (list :plugins (list :jedi (list :env_vars eglot-{}))))
-  (let ((venv-path (string-trim (shell-command-to-string "pyenv prefix"))))
-    `(:pylsp
-      (:plugins (
-                 :pylsp_mypy (
-                              :enabled t
-                              :ignore_missing_imports :json-false)
-                 :jedi (:environment ,venv-path)
-                 :jedi_completion (
-                                   :cache_for ["pandas" "numpy" "tensorflow" "matplotlib"] ; string array: ["pandas", "numpy", "tensorflow", "matplotlib"] (default)
-                                   :eager :json-false ; boolean: true or false (default)
-                                   :enabled t ; boolean: true (default) or false
-                                   :fuzzy :json-false ; boolean: true or false (default)
-                                   :include_class_objects :json-false ; boolean: true or false (default)
-                                   :include_function_objects :json-false ; boolean: true or false (default)
-                                   :include_params t ; boolean: true (default) or false
-                                   :resolve_at_most 25)
-                 :jedi_definition
-                 (:enabled t ; boolean: true (default) or false
-                           :follow_builtin_definitions t ; boolean: true (default) or false
-                           :follow_builtin_imports t ; boolean: true (default) or false
-                           :follow_imports t) ; boolean: true (default) or false
-                 :jedit_hover
-                 (:enabled t) ; boolean: true (default) or false
-                 :jedi_references
-                 (:enabled t) ; boolean: true (default) or false
-                 :jedi_signature_help
-                 (:enabled t) ; boolean: true (default) or false
-                 :jedi_symbols
-                 (:all_scopes t ; boolean: true (default) or false
-                              :enabled t ; boolean: true (default) or false
-                              :include_import_symbols t) ; boolean: true (default) or false
-                 :pylint (:enabled :json-false)
-                 :ruff
-                  (:enabled t)
-                 ))
-      ;; :ccls (:initializationOptions (:clang (:extraArgs ["-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"])))
-
-      )))
 
 ;;; EVIL
 (mapc #'define-prefix-command
@@ -214,7 +149,7 @@
     ("p" . previous-buffer)
     ("n" . next-buffer)
     ("B" . bury-buffer)
-    ("k" . kill-this-buffer)
+    ("k" . kill-current-buffer)
     ("e" . eval-buffer)
     ("m" . view-echo-area-messages)
     ("s" . scratch-buffer)
@@ -742,7 +677,7 @@
           ("w" "Work" plain
            "%?"
            :if-new (file+head "work/%<%Y%m%d%H%M%S>-${slug}.org"
-                              "#+title: ${title}\n#+filetags: :draft:\n")
+                              "#+title: ${title}\n#+filetags: :osedea:draft:\n")
            :unnarrowed t)
           ("r" "Reference" plain
            "%?"
@@ -879,7 +814,7 @@
   (fset #'jsonrpc--log-event #'ignore)
   (setq eglot-events-buffer-size 0)
   (setq eglot-autoshutdown t)
-  (setq eglot-workspace-configuration #'zeds/eglot-python-workspace-config)
+  ;; (setq eglot-workspace-configuration #'zeds/eglot-python-workspace-config)
    :commands eglot
   :bind (:map eglot-mode-map
               ("<f6>" . eglot-format-buffer)
@@ -925,98 +860,7 @@
 ;;         ))
 ;;     )
 
-;;; PYTHON
-;; (dir-locals-set-class-variables 'unwritable-directory
-;;                                 (zeds/eglot-python-workspace-config))
-
-;; (dir-locals-set-directory-class
-;;    "/Users/zakaria/Projects/BIT/" 'unwritable-directory)
-
-(defun zeds/pyenv-mode-versions ()
-  "List installed python versions."
-  (let ((versions (shell-command-to-string "pyenv versions --bare")))
-    (cons "system" (split-string versions))))
-
-(defvar zeds/pyenv--version nil)
-
-(defun zeds/python-pyenv-read-version-from-file ()
-  "Read pyenv version from .python-version file."
-  (when-let (root-path (locate-dominating-file default-directory ".python-version"))
-    (let* ((file-path (expand-file-name ".python-version" root-path))
-           (version
-            (with-temp-buffer
-              (insert-file-contents-literally file-path)
-              (string-trim (buffer-string)))))
-      (if (member version (zeds/pyenv-mode-versions))
-          version ;; return.
-        (message "pyenv: version `%s' is not installed (set by `%s')."
-                 version file-path)))))
-
-(defun zeds/python-pyenv-mode-set-auto-h ()
-  "Set pyenv-mode version from buffer-local variable."
-  (when (memq major-mode '(python-ts-mode python-mode))
-    (when (not (local-variable-p 'zeds/pyenv--version))
-      (make-local-variable 'zeds/pyenv--version)
-      (setq-local zeds/pyenv--version (zeds/python-pyenv-read-version-from-file)))
-    (if zeds/pyenv--version
-        (progn
-          (pyenv-mode-set zeds/pyenv--version)
-          ;; (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
-
-          ;; (setq-default eglot-workspace-configuration (zeds/eglot-python-workspace-config))
-          ;; (eglot-ensure)
-          )
-      (pyenv-mode-unset))))
-
-(defun zeds/activate-project-venv ()
-  "Activate pyenv or pyvenv virtualenv for the current project."
-  (when-let ((proj (project-current)))
-    (let* ((root (project-root proj))
-           (venv (expand-file-name ".venv" root))
-           (pyenv-version-file (expand-file-name ".python-version" root)))
-      (cond
-       ((file-exists-p venv)
-        (pyvenv-activate venv))
-       ((file-exists-p pyenv-version-file)
-        (let ((version (string-trim
-                        (with-temp-buffer
-                          (insert-file-contents pyenv-version-file)
-                          (buffer-string)))))
-          (pyenv-mode-set version)))))))
-;; (use-package python
-;;   :hook
-;;   ((python-mode . (lambda ()
-;;                        (setq-local indent-tabs-mode t)
-;;                        (setq-local tab-width 4)
-;;                        (setq-local py-indent-tabs-mode t)))
-;;    (python-mode . eglot-ensure))
-;;   :config
-;;   (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio"))))
-
-
-(use-package python-ts-mode
-  :ensure nil
-  :mode ("\\.py\\'" . python-ts-mode)
-  :interpreter "ipython"
-  :hook ((python-ts-mode . (lambda ()
-                             (setq-local indent-tabs-mode nil)
-                             (setq-local python-indent-offset 4)
-                             (setq-local py-indent-tabs-mode t)
-                             (setq-local tab-width 4)
-                             (eglot-ensure)
-                             ))))
-
-
-(use-package pyenv-mode
-    :ensure t
-    :config
-    (when (executable-find "pyenv")
-      (pyenv-mode +1)
-      (add-to-list 'exec-path (expand-file-name "shims" (or (getenv "PYENV_ROOT") "~/.pyenv"))))
-    :hook (python-ts-mode . (lambda ()
-                              (zeds/python-pyenv-mode-set-auto-h)
-                              (eglot-ensure))))
-;;; C LANG
+;; ;;; C LANG
 (use-package c-ts-mode
     :ensure nil
     :after (eglot)
@@ -1081,11 +925,28 @@
 (use-package js2-mode
     :ensure t
     :after (eglot)
+    :mode (("\\.js\\'" . js2-mode)
+         ("\\.jsx\\'" . js2-mode)
+         ("\\.ts\\'" . js2-mode)
+         ("\\.tsx\\'" . js2-mode))
     :hook ((js2-mode . (lambda()
                          (eglot-ensure))))
     :config
-      (add-to-list 'eglot-server-programs '(js2-mode . ("typescript-language-server" "--stdio")))
-)
+    ;; js2-mode has its own syntax checker which can conflict with flymake/eglot.
+    ;; We disable it to let the LSP and ESLint handle all diagnostics.
+    (setq js2-mode-show-parse-errors nil)
+    (setq js2-mode-show-strict-warnings nil)
+    (add-to-list 'eglot-server-programs '(js2-mode . ("typescript-language-server" "--stdio")))
+    )
+
+(use-package tsx-ts-mode
+  :ensure nil
+  :mode ("\\.tsx\\'" . tsx-ts-mode)
+    :hook ((tsx-ts-mode . (lambda()
+                         (eglot-ensure))))
+
+  )
+
 
 ;;; LISP
 (use-package elisp-mode
@@ -1274,6 +1135,13 @@
     "h" 'image-backward-hscroll
     "l" 'image-forward-hscroll))
 
+(defun zeds/copy-buffer-file-path ()
+  "Copies the full file path of the current buffer to the kill ring."
+  (interactive)
+  (when buffer-file-name
+    (kill-new buffer-file-name)
+    (message "Copied file path: %s" buffer-file-name)))
+
 ;; (use-package pdf-tools
 ;;   :ensure t
 ;;   :hook (TeX-after-compilation-finished . TeX-revert-document-buffer)
@@ -1315,39 +1183,6 @@
 ;;   ;;  "C-M-$" 'jinx-languages)
 ;;   )
 
-;;; Co-Pilot (copilot)
-;; (use-package copilot
-;;   :init (zeds/vc-install :fetcher "github" :repo "copilot-emacs/copilot.el")
-;;   :ensure t
-;;   :after evil
-;;   :hook (prog-mode . copilot-mode)
-;;   :bind (:map copilot-completion-map
-;;               ("C-l" . copilot-accept-completion)
-;;               ("C-j" . copilot-next-completion)
-;;               ("C-k" . copilot-previous-completion)
-;;               ("M-l" . copilot-accept-completion-by-line))
-;;   :init
-;;   (setq copilot-backend 'copilot-node) ;; Use the NodeJS backend for better performance
-;; (setq copilot-indent-offset-warning-disable t)
-;;   ;; (setq copilot-node-command "/opt/homebrew/bin/node") ;; If the command is not in your exec-path
-;;   :config
-;;   (setq copilot-completion-at-point-functions '(copilot-completion-at-point))
-;;    (add-to-list 'copilot-indentation-alist '(js-json-mode . 2))
-;;  (add-to-list 'copilot-indentation-alist '(prog-mode . 4))
-;;   (add-to-list 'copilot-indentation-alist '(org-mode . 4))
-;;   (add-to-list 'copilot-indentation-alist '(text-mode . 4))
-;;   (add-to-list 'copilot-indentation-alist '(closure-mode . 4))
-;;   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . 4)))
-
-;; (use-package copilot-chat
-;;   :init (zeds/vc-install :fetcher "github" :repo "chep/copilot-chat.el")
-;;   :ensure t
-;;   :after copilot
-;;   :bind (:map global-map
-;;               ("C-c C-y" . copilot-chat-yank)
-;;               ("C-c C-m" . copilot-chat-yank-pop)
-;;               ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
-;;   :config (setq copilot-chat-model "claude-3.7-sonnet-thought"))
 
 ;;; Benchmarking
 ;; (use-package benchmark-init
@@ -1360,6 +1195,14 @@
 ;; (use-package esup
 ;;   :ensure t
 ;;   :commands (esup))
+
+;; Jinja2 support
+(use-package jinja2-mode
+  :ensure t
+  :mode ("\\.j2\\'" . jinja2-mode)
+  :hook (jinja2-mode . (lambda ()
+                        (setq-local comment-start "{# ")
+                        (setq-local comment-end " #"))))
 
 
 (provide 'init)

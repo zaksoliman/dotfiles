@@ -50,4 +50,4 @@
   )
 ;;; package-setup.el ends here
 
-(provide 'core/package-setup)
+(provide 'package-setup)

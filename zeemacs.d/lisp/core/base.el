@@ -149,6 +149,10 @@
   (add-to-list 'recentf-exclude "private/tmp")
   (recentf-mode))
 
+(use-package dockerfile-ts-mode
+  :mode (("Dockerfile\\'" . dockerfile-ts-mode)
+          ("\\.dockerignore\\'" . dockerfile-ts-mode)))
+
 ;;; THEME
 ;; https://protesilaos.com/emacs/standard-themes
 ;; (use-package ef-themes
@@ -241,5 +245,5 @@
 ;; END HIGHLIGHT TODOs
 
 
-(provide 'core/base)
+(provide 'base)
 ;;; core/base.el ends here

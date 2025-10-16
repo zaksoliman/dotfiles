@@ -16,5 +16,5 @@
   (evil-define-key 'normal eglot-mode-map (kbd "<localleader>h") 'eglot-inlay-hints-mode)
   )
 
-(provide 'langs/rust)
+(provide 'rust)
 ;;; rust.el ends here
