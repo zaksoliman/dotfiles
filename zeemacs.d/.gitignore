@@ -1,3 +1,5 @@
 elpa/*
 history
 recentf
+.cache/
+places

@@ -42,15 +42,15 @@
 (require 'variables)
 (require 'functions)
 (require 'base)
-(require 'ai)
 (require 'rust)
 (require 'python-lang)
+;; (require 'ai)
 
 
-(use-package direnv
-  :ensure t
-  :config
-  (direnv-mode))
+;; (use-package direnv
+;;   :ensure t
+;;   :config
+;;   (direnv-mode))
 
 
 ;;; EVIL

@@ -12,7 +12,7 @@
                         (eglot-ensure)
 			                  (eglot-inlay-hints-mode -1))))
   :config
-  (add-to-list 'eglot-server-programs '(rust-ts-mode . ("rust-analyzer")))
+  (add-to-list 'eglot-server-programs '(rust-ts-mode . ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
   (evil-define-key 'normal eglot-mode-map (kbd "<localleader>h") 'eglot-inlay-hints-mode)
   )
 
