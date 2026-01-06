@@ -205,23 +205,23 @@
 ;;   :hook (after-init . doom-modeline-mode))
 
 ;;; ICONS
-(use-package all-the-icons
+(use-package nerd-icons
   :ensure t
   :demand t)
 
 ;; prettify dired with icons
-(use-package all-the-icons-dired
+(use-package nerd-icons-dired
   :ensure t
   :demand t
   :hook
-  (dired-mode . all-the-icons-dired-mode))
+  (dired-mode . nerd-icons-dired-mode))
 
-(use-package all-the-icons-completion
+(use-package nerd-icons-completion
   :ensure t
-  :after (marginalia all-the-icons)
+  :after (marginalia nerd-icons)
   :demand t
-  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
-  :init (all-the-icons-completion-mode))
+  :hook (marginalia-mode . nerd-icons-completion-marginalia-setup)
+  :init (nerd-icons-completion-mode))
 
 ;;; HIGHLIGHT TODOs
 (use-package hl-todo
