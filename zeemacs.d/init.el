@@ -30,7 +30,7 @@
 ;; Show help buffer after startup
 (add-hook 'after-init-hook 'help-quick)
 
- (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3") 
+ (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 ;; Add lisp directory to load path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
@@ -38,19 +38,14 @@
 (add-to-list 'load-path (expand-file-name "lisp/langs" user-emacs-directory))
 ;; ;; (add-to-list 'load-path (expand-file-name "lisp/tools" user-emacs-directory))
 
-(require 'package-setup)
-(require 'variables)
-(require 'functions)
-(require 'base)
-(require 'rust)
-(require 'python-lang)
-;; (require 'ai)
-
-
-;; (use-package direnv
-;;   :ensure t
-;;   :config
-;;   (direnv-mode))
+;; (require 'package-setup)
+(load "core/package-setup")
+(load "core/variables")
+(load "core/functions")
+(load "core/base")
+(load "langs/rust")
+(load "langs/python-lang")
+(load "core/ai")
 
 
 ;;; EVIL
@@ -77,6 +72,7 @@
   (set-keymap-parent map project-prefix-map)
   map)
   "Repeating map for balanced expressions.")
+
 
 (defun zeds/evil-shift-left-visual ()
   (interactive)

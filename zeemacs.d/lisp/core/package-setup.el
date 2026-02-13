@@ -48,6 +48,6 @@
   :config (when (memq window-system '(mac ns x))
             (exec-path-from-shell-initialize))
   )
-;;; package-setup.el ends here
 
 (provide 'package-setup)
+;;; package-setup.el ends here

@@ -1,5 +1,5 @@
 ;;; core/base.el --- Base Emacs Configs -*- lexical-binding: t -*-
-
+(message "********Loaded base**********")
 (use-package emacs
   :demand t
   :hook
@@ -175,25 +175,47 @@
 ;;  :custom
 ;;  (mood-line-glyph-alist mood-line-glyphs-fira-code))
 
-(use-package doom-themes
+(use-package haki-theme
   :ensure t
+  :custom-face
+  (haki-region ((t (:background "#2e8b57" :foreground "#ffffff"))))
+  (haki-highlight ((t (:background "#fafad2" :foreground "#000000"))))
   :custom
-  ;; Global settings (defaults)
-  (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
-  (doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  ;; for treemacs users
-  (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  :config
-  (load-theme 'doom-one t)
+   ;; If you skip setting this, it will use 'default' font.
+  (haki-heading-font "Fira Code-12")
+  (haki-sans-font "Fira Code-12")
+  (haki-title-font "Fira Code-12")
+  (haki-link-font "Fira Code-12") ;; or Maple Mono looks good
+  (haki-code-font "Fira Code-12") ;; inline code/verbatim (org,markdown..)
+  (haki-bg-oled t "Toggle pitch black OLED background.")
 
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (nerd-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+  :config
+  ;; For meow/evil users (change border of mode-line according to modal states)
+  (add-hook 'post-command-hook #'haki-modal-mode-line)
+
+  (load-theme 'haki t))
+
+
+
+;; (use-package doom-themes
+;;   :ensure t
+;;   :custom
+;;   ;; Global settings (defaults)
+;;   (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
+;;   (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+;;   ;; for treemacs users
+;;   (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+;;   :config
+;;   (load-theme 'doom-one t)
+
+;;   ;; Enable flashing mode-line on errors
+;;   (doom-themes-visual-bell-config)
+;;   ;; Enable custom neotree theme (nerd-icons must be installed!)
+;;   (doom-themes-neotree-config)
+;;   ;; or for treemacs users
+;;   (doom-themes-treemacs-config)
+;;   ;; Corrects (and improves) org-mode's native fontification.
+;;   (doom-themes-org-config))
 
 (use-package solaire-mode
   :ensure t
