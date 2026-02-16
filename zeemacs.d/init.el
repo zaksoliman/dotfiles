@@ -343,7 +343,7 @@
   :demand t
   :hook
   (eval-expression-minibuffer-setup . corfu-mode)
-  ;; ((prog-mode . corfu-mode)
+  (prog-mode . corfu-mode)
   :init
   (global-corfu-mode)
   :custom
@@ -358,7 +358,8 @@
   ;; (corfu-scroll-margin 5)        ;; Use scroll margin
   :bind (:map corfu-map
               ("SPC" . corfu-insert-separator))
-  ) ;; for compatibility with orderless
+  )
+   ;; for compatibility with orderless
 
 ;;; keys unbound
 ;; (general-unbind

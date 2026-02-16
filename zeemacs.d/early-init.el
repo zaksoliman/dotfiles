@@ -74,7 +74,7 @@
 ;;tab-line-close-button-show nil) ;; don't show tab close button
 ;; FONTS
 ;; This sets the default font on all graphical frames created after restarting Emacs.
-(add-to-list 'default-frame-alist '(font . "Fira Code-12"))
+(add-to-list 'default-frame-alist '(font . "Fira Code-15"))
 
 ;; Makes commented text and keywords italics.
 ;; This is working in emacsclient but not emacs.

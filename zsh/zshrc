@@ -11,15 +11,6 @@
 # SET INFORPATH TODO: Verify why I need this and add comment to clarify
 export INFOPATH=$INFOPATH:/usr/share/info
 
-# Aliases
-alias ls='ls --color=auto'
-alias ll='ls -lah --color=auto'
-alias grep='grep --color=auto'
-alias ec="$EDITOR $HOME/.zshrc" # edit .zshrc
-alias sc="source $HOME/.zshrc"  # reload zsh configuration
-alias cats='highlight -O xterm256 -s bipolar'
-alias tmux="TERM=screen-256color-bce tmux"
-alias smlnj="rlwrap sml"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -207,6 +198,17 @@ fi
 # For CLI completions
 # Where to find them:
 fpath+=(~/.zsh/completions)
+
+
+# Aliases
+alias ls='ls --color=auto'
+alias ll='ls -lah --color=auto'
+alias grep='grep --color=auto'
+alias ec="$EDITOR $HOME/.zshrc" # edit .zshrc
+alias sc="source $HOME/.zshrc"  # reload zsh configuration
+alias cats='highlight -O xterm256 -s bipolar'
+alias tmux="TERM=screen-256color-bce tmux"
+alias smlnj="rlwrap sml"
 
 #To ensure Zsh recognizes the new completion script, you need to reinitialize the completion system. This is typically done by running compinit
 autoload -Uz compinit
