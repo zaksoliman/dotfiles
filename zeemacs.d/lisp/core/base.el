@@ -51,10 +51,15 @@
         truncate-string-ellipsis "…"
         ;; when I say to quit, I mean quit
         confirm-kill-processes nil
-        browse-url-firefox-program "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox"
-        browse-url-browser-function #'browse-url-firefox
         treesit-font-lock-level 4
         )
+
+  ;; Prefer Firefox Developer Edition when installed; otherwise fall back to
+  ;; the system default browser so this stays portable across machines.
+  (let ((ff "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox"))
+    (when (file-exists-p ff)
+      (setq browse-url-firefox-program ff
+            browse-url-browser-function #'browse-url-firefox)))
 
   ;; Modes I want by default
   (column-number-mode 1)
@@ -153,50 +158,13 @@
   :mode (("Dockerfile\\'" . dockerfile-ts-mode)
           ("\\.dockerignore\\'" . dockerfile-ts-mode)))
 
-;;; THEME
-;; https://protesilaos.com/emacs/standard-themes
-;; (use-package ef-themes
-;;   :ensure t
-;;   :demand t
-;;   :config
-;;   (load-theme 'ef-winter)
-;;   )
-
-;; Modeline
+;;; MODELINE
 (use-package mood-line
   :ensure t
-  ;; Enable mood-line
   :config
   (mood-line-mode))
-;;(use-package doom-modeline
-;;  :ensure t
-;;  :init (doom-modeline-mode 1))
-;;  ;; Use pretty Fira Code-compatible glyphs
-;;  :custom
-;;  (mood-line-glyph-alist mood-line-glyphs-fira-code))
 
-;; (use-package haki-theme
-;;   :ensure t
-;;   :custom-face
-;;   (haki-region ((t (:background "#2e8b57" :foreground "#ffffff"))))
-;;   (haki-highlight ((t (:background "#fafad2" :foreground "#000000"))))
-;;   :custom
-;;    ;; If you skip setting this, it will use 'default' font.
-;;   (haki-heading-font "Fira Code-12")
-;;   (haki-sans-font "Fira Code-12")
-;;   (haki-title-font "Fira Code-12")
-;;   (haki-link-font "Fira Code-12") ;; or Maple Mono looks good
-;;   (haki-code-font "Fira Code-12") ;; inline code/verbatim (org,markdown..)
-;;   (haki-bg-oled t "Toggle pitch black OLED background.")
-
-;;   :config
-;;   ;; For meow/evil users (change border of mode-line according to modal states)
-;;   (add-hook 'post-command-hook #'haki-modal-mode-line)
-
-;;   (load-theme 'haki t))
-
-
-
+;;; THEME
 (use-package doom-themes
   :ensure t
   :custom
@@ -221,10 +189,6 @@
   :ensure t
   :config
   (solaire-global-mode 1))
-
-;; (use-package doom-modeline
-;;   :ensure t
-;;   :hook (after-init . doom-modeline-mode))
 
 ;;; ICONS
 (use-package nerd-icons

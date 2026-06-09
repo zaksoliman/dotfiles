@@ -1,0 +1,887 @@
+{
+  "/Users/zakaria/dotfiles/setup.sh": {
+    "mtime": 1763829159.8177176,
+    "ast_hash": "080982561739c9e9c5d35c2db2fdb584",
+    "semantic_hash": "080982561739c9e9c5d35c2db2fdb584"
+  },
+  "/Users/zakaria/dotfiles/makesymlinks.sh": {
+    "mtime": 1763829159.8176332,
+    "ast_hash": "be615b85837b017150b7a7fb991cca3a",
+    "semantic_hash": "be615b85837b017150b7a7fb991cca3a"
+  },
+  "/Users/zakaria/dotfiles/xinitrc": {
+    "mtime": 1763829159.8204947,
+    "ast_hash": "05e2f55a2d3a999985e133c6f022cd4c",
+    "semantic_hash": "05e2f55a2d3a999985e133c6f022cd4c"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/rmsbolt-20250325.50/starters/rmsbolt.py": {
+    "mtime": 1763877712.572388,
+    "ast_hash": "1d8d65cc6a9bb24af482a29a50c42d47",
+    "semantic_hash": "1d8d65cc6a9bb24af482a29a50c42d47"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/rmsbolt-20250325.50/starters/rmsbolt.zig": {
+    "mtime": 1763877712.5729668,
+    "ast_hash": "62ab931c6973bc5b3127a84518afac06",
+    "semantic_hash": "62ab931c6973bc5b3127a84518afac06"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/rmsbolt-20250325.50/starters/rmsbolt.swift": {
+    "mtime": 1763877712.5727699,
+    "ast_hash": "80bc8169da7e8713bce93d8faabbf072",
+    "semantic_hash": "80bc8169da7e8713bce93d8faabbf072"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/rmsbolt-20250325.50/starters/rmsbolt.f": {
+    "mtime": 1763877712.5704653,
+    "ast_hash": "17cedd8177d44b038705501df95979ec",
+    "semantic_hash": "17cedd8177d44b038705501df95979ec"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/rmsbolt-20250325.50/starters/rmsbolt.go": {
+    "mtime": 1763877712.5708604,
+    "ast_hash": "dbd92852826b8ffa3506473f6c63b99f",
+    "semantic_hash": "dbd92852826b8ffa3506473f6c63b99f"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/rmsbolt-20250325.50/starters/rmsbolt.rs": {
+    "mtime": 1763877712.5725782,
+    "ast_hash": "d15e54968ee5dcf0d6bc60d1554cb688",
+    "semantic_hash": "d15e54968ee5dcf0d6bc60d1554cb688"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/rmsbolt-20250325.50/starters/rmsbolt.php": {
+    "mtime": 1763877712.572004,
+    "ast_hash": "41f7dff0e251c7aa68b01b76c99115a4",
+    "semantic_hash": "41f7dff0e251c7aa68b01b76c99115a4"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/rmsbolt-20250325.50/starters/rmsbolt.cpp": {
+    "mtime": 1763877712.570082,
+    "ast_hash": "76e5dbbb3c598a6d8e8c65415f80600c",
+    "semantic_hash": "76e5dbbb3c598a6d8e8c65415f80600c"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/rmsbolt-20250325.50/starters/Rmsbolt.java": {
+    "mtime": 1763877712.5693057,
+    "ast_hash": "4127b9efcfb8093c8034ce58057ef1ed",
+    "semantic_hash": "4127b9efcfb8093c8034ce58057ef1ed"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/rmsbolt-20250325.50/starters/rmsbolt.c": {
+    "mtime": 1763877712.5698798,
+    "ast_hash": "5fadde50b070b0bba63a5ab1262dd5d5",
+    "semantic_hash": "5fadde50b070b0bba63a5ab1262dd5d5"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/rmsbolt-20250325.50/starters/rmsbolt.f90": {
+    "mtime": 1763877712.5706587,
+    "ast_hash": "77c57aad9ee07a324e4514404c167d1f",
+    "semantic_hash": "77c57aad9ee07a324e4514404c167d1f"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/org-setup.inc": {
+    "mtime": 1763877717.8578606,
+    "ast_hash": "be200b0da91e1a2d4e2b48a6cc72fa84",
+    "semantic_hash": "be200b0da91e1a2d4e2b48a6cc72fa84"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/nav-menu.html.inc": {
+    "mtime": 1763877717.8576674,
+    "ast_hash": "7417ba19c13c3ebd9add98158f0aa3b7",
+    "semantic_hash": "7417ba19c13c3ebd9add98158f0aa3b7"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/lispy-20230314.1738/lispy-python.py": {
+    "mtime": 1763878954.2964437,
+    "ast_hash": "47041bef92d175f349b58bcbf9fc0dac",
+    "semantic_hash": "47041bef92d175f349b58bcbf9fc0dac"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/vterm-20251119.1653/elisp.h": {
+    "mtime": 1763877714.8678286,
+    "ast_hash": "dac4a8087d9ce2ac70b1449f240a7fce",
+    "semantic_hash": "dac4a8087d9ce2ac70b1449f240a7fce"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/vterm-20251119.1653/vterm-module.c": {
+    "mtime": 1763877714.869465,
+    "ast_hash": "7519e15a5efbe7647e7201ee2b8abd8d",
+    "semantic_hash": "7519e15a5efbe7647e7201ee2b8abd8d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/vterm-20251119.1653/utf8.c": {
+    "mtime": 1763877714.8690138,
+    "ast_hash": "42299004a509d068e8cdced496528f32",
+    "semantic_hash": "42299004a509d068e8cdced496528f32"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/vterm-20251119.1653/elisp.c": {
+    "mtime": 1763877714.8676014,
+    "ast_hash": "82bb9e61899bb5936f216cabb4663ae9",
+    "semantic_hash": "82bb9e61899bb5936f216cabb4663ae9"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/vterm-20251119.1653/emacs-module.h": {
+    "mtime": 1763877714.8680444,
+    "ast_hash": "c9913f343e1c980d0c26c7999b6bb9ec",
+    "semantic_hash": "c9913f343e1c980d0c26c7999b6bb9ec"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/vterm-20251119.1653/vterm-module.h": {
+    "mtime": 1763877714.8697128,
+    "ast_hash": "581e54742d400a9fe1e503b2c83cdd7e",
+    "semantic_hash": "581e54742d400a9fe1e503b2c83cdd7e"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/vterm-20251119.1653/utf8.h": {
+    "mtime": 1763877714.8692467,
+    "ast_hash": "50081d87be96d1bed24c116cb7bb6689",
+    "semantic_hash": "50081d87be96d1bed24c116cb7bb6689"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/vterm-20251119.1653/etc/emacs-vterm-bash.sh": {
+    "mtime": 1763877714.86832,
+    "ast_hash": "31844de56b7074432fdf881a22be2fca",
+    "semantic_hash": "31844de56b7074432fdf881a22be2fca"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/vterm-20251119.1653/etc/emacs-vterm-zsh.sh": {
+    "mtime": 1763877714.8685489,
+    "ast_hash": "4963a71ec8eefd88f25c7cdfa8b0546d",
+    "semantic_hash": "4963a71ec8eefd88f25c7cdfa8b0546d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/refactoring_plan.md": {
+    "mtime": 1770345449.4017062,
+    "ast_hash": "ddb6e28f130b4d1bdc6944167a4f7c74",
+    "semantic_hash": "ddb6e28f130b4d1bdc6944167a4f7c74"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/README.md": {
+    "mtime": 1771208830.8516924,
+    "ast_hash": "c678691de0fef3760e645078ae292675",
+    "semantic_hash": "c678691de0fef3760e645078ae292675"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/ace-window-0.10.0/README.md": {
+    "mtime": 1763878952.7961533,
+    "ast_hash": "8d72dec20b225dab7805443d463f9839",
+    "semantic_hash": "8d72dec20b225dab7805443d463f9839"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/ace-window-0.10.0/.github/FUNDING.yml": {
+    "mtime": 1763878952.7950764,
+    "ast_hash": "65d1b36290a1858a48cf6d9718f007d2",
+    "semantic_hash": "65d1b36290a1858a48cf6d9718f007d2"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/magit-20251122.1529/AUTHORS.md": {
+    "mtime": 1763878912.102057,
+    "ast_hash": "98f53175278e3a0cfdcdeb4b9565c09f",
+    "semantic_hash": "98f53175278e3a0cfdcdeb4b9565c09f"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/lv-0.15.0/.github/FUNDING.yml": {
+    "mtime": 1763878796.6448045,
+    "ast_hash": "65d1b36290a1858a48cf6d9718f007d2",
+    "semantic_hash": "65d1b36290a1858a48cf6d9718f007d2"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/ivy-0.15.1/README.md": {
+    "mtime": 1763878951.2118742,
+    "ast_hash": "b806bf8543aa9dbe4324a8e1b5a11e1d",
+    "semantic_hash": "b806bf8543aa9dbe4324a8e1b5a11e1d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/CONTRIBUTING.md": {
+    "mtime": 1763877717.8517785,
+    "ast_hash": "ef8e15f79b8540203d9907f8d7606a5a",
+    "semantic_hash": "ef8e15f79b8540203d9907f8d7606a5a"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/.travis.yml": {
+    "mtime": 1763877717.8514836,
+    "ast_hash": "2abb015043ba6d743375b135d28c1e29",
+    "semantic_hash": "2abb015043ba6d743375b135d28c1e29"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/vterm-20251119.1653/CMakeLists.txt": {
+    "mtime": 1763877714.8672848,
+    "ast_hash": "ec9cbd6c5106607e16b1ce571c626e3d",
+    "semantic_hash": "ec9cbd6c5106607e16b1ce571c626e3d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/dash-2.20.0/NEWS.md": {
+    "mtime": 1763877648.0294678,
+    "ast_hash": "bc887a389d2ab29a5e975332f19aec06",
+    "semantic_hash": "bc887a389d2ab29a5e975332f19aec06"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/dash-2.20.0/README.md": {
+    "mtime": 1763877648.029648,
+    "ast_hash": "0d543109b609c822040dcd355553d154",
+    "semantic_hash": "0d543109b609c822040dcd355553d154"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/dash-2.20.0/readme-template.md": {
+    "mtime": 1763877648.0311723,
+    "ast_hash": "a00588b3b50c8a2aec538ca96778c366",
+    "semantic_hash": "a00588b3b50c8a2aec538ca96778c366"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/dash-2.20.0/.github/workflows/test.yml": {
+    "mtime": 1763877648.0278618,
+    "ast_hash": "34513bdf994a668b6cf64a02e0be8a04",
+    "semantic_hash": "34513bdf994a668b6cf64a02e0be8a04"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/js2-mode-20231224/NEWS.md": {
+    "mtime": 1763877713.7524283,
+    "ast_hash": "5e21bdc21fab8f842b687afa364b6e5d",
+    "semantic_hash": "5e21bdc21fab8f842b687afa364b6e5d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/js2-mode-20231224/README.md": {
+    "mtime": 1763877713.7526963,
+    "ast_hash": "30a1bef5ab46964c0695e17ac168004e",
+    "semantic_hash": "30a1bef5ab46964c0695e17ac168004e"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/js2-mode-20231224/.github/FUNDING.yml": {
+    "mtime": 1763877713.7508452,
+    "ast_hash": "a11d6ec037631b6626cc864a9fafdd1a",
+    "semantic_hash": "a11d6ec037631b6626cc864a9fafdd1a"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/js2-mode-20231224/.github/workflows/test.yml": {
+    "mtime": 1763877713.7512531,
+    "ast_hash": "5ef2bdb2c5be9aca645b822eac3895f2",
+    "semantic_hash": "5ef2bdb2c5be9aca645b822eac3895f2"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/NEWS.md": {
+    "mtime": 1763877691.2024336,
+    "ast_hash": "c2c911037652b6818b29255fe7bbd1ad",
+    "semantic_hash": "c2c911037652b6818b29255fe7bbd1ad"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/README.md": {
+    "mtime": 1763877691.2135053,
+    "ast_hash": "a4b460ff08d19886be86dfe186a71d41",
+    "semantic_hash": "a4b460ff08d19886be86dfe186a71d41"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/CONTRIBUTING.md": {
+    "mtime": 1763877691.1886647,
+    "ast_hash": "6c8595308b442aa30c606b89c9448388",
+    "semantic_hash": "6c8595308b442aa30c606b89c9448388"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/attribution.md": {
+    "mtime": 1763877691.2078261,
+    "ast_hash": "5eb98bd8d74dd9fb18b19bc3d66d3555",
+    "semantic_hash": "5eb98bd8d74dd9fb18b19bc3d66d3555"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/uv/README.md": {
+    "mtime": 1763877670.055369,
+    "ast_hash": "e1d02b21718f2f785473ec10c8ba0e62",
+    "semantic_hash": "e1d02b21718f2f785473ec10c8ba0e62"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/uv/.github/workflows/test.yml": {
+    "mtime": 1763877670.055054,
+    "ast_hash": "7ba6c6874057434cdbafcc4a2d644a48",
+    "semantic_hash": "7ba6c6874057434cdbafcc4a2d644a48"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/aio-20251117.644/README.md": {
+    "mtime": 1763877663.600316,
+    "ast_hash": "a388ef20972810e876669699022597a3",
+    "semantic_hash": "a388ef20972810e876669699022597a3"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/emacsql-20251116.1655/README.md": {
+    "mtime": 1763878909.0961251,
+    "ast_hash": "2694d81c95daa042e8fa5376ab6b7064",
+    "semantic_hash": "2694d81c95daa042e8fa5376ab6b7064"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/avy-0.5.0/README.md": {
+    "mtime": 1763878952.311793,
+    "ast_hash": "3d0f63d72cf2b5c06c5b3080e39b85fb",
+    "semantic_hash": "3d0f63d72cf2b5c06c5b3080e39b85fb"
+  },
+  "/Users/zakaria/dotfiles/tmux/README.md": {
+    "mtime": 1763829159.817944,
+    "ast_hash": "5e3f31dbcad10a20756b28472e08988c",
+    "semantic_hash": "5e3f31dbcad10a20756b28472e08988c"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/auctex-14.1.0/doc/tex-ref.pdf": {
+    "mtime": 1763877711.5104785,
+    "ast_hash": "8da50245e9415e27808b09a801090bba",
+    "semantic_hash": "8da50245e9415e27808b09a801090bba"
+  },
+  "/Users/zakaria/dotfiles/doom.d/splash/doom-emacs-bw-light.svg": {
+    "mtime": 1763829159.8172653,
+    "ast_hash": "d9159543be4ad44f289b0c07521f6f86",
+    "semantic_hash": "d9159543be4ad44f289b0c07521f6f86"
+  },
+  "/Users/zakaria/dotfiles/doom.d/splash/I-am-doom.png": {
+    "mtime": 1763829159.8171017,
+    "ast_hash": "f42e5287b5a47bebcdf45a5120e3a666",
+    "semantic_hash": "f42e5287b5a47bebcdf45a5120e3a666"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/bg-content-left.png": {
+    "mtime": 1763877717.8529081,
+    "ast_hash": "acfeaa17db12437c87928c0cd51578d3",
+    "semantic_hash": "acfeaa17db12437c87928c0cd51578d3"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/customization-group.png": {
+    "mtime": 1763877717.8539536,
+    "ast_hash": "c0e8a943352604d3d248cf9e97c5a62c",
+    "semantic_hash": "c0e8a943352604d3d248cf9e97c5a62c"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/external.png": {
+    "mtime": 1763877717.8558607,
+    "ast_hash": "8ea7563eac773be6a466fd8a9866a411",
+    "semantic_hash": "8ea7563eac773be6a466fd8a9866a411"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/menu-groups.png": {
+    "mtime": 1763877717.8541446,
+    "ast_hash": "8a8c0d0747743d385428449210bfdd62",
+    "semantic_hash": "8a8c0d0747743d385428449210bfdd62"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/menu-parent.png": {
+    "mtime": 1763877717.8537645,
+    "ast_hash": "c67931146cadbb315a79d546075a5b05",
+    "semantic_hash": "c67931146cadbb315a79d546075a5b05"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/body.png": {
+    "mtime": 1763877717.855676,
+    "ast_hash": "516590354136225884c548712ae91860",
+    "semantic_hash": "516590354136225884c548712ae91860"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/menu-2.png": {
+    "mtime": 1763877717.8547225,
+    "ast_hash": "e75f6002383f6e15dfb6ca18645f265d",
+    "semantic_hash": "e75f6002383f6e15dfb6ca18645f265d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/menu-1.png": {
+    "mtime": 1763877717.8554807,
+    "ast_hash": "ebfb1de2663642d927f37f0b47a9885b",
+    "semantic_hash": "ebfb1de2663642d927f37f0b47a9885b"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/ido-menu.png": {
+    "mtime": 1763877717.8531318,
+    "ast_hash": "7d68cee92f9d3ac2c6c83398e7196259",
+    "semantic_hash": "7d68cee92f9d3ac2c6c83398e7196259"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/minor-mode-indicator.png": {
+    "mtime": 1763877717.8552856,
+    "ast_hash": "869c04aefc73c21e8d3a0a956e345189",
+    "semantic_hash": "869c04aefc73c21e8d3a0a956e345189"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/bg-content.png": {
+    "mtime": 1763877717.8543415,
+    "ast_hash": "41408f398c2f50120db677d38684576a",
+    "semantic_hash": "41408f398c2f50120db677d38684576a"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/bg-navigation.png": {
+    "mtime": 1763877717.8535483,
+    "ast_hash": "31694a9a6a0bca2f41d95f77e34f9551",
+    "semantic_hash": "31694a9a6a0bca2f41d95f77e34f9551"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/x-menu.png": {
+    "mtime": 1763877717.854908,
+    "ast_hash": "db8e9abcc2fdf7538015a710ab950bef",
+    "semantic_hash": "db8e9abcc2fdf7538015a710ab950bef"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/dropdown-menu.png": {
+    "mtime": 1763877717.8551009,
+    "ast_hash": "15d0cc2cd4a601302b9c6361554b5c4e",
+    "semantic_hash": "15d0cc2cd4a601302b9c6361554b5c4e"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/bg-content-right.png": {
+    "mtime": 1763877717.8560455,
+    "ast_hash": "602789daff17a4f2d5a67632096e9353",
+    "semantic_hash": "602789daff17a4f2d5a67632096e9353"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/bg-navigation-item-hover.png": {
+    "mtime": 1763877717.8533437,
+    "ast_hash": "8ba9ccd01f487e8df65f443f165a0860",
+    "semantic_hash": "8ba9ccd01f487e8df65f443f165a0860"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/yasnippet-0.14.3/doc/images/bg-navigation-item.png": {
+    "mtime": 1763877717.85453,
+    "ast_hash": "e59f255cdd9139e50c981702e5ee5527",
+    "semantic_hash": "e59f255cdd9139e50c981702e5ee5527"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/dash-2.20.0/rainbow-dash.png": {
+    "mtime": 1763877648.030481,
+    "ast_hash": "403113964aa8b250b12d03d9f869bc09",
+    "semantic_hash": "403113964aa8b250b12d03d9f869bc09"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-filter.png": {
+    "mtime": 1763877691.201185,
+    "ast_hash": "42275e6dda279bec7c885ede709ef916",
+    "semantic_hash": "42275e6dda279bec7c885ede709ef916"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-quick-access.png": {
+    "mtime": 1763877691.1972504,
+    "ast_hash": "63f41b1c9130f5d9a28204e2ffed781d",
+    "semantic_hash": "63f41b1c9130f5d9a28204e2ffed781d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-icon-bg.png": {
+    "mtime": 1763877691.1961017,
+    "ast_hash": "c07b9aeec4d09f140a2b87647a8d446e",
+    "semantic_hash": "c07b9aeec4d09f140a2b87647a8d446e"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-minimum-below.png": {
+    "mtime": 1763877691.2007864,
+    "ast_hash": "786c0f45d94d58b38f15326c9f9fe726",
+    "semantic_hash": "786c0f45d94d58b38f15326c9f9fe726"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/preview-dark.png": {
+    "mtime": 1763877691.1993473,
+    "ast_hash": "e99b555136dfac523970ed26afc60c80",
+    "semantic_hash": "e99b555136dfac523970ed26afc60c80"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-limit.png": {
+    "mtime": 1763877691.1951048,
+    "ast_hash": "03112aceb2516b956b4480e37b4b40a6",
+    "semantic_hash": "03112aceb2516b956b4480e37b4b40a6"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-margin.png": {
+    "mtime": 1763877691.1976283,
+    "ast_hash": "f396dac22ed7a4e9e846db3882fe2c88",
+    "semantic_hash": "f396dac22ed7a4e9e846db3882fe2c88"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/preview-light.png": {
+    "mtime": 1763877691.2002175,
+    "ast_hash": "76a5bafaa47bf51187ea4a13f2d86d97",
+    "semantic_hash": "76a5bafaa47bf51187ea4a13f2d86d97"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/echo.png": {
+    "mtime": 1763877691.200596,
+    "ast_hash": "4080a79ed53952cdf2a956647d9b8339",
+    "semantic_hash": "4080a79ed53952cdf2a956647d9b8339"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/echo-meta.png": {
+    "mtime": 1763877691.1955135,
+    "ast_hash": "36c3fe3972632515f76dba550040cc71",
+    "semantic_hash": "36c3fe3972632515f76dba550040cc71"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/echo-strip.png": {
+    "mtime": 1763877691.1965084,
+    "ast_hash": "a0d8cf5463ce4e9ce9efffb08e3318d7",
+    "semantic_hash": "a0d8cf5463ce4e9ce9efffb08e3318d7"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/echo-qa.png": {
+    "mtime": 1763877691.1947877,
+    "ast_hash": "e3c3dc5dce5e0209f1ad5be2916cd0a3",
+    "semantic_hash": "e3c3dc5dce5e0209f1ad5be2916cd0a3"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-icons-vscode.png": {
+    "mtime": 1763877691.2009861,
+    "ast_hash": "a91ef9b997a5427842030f2098eb0d1d",
+    "semantic_hash": "a91ef9b997a5427842030f2098eb0d1d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-annotations.png": {
+    "mtime": 1763877691.1987066,
+    "ast_hash": "44e3cd6b58385037c23457dee6140f71",
+    "semantic_hash": "44e3cd6b58385037c23457dee6140f71"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-faces-light.png": {
+    "mtime": 1763877691.195704,
+    "ast_hash": "eed8c26b41bf642ee8ebbf8325442bb2",
+    "semantic_hash": "eed8c26b41bf642ee8ebbf8325442bb2"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-flip.png": {
+    "mtime": 1763877691.1963074,
+    "ast_hash": "45d1328a084e909330884ac9b0cee076",
+    "semantic_hash": "45d1328a084e909330884ac9b0cee076"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/echo-strip-qa.png": {
+    "mtime": 1763877691.1967134,
+    "ast_hash": "60c6716a84179a7c9477cf10ff99b371",
+    "semantic_hash": "60c6716a84179a7c9477cf10ff99b371"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-icon-face.png": {
+    "mtime": 1763877691.1959014,
+    "ast_hash": "e61e4aaf5bf0c248abb97907a0bbc495",
+    "semantic_hash": "e61e4aaf5bf0c248abb97907a0bbc495"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-minimum-above.png": {
+    "mtime": 1763877691.2004135,
+    "ast_hash": "c58e4de90e8029f06279264b4a437588",
+    "semantic_hash": "c58e4de90e8029f06279264b4a437588"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-icons-text.png": {
+    "mtime": 1763877691.1998155,
+    "ast_hash": "7c8e431dd081508a27b86b89d437ca4a",
+    "semantic_hash": "7c8e431dd081508a27b86b89d437ca4a"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-search.png": {
+    "mtime": 1763877691.1970057,
+    "ast_hash": "3c0cc9cd169c831ed14d54aeb77dd5da",
+    "semantic_hash": "3c0cc9cd169c831ed14d54aeb77dd5da"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-qa-faces-light.png": {
+    "mtime": 1763877691.199147,
+    "ast_hash": "fd03f490f6dd45913ee244a97f1420af",
+    "semantic_hash": "fd03f490f6dd45913ee244a97f1420af"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-offset-display.png": {
+    "mtime": 1763877691.2000277,
+    "ast_hash": "77660d90b010b679661b8fbbd43b5983",
+    "semantic_hash": "77660d90b010b679661b8fbbd43b5983"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/large/tooltip-icons-dot.png": {
+    "mtime": 1763877691.1953142,
+    "ast_hash": "9f479b7d992103e89473637ea4ea0845",
+    "semantic_hash": "9f479b7d992103e89473637ea4ea0845"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-filter.png": {
+    "mtime": 1763877691.1944175,
+    "ast_hash": "d0520cd70e2373e79d438a645dd1593a",
+    "semantic_hash": "d0520cd70e2373e79d438a645dd1593a"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-quick-access.png": {
+    "mtime": 1763877691.1916952,
+    "ast_hash": "5b22927a014ec31b6db2549f0aba1335",
+    "semantic_hash": "5b22927a014ec31b6db2549f0aba1335"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-icon-bg.png": {
+    "mtime": 1763877691.1903536,
+    "ast_hash": "f5f9a7651451aca167c4e58a14a2214e",
+    "semantic_hash": "f5f9a7651451aca167c4e58a14a2214e"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-minimum-below.png": {
+    "mtime": 1763877691.1938643,
+    "ast_hash": "175c3bd73234e49e9917b31c3815580f",
+    "semantic_hash": "175c3bd73234e49e9917b31c3815580f"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/preview-dark.png": {
+    "mtime": 1763877691.192702,
+    "ast_hash": "63d1c8b9c2482f425131e03ebe9675ca",
+    "semantic_hash": "63d1c8b9c2482f425131e03ebe9675ca"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-limit.png": {
+    "mtime": 1763877691.189433,
+    "ast_hash": "f64dcb84d6e881a382d54515f94a654b",
+    "semantic_hash": "f64dcb84d6e881a382d54515f94a654b"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-margin.png": {
+    "mtime": 1763877691.1919124,
+    "ast_hash": "d89b12236e896656fcb1e0f08f550700",
+    "semantic_hash": "d89b12236e896656fcb1e0f08f550700"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/preview-light.png": {
+    "mtime": 1763877691.1932783,
+    "ast_hash": "6f8263232952b79a54609ec999c24622",
+    "semantic_hash": "6f8263232952b79a54609ec999c24622"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/echo.png": {
+    "mtime": 1763877691.1936624,
+    "ast_hash": "28e78f214c5b455d18d386208c312fa3",
+    "semantic_hash": "28e78f214c5b455d18d386208c312fa3"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/echo-meta.png": {
+    "mtime": 1763877691.1898046,
+    "ast_hash": "da94744f3194742cac94d68f08645d54",
+    "semantic_hash": "da94744f3194742cac94d68f08645d54"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/echo-strip.png": {
+    "mtime": 1763877691.1907122,
+    "ast_hash": "d3efb8203bc9e5567e2bda727a2a88c3",
+    "semantic_hash": "d3efb8203bc9e5567e2bda727a2a88c3"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/echo-qa.png": {
+    "mtime": 1763877691.1892502,
+    "ast_hash": "5cec6fcecc3de85d50da349e9ee2bb21",
+    "semantic_hash": "5cec6fcecc3de85d50da349e9ee2bb21"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-icons-vscode.png": {
+    "mtime": 1763877691.194169,
+    "ast_hash": "de276659e73fe6bf3b9299bf0d31eb52",
+    "semantic_hash": "de276659e73fe6bf3b9299bf0d31eb52"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-annotations.png": {
+    "mtime": 1763877691.1921206,
+    "ast_hash": "a8ab65fb3d22e64ac7fa67edb8e76b7a",
+    "semantic_hash": "a8ab65fb3d22e64ac7fa67edb8e76b7a"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-faces-light.png": {
+    "mtime": 1763877691.1899953,
+    "ast_hash": "ff22e76a5228018d295dacf83346b167",
+    "semantic_hash": "ff22e76a5228018d295dacf83346b167"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-flip.png": {
+    "mtime": 1763877691.1905375,
+    "ast_hash": "c3918f2f57f98ac3d4fdcaf90b9247e9",
+    "semantic_hash": "c3918f2f57f98ac3d4fdcaf90b9247e9"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/echo-strip-qa.png": {
+    "mtime": 1763877691.1909146,
+    "ast_hash": "bc54017b854168dc059d2a4e4aba7aef",
+    "semantic_hash": "bc54017b854168dc059d2a4e4aba7aef"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-icon-face.png": {
+    "mtime": 1763877691.1901734,
+    "ast_hash": "f9fb7596f1bc55fe1bd6b8f4f1cc203a",
+    "semantic_hash": "f9fb7596f1bc55fe1bd6b8f4f1cc203a"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-minimum-above.png": {
+    "mtime": 1763877691.1934814,
+    "ast_hash": "800e2ca97ccaa7584bacbe53f01234b8",
+    "semantic_hash": "800e2ca97ccaa7584bacbe53f01234b8"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-icons-text.png": {
+    "mtime": 1763877691.1929014,
+    "ast_hash": "5d5cf725af18b026aa1dd2c1769a7a7d",
+    "semantic_hash": "5d5cf725af18b026aa1dd2c1769a7a7d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-search.png": {
+    "mtime": 1763877691.1914108,
+    "ast_hash": "e3c30b0d2cbca79b817ad67ecae316c7",
+    "semantic_hash": "e3c30b0d2cbca79b817ad67ecae316c7"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-qa-faces-light.png": {
+    "mtime": 1763877691.1925142,
+    "ast_hash": "c8f3239bec3114aa4b45038b02da49f9",
+    "semantic_hash": "c8f3239bec3114aa4b45038b02da49f9"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-offset-display.png": {
+    "mtime": 1763877691.1930952,
+    "ast_hash": "4e2bda738ff39c9a47d13ef2e5cd479d",
+    "semantic_hash": "4e2bda738ff39c9a47d13ef2e5cd479d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/images/small/tooltip-icons-dot.png": {
+    "mtime": 1763877691.1896245,
+    "ast_hash": "d712ecdbc50b09fb00ca8d79833eaef9",
+    "semantic_hash": "d712ecdbc50b09fb00ca8d79833eaef9"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-string.svg": {
+    "mtime": 1763877691.206105,
+    "ast_hash": "8ab1e3394c789eac7943ee51f4de775b",
+    "semantic_hash": "8ab1e3394c789eac7943ee51f4de775b"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-property.svg": {
+    "mtime": 1763877691.2042606,
+    "ast_hash": "41d40e08b2c3b30c761dbde2c8ebb90e",
+    "semantic_hash": "41d40e08b2c3b30c761dbde2c8ebb90e"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-numeric.svg": {
+    "mtime": 1763877691.2065482,
+    "ast_hash": "819109488925dcc4ae5f09e634330b92",
+    "semantic_hash": "819109488925dcc4ae5f09e634330b92"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-operator.svg": {
+    "mtime": 1763877691.2049892,
+    "ast_hash": "839b5ab5191fd11af29aeee71306955d",
+    "semantic_hash": "839b5ab5191fd11af29aeee71306955d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-interface.svg": {
+    "mtime": 1763877691.2046297,
+    "ast_hash": "12290f3513318991a4eb44fb13b85aaf",
+    "semantic_hash": "12290f3513318991a4eb44fb13b85aaf"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-file.svg": {
+    "mtime": 1763877691.2044399,
+    "ast_hash": "996ea246fddbcbc98c5a00dfccd62d80",
+    "semantic_hash": "996ea246fddbcbc98c5a00dfccd62d80"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-enumerator.svg": {
+    "mtime": 1763877691.2030363,
+    "ast_hash": "563c1465d5cfb4cdfbe67e2ec72d9c9c",
+    "semantic_hash": "563c1465d5cfb4cdfbe67e2ec72d9c9c"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-color.svg": {
+    "mtime": 1763877691.20391,
+    "ast_hash": "3e02ca4497a68cd192161e452bd9f4c3",
+    "semantic_hash": "3e02ca4497a68cd192161e452bd9f4c3"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-snippet.svg": {
+    "mtime": 1763877691.2070973,
+    "ast_hash": "ee169222f0cc923ebae619dad954541d",
+    "semantic_hash": "ee169222f0cc923ebae619dad954541d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-enumerator-member.svg": {
+    "mtime": 1763877691.204812,
+    "ast_hash": "cc18136eeb84948b6f028342ec0cf9b9",
+    "semantic_hash": "cc18136eeb84948b6f028342ec0cf9b9"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-key.svg": {
+    "mtime": 1763877691.203734,
+    "ast_hash": "1631f127b775c304aca1fbd1b40ec951",
+    "semantic_hash": "1631f127b775c304aca1fbd1b40ec951"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-boolean.svg": {
+    "mtime": 1763877691.2057102,
+    "ast_hash": "d2eb1da77b61708a92bccfa5e7268911",
+    "semantic_hash": "d2eb1da77b61708a92bccfa5e7268911"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-keyword.svg": {
+    "mtime": 1763877691.203219,
+    "ast_hash": "e9a58f38aefa5c45dc5fee1a5a8835d9",
+    "semantic_hash": "e9a58f38aefa5c45dc5fee1a5a8835d9"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-structure.svg": {
+    "mtime": 1763877691.2072787,
+    "ast_hash": "669e926114fb39c914e658d7f66b6836",
+    "semantic_hash": "669e926114fb39c914e658d7f66b6836"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-array.svg": {
+    "mtime": 1763877691.2028568,
+    "ast_hash": "1036c975e65410ece318b1c448f30efd",
+    "semantic_hash": "1036c975e65410ece318b1c448f30efd"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-variable.svg": {
+    "mtime": 1763877691.2033916,
+    "ast_hash": "a6b3edfc626efadbff823c577aee0576",
+    "semantic_hash": "a6b3edfc626efadbff823c577aee0576"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-field.svg": {
+    "mtime": 1763877691.207457,
+    "ast_hash": "4fc8501f18a615cc832ddb80599c1b00",
+    "semantic_hash": "4fc8501f18a615cc832ddb80599c1b00"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-namespace.svg": {
+    "mtime": 1763877691.2069166,
+    "ast_hash": "66c006669befb05188a1038155a68ac4",
+    "semantic_hash": "66c006669befb05188a1038155a68ac4"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-constant.svg": {
+    "mtime": 1763877691.205164,
+    "ast_hash": "5837ecb810c466de82658be8618c7a4f",
+    "semantic_hash": "5837ecb810c466de82658be8618c7a4f"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-method.svg": {
+    "mtime": 1763877691.2035613,
+    "ast_hash": "efe845798b721eb9ab6e0801987b7aa5",
+    "semantic_hash": "efe845798b721eb9ab6e0801987b7aa5"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-ruler.svg": {
+    "mtime": 1763877691.2076397,
+    "ast_hash": "9bcb41fcd40aee8f81d8081856f33b3a",
+    "semantic_hash": "9bcb41fcd40aee8f81d8081856f33b3a"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-class.svg": {
+    "mtime": 1763877691.2053416,
+    "ast_hash": "ba0163d671063982897d3efbc7b01f1c",
+    "semantic_hash": "ba0163d671063982897d3efbc7b01f1c"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-event.svg": {
+    "mtime": 1763877691.2058856,
+    "ast_hash": "0a0bf09d363c32e72f596728c7097633",
+    "semantic_hash": "0a0bf09d363c32e72f596728c7097633"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-parameter.svg": {
+    "mtime": 1763877691.2040856,
+    "ast_hash": "bbf10f8f526c27031cc87ed73dfaff12",
+    "semantic_hash": "bbf10f8f526c27031cc87ed73dfaff12"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/references.svg": {
+    "mtime": 1763877691.2063468,
+    "ast_hash": "5e88b3bb64ac55e25f79252d404829aa",
+    "semantic_hash": "5e88b3bb64ac55e25f79252d404829aa"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/folder.svg": {
+    "mtime": 1763877691.2055206,
+    "ast_hash": "8d6154f86f71a7807e57912462d5ba2f",
+    "semantic_hash": "8d6154f86f71a7807e57912462d5ba2f"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-light/symbol-misc.svg": {
+    "mtime": 1763877691.2067332,
+    "ast_hash": "e8b023a500da346107d7e41a98841e43",
+    "semantic_hash": "e8b023a500da346107d7e41a98841e43"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-string.svg": {
+    "mtime": 1763877691.2115626,
+    "ast_hash": "24350bd7eb09bef2eb9e6b1bb2b244e6",
+    "semantic_hash": "24350bd7eb09bef2eb9e6b1bb2b244e6"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-property.svg": {
+    "mtime": 1763877691.2097642,
+    "ast_hash": "71a435d6b95a19fcf20e08f016ac1f93",
+    "semantic_hash": "71a435d6b95a19fcf20e08f016ac1f93"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-numeric.svg": {
+    "mtime": 1763877691.2120538,
+    "ast_hash": "fa6147fdc3705e60572f83d9fab59072",
+    "semantic_hash": "fa6147fdc3705e60572f83d9fab59072"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-operator.svg": {
+    "mtime": 1763877691.2104952,
+    "ast_hash": "30d011c3db0b765e8651f965d76e23bc",
+    "semantic_hash": "30d011c3db0b765e8651f965d76e23bc"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-interface.svg": {
+    "mtime": 1763877691.2101314,
+    "ast_hash": "6d83f592e20b2b6d4f65e7847ba78182",
+    "semantic_hash": "6d83f592e20b2b6d4f65e7847ba78182"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-file.svg": {
+    "mtime": 1763877691.209946,
+    "ast_hash": "1c2a92d182f33b247923385068c6d769",
+    "semantic_hash": "1c2a92d182f33b247923385068c6d769"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-enumerator.svg": {
+    "mtime": 1763877691.2084827,
+    "ast_hash": "55fb12f6065589df158e5246242cd025",
+    "semantic_hash": "55fb12f6065589df158e5246242cd025"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-color.svg": {
+    "mtime": 1763877691.2094085,
+    "ast_hash": "aed9996cff09b393df41f49cbc25736d",
+    "semantic_hash": "aed9996cff09b393df41f49cbc25736d"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-snippet.svg": {
+    "mtime": 1763877691.212588,
+    "ast_hash": "7d14408ec5f57a95eb922315e57510cc",
+    "semantic_hash": "7d14408ec5f57a95eb922315e57510cc"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-enumerator-member.svg": {
+    "mtime": 1763877691.2103171,
+    "ast_hash": "5144593ddccd40979a69101207f3fe05",
+    "semantic_hash": "5144593ddccd40979a69101207f3fe05"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-key.svg": {
+    "mtime": 1763877691.2092204,
+    "ast_hash": "181f02243bb653a4380441b645311b54",
+    "semantic_hash": "181f02243bb653a4380441b645311b54"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-boolean.svg": {
+    "mtime": 1763877691.2112124,
+    "ast_hash": "23ce94a98eac4db34a6927820bb9c013",
+    "semantic_hash": "23ce94a98eac4db34a6927820bb9c013"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-keyword.svg": {
+    "mtime": 1763877691.208661,
+    "ast_hash": "6151b52a7577c5b6cf6d404a8a897576",
+    "semantic_hash": "6151b52a7577c5b6cf6d404a8a897576"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-structure.svg": {
+    "mtime": 1763877691.212771,
+    "ast_hash": "cac4af30f6cb2660c1c6e8a7e8411bcf",
+    "semantic_hash": "cac4af30f6cb2660c1c6e8a7e8411bcf"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-array.svg": {
+    "mtime": 1763877691.2083008,
+    "ast_hash": "91fb1344f5231528600cef2d4531ce95",
+    "semantic_hash": "91fb1344f5231528600cef2d4531ce95"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-variable.svg": {
+    "mtime": 1763877691.208856,
+    "ast_hash": "c408f1fd866de9edd41f9f21887278c3",
+    "semantic_hash": "c408f1fd866de9edd41f9f21887278c3"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-field.svg": {
+    "mtime": 1763877691.212962,
+    "ast_hash": "659e06ba3cd9932eb24727a943186550",
+    "semantic_hash": "659e06ba3cd9932eb24727a943186550"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-namespace.svg": {
+    "mtime": 1763877691.212414,
+    "ast_hash": "3e2c13985848000bb13727d4532c6002",
+    "semantic_hash": "3e2c13985848000bb13727d4532c6002"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-constant.svg": {
+    "mtime": 1763877691.2106712,
+    "ast_hash": "bf7a96fe288d35cc4e0afed9c8190ad3",
+    "semantic_hash": "bf7a96fe288d35cc4e0afed9c8190ad3"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-method.svg": {
+    "mtime": 1763877691.2090402,
+    "ast_hash": "5a70887b10ea33640efb2350258cf9d0",
+    "semantic_hash": "5a70887b10ea33640efb2350258cf9d0"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-ruler.svg": {
+    "mtime": 1763877691.2131445,
+    "ast_hash": "5e4693efdaee8cc246e6bf0381398498",
+    "semantic_hash": "5e4693efdaee8cc246e6bf0381398498"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-class.svg": {
+    "mtime": 1763877691.2108543,
+    "ast_hash": "8e8d7682dd68928a01e3b94e798e82be",
+    "semantic_hash": "8e8d7682dd68928a01e3b94e798e82be"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-event.svg": {
+    "mtime": 1763877691.211385,
+    "ast_hash": "06adf23e8dc4e21013f13d1b36978dc8",
+    "semantic_hash": "06adf23e8dc4e21013f13d1b36978dc8"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-parameter.svg": {
+    "mtime": 1763877691.2095854,
+    "ast_hash": "c19b82ba5891d0f1653dda6ad774a0b2",
+    "semantic_hash": "c19b82ba5891d0f1653dda6ad774a0b2"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/references.svg": {
+    "mtime": 1763877691.2118587,
+    "ast_hash": "e50b5c820ea64691b0fae6ba68217194",
+    "semantic_hash": "e50b5c820ea64691b0fae6ba68217194"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/folder.svg": {
+    "mtime": 1763877691.2110312,
+    "ast_hash": "ef0a2e8683aa59f47f36c275fbfeb8c6",
+    "semantic_hash": "ef0a2e8683aa59f47f36c275fbfeb8c6"
+  },
+  "/Users/zakaria/dotfiles/zeemacs.d/elpa/company-1.0.2/icons/vscode-dark/symbol-misc.svg": {
+    "mtime": 1763877691.2122414,
+    "ast_hash": "69f4b2f48ec8a33936c9d7e5bcb2b74d",
+    "semantic_hash": "69f4b2f48ec8a33936c9d7e5bcb2b74d"
+  }
+}

@@ -36,43 +36,19 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lisp/core" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lisp/langs" user-emacs-directory))
-;; ;; (add-to-list 'load-path (expand-file-name "lisp/tools" user-emacs-directory))
 
-;; (require 'package-setup)
 (load "core/package-setup")
 (load "core/variables")
 (load "core/functions")
 (load "core/base")
+(load "core/keybinds")
 (load "langs/rust")
 (load "langs/python-lang")
 (load "core/ai")
 
 
 ;;; EVIL
-(mapc #'define-prefix-command
-      '(evil-application-map
-        evil-buffer-map
-        evil-error-map
-        evil-file-map
-        evil-git-map
-        evil-global-leader-map
-        evil-insert-map
-        evil-jump-map
-        evil-option-map
-        evil-search-map
-        evil-code-map
-        evil-notes-map
-        evil-help-map
-        evil-dir-map
-        evil-project-map
-        evil-tab-map))
-
-(defvar zeeds-project-map
-(let ((map (make-sparse-keymap)))
-  (set-keymap-parent map project-prefix-map)
-  map)
-  "Repeating map for balanced expressions.")
-
+;; The leader-key skeleton (zeds/*-map) lives in core/keybinds.el.
 
 (defun zeds/evil-shift-left-visual ()
   (interactive)
@@ -116,72 +92,7 @@
 
   (evil-set-leader 'normal (kbd ",") t)
   (evil-set-leader 'motion (kbd ",") t)
-  (evil-set-leader 'visual (kbd ",") t)
-
-  :bind
-  (:map evil-motion-state-map
-    ("SPC" . evil-global-leader-map)
-    ("M-SPC" . evil-global-leader-map)
-    :map evil-insert-state-map
-    ("M-SPC" . evil-global-leader-map)
-    :map evil-global-leader-map
-    ("SPC" . execute-extended-command)
-    ("a" . evil-application-map)
-    ("b" . evil-buffer-map)
-    ("c" . evil-code-map)
-    ("f" . evil-file-map)
-    ("g" . evil-git-map)
-    ("j" . evil-jump-map)
-    ("n" . evil-notes-map)
-    ("o" . evil-option-map)
-    ("p" . evil-project-map)
-    ("s" . evil-search-map)
-    ("u" . universal-argument)
-    ("w" . evil-window-map)
-    ("h" . evil-help-map)
-    ("d" . evil-dir-map)
-    :map evil-buffer-map
-    ("b" . switch-to-buffer)
-    ("p" . previous-buffer)
-    ("n" . next-buffer)
-    ("B" . bury-buffer)
-    ("k" . kill-current-buffer)
-    ("e" . eval-buffer)
-    ("m" . view-echo-area-messages)
-    ("s" . scratch-buffer)
-    ("x" . kill-buffer-and-window)
-    :map evil-window-map
-    :prefix "m"
-    :prefix-map maxize-window-prefix-map
-    ("m" . zeds/window-maximize-buffer)
-    ("s" . zeds/window-maximize-horizontally)
-    ("v" . zeds/window-maximize-vertically)
-    :map evil-file-map
-    ("a" . write-file)
-    ("c" . copy-file)
-    ("f" . find-file)
-    ("i" . insert-file)
-    ("n" . fileloop-continue)
-    ("r" . recentf)
-    ("R" . zeds/reload-init)
-    ("i" . zeds/open-init-file)
-    ;; ("R" . miciah/rename-file-and-buffer)
-    ("s" . save-buffer)
-    :map evil-jump-map
-    ("f" . find-function)
-    ("v" . find-variable)
-    :map evil-option-map
-    ("f" . display-fill-column-indicator-mode)
-    ("s" . window-toggle-side-windows)
-    ("l" . toggle-truncate-lines)
-    ("n" . display-line-numbers-mode)
-    ("d" . toggle-debug-on-error)
-    ("D" . toggle-debug-on-quit)
-    ("T" . miciah/toggle-themes)
-    :map evil-replace-state-map
-    ("M-SPC" . evil-global-leader-map)
-    :map evil-search-map
-    ("c" . evil-ex-nohighlight)))
+  (evil-set-leader 'visual (kbd ",") t))
 
 ;; https://github.com/emacs-evil/evil-collection
 (use-package evil-collection
@@ -294,20 +205,7 @@
   (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
   :init
   (vertico-mode)
-  (setq vertico-cycle t) ;; enable cycling for 'vertico-next' and 'vertico-prev'
-  ;;:general
-  ;; (:keymaps 'vertico-map
-  ;;           ;; keybindings to cycle through vertico results.
-  ;;           "C-j" 'vertico-next
-  ;;           "C-k" 'vertico-previous
-  ;;           "C-f" 'vertico-exit
-  ;;           "<backspace>" 'vertico-directory-delete-char
-  ;;           "C-<backspace>" 'vertico-directory-delete-word
-  ;;           "C-w" 'vertico-directory-delete-word
-  ;;           "RET" 'vertico-directory-enter)
-  ;; (:keymaps 'minibuffer-local-map
-  ;;           "M-h" 'backward-kill-word)
-  )
+  (setq vertico-cycle t)) ;; enable cycling for 'vertico-next' and 'vertico-prev'
 
 (use-package vertico-directory
   :after vertico
@@ -357,38 +255,12 @@
   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
   ;; (corfu-scroll-margin 5)        ;; Use scroll margin
   :bind (:map corfu-map
-              ("SPC" . corfu-insert-separator))
-  )
-   ;; for compatibility with orderless
-
-;;; keys unbound
-;; (general-unbind
-;;   :ensure t
-;;   :states '(insert)
-;;   "C-k" ;; this was interfering with corfu completion
-;;   :states '(normal)
-;;   "C-;")
+              ("SPC" . corfu-insert-separator)))
 
 ;;; cape
 (use-package cape
   :ensure t
   :demand t
-  ;; bindings for dedicated completion commands
-  ;; :general
-  ;; ("M-p p" 'completion-at-point ;; capf
-  ;;  "M-p t" 'complete-tag        ;; etags
-  ;;  "M-p d" 'cape-dabbrev        ;; dabbrev
-  ;;  "M-p h" 'cape-history
-  ;;  "M-p f" 'cape-file
-  ;;  "M-p k" 'cape-keyword
-  ;;  "M-p s" 'cape-symbol
-  ;;  "M-p a" 'cape-abbrev
-  ;;  "M-p i" 'cape-ispell
-  ;;  "M-p l" 'cape-line
-  ;;  "M-p w" 'cape-dict
-  ;;  "M-p \\" 'cape-tex
-  ;;  "M-p &" 'cape-sgml
-  ;;  "M-p r" 'cape-rfc1345)
   :init
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
@@ -407,9 +279,9 @@
 (use-package consult
   :ensure t
   :demand t
-  :bind (:map evil-buffer-map
+  :bind (:map zeds/buffer-map
               ("b" . consult-buffer)
-              :map evil-search-map
+              :map zeds/search-map
               ("o" . consult-outline)
               ("r" . consult-ripgrep)
               ("g" . consult-grep)
@@ -419,7 +291,7 @@
               ("l" . consult-line)
               ("y" . consult-yank-from-kill-ring)
               ("i" . consult-imenu)
-              :map evil-help-map
+              :map zeds/help-map
               ("t" . consult-theme))
   :config
   ; use project.el to retrieve the project root
@@ -442,15 +314,6 @@
 (use-package embark
   :ensure t
   :demand t
-  ;; :general
-  ;; (zeds/leader-keys
-  ;;   "." 'embark-act)    ;; easily accessible 'embark-act' binding.
-  ;; ("C-." 'embark-act)  ;; overlaps with evil-repeat
-  ;; ("C-;" 'embark-dwim) ;; overlaps with IEdit
-  ;; (:keymaps 'vertico-map
-  ;;           "C-." 'embark-act) ;; embark on completion candidates
-  ;; (:keymaps 'embark-heading-map
-  ;;           "l" 'org-id-store-link)
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
@@ -469,22 +332,6 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 ;; END EMBARK
-
-;;; AFFE
-;; (use-package affe
-;;   :ensure t
-;;   :demand t
-;;   :after orderless
-;;   ;; :general
-;;   ;; (zeds/leader-keys
-;;   ;;   "sa" '(affe-grep :wk "affe grep")
-;;   ;;   "sw" '(affe-find :wk "affe find"))
-;;   :init
-;;   (defun affe-orderless-regexp-compiler (input _type _ignorecase)
-;;     (setq input (orderless-pattern-compiler input))
-;;     (cons input (lambda (str) (orderless--highlight input str))))
-;;   :config
-;;   (setq affe-regexp-compiler #'affe-orderless-regexp-compiler))
 
 ;;;  OLIVETTI Make writing prose nicer
 ;; Might remove later
@@ -537,41 +384,10 @@
   (setq org-adapt-indentation nil) ;; interacts poorly with 'evil-open-below'
 
   :custom
-  (org-agenda-files '("~/notes/todo.org" "~/notes/teaching.org" "~/notes/projects.org"))
-  ;; (org-cite-global-bibliography (list zeds/global-bib-file))
-  ;; handle citations using citar
-  ;; (org-cite-insert-processor 'citar)
-  ;; (org-cite-follow-processor 'citar)
-  ;; (org-cite-activate-processor 'citar)
-  ;; :general
-  ;; (zeds/local-leader-keys
-  ;;   :keymaps 'org-mode-map
-  ;;   "a" '(org-archive-subtree :wk "archive")
-  ;;   "c" '(org-cite-insert :wk "insert citation")
-  ;;   "l" '(:ignore t :wk "link")
-  ;;   "ll" '(org-insert-link t :wk "link")
-  ;;   "lp" '(org-latex-preview t :wk "prev latex")
-  ;;   "h" '(consult-org-heading :wk "consult heading")
-  ;;   "d" '(org-cut-special :wk "org cut special")
-  ;;   "y" '(org-copy-special :wk "org copy special")
-  ;;   "p" '(org-paste-special :wk "org paste special")
-  ;;   "b" '(:keymap org-babel-map :wk "babel")
-  ;;   "t" '(org-todo :wk "todo")
-  ;;   "s" '(org-insert-structure-template :wk "template")
-  ;;   "e" '(org-edit-special :wk "edit")
-  ;;   "i" '(:ignore t :wk "insert")
-  ;;   "ih" '(org-insert-heading :wk "insert heading")
-  ;;   "is" '(org-insert-subheading :wk "insert heading")
-  ;;   "f" '(org-footnote-action :wk "footnote action")
-  ;;   ">" '(org-demote-subtree :wk "demote subtree")
-  ;;   "<" '(org-promote-subtree :wk "demote subtree"))
-  ;; (:keymaps 'org-agenda-mode-map
-  ;;           "j" '(org-agenda-next-line)
-  ;;           "h" '(org-agenda-previous-line))
+  (org-agenda-files (mapcar (lambda (f) (expand-file-name f zeds/org-path))
+                            '("todo.org" "teaching.org" "projects.org")))
 
   :hook
-  ;; (org-mode . olivetti-mode)
-  ;; (org-mode . variable-pitch-mode)
   (org-mode . (lambda () (electric-indent-local-mode -1)
                 (display-line-numbers-mode -1))) ;; disable electric indentation
 
@@ -595,18 +411,9 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-;; (use-package org-auctex
-;; :ensure (:type git :host github :repo
-;;                  "karthink/org-auctex")
-;; :hook (org-mode . org-auctex-mode))
-
 (use-package org-transclusion
   :ensure t
-  :after org
-  ;; :general
-  ;; (zeds/leader-keys
-  ;;   "nt" '(org-transclusion-mode :wk "transclusion mode"))
-  )
+  :after org)
 
 (use-package org-appear
   :ensure t
@@ -620,13 +427,6 @@
                                 #'org-appear-manual-stop
                                 nil t))))
 
-;; (use-package org-cliplink
-;;   :after org
-;;   ;;:general
-;;   ;; (zeds/local-leader-keys
-;;   ;;   :keymaps 'org-mode-map
-;;   ;;   "lc" '(org-cliplink :wk "cliplink"))
-;;   )
 
 (use-package org-modern
   :ensure t
@@ -637,11 +437,11 @@
 (use-package org-roam
   :ensure t
   :demand t
-  :bind (:map evil-notes-map
+  :bind (:map zeds/notes-map
               :prefix "r"
               :prefix-map org-roam-map
               ("i" . org-roam-node-insert)
-              ("t" . org-roam-buffer-toggle)
+              ("b" . org-roam-buffer-toggle)
               ("c" . org-roam-capture)
               ("f" . org-roam-node-find)
               ("t" . org-roam-tag-add)
@@ -745,29 +545,12 @@
   (add-hook 'TeX-mode-hook #'prettify-symbols-mode)
   (add-hook 'TeX-after-compilation-finished-functions
             #'TeX-revert-document-buffer)
-  (add-hook 'TeX-mode-hook #'outline-minor-mode)
-  ;; :general
-  ;; (zeds/local-leader-keys
-  ;;   :keymaps 'LaTeX-mode-map
-  ;;   ;; "TAB" 'TeX-complete-symbol ;; FIXME let's 'TAB' do autocompletion (but it's kind of useless to be honest)
-  ;;   "=" '(reftex-toc :wk "reftex toc")
-  ;;   "(" '(reftex-latex :wk "reftex label")
-  ;;   ")" '(reftex-reference :wk "reftex ref")
-  ;;   "m" '(LaTeX-macro :wk "insert macro")
-  ;;   "s" '(LaTeX-section :wk "insert section header")
-  ;;   "e" '(LaTeX-environment :wk "insert environment")
-  ;;   "p" '(preview-at-point :wk "preview at point")
-  ;;   "f" '(TeX-font :wk "font")
-  ;;   "c" '(TeX-command-run-all :wk "compile"))
-  )
+  (add-hook 'TeX-mode-hook #'outline-minor-mode))
 
 (use-package evil-tex
   :ensure t
-  :after general
+  :after evil
   :hook (LaTeX-mode . evil-tex-mode)
-  ;; :general
-  ;; (:keymaps 'evil-tex-mode-map
-  ;;           "M-]" 'evil-tex-brace-movement)
   :config
   (unbind-key "M-n" 'evil-tex-mode-map)) ;; interfering with jinx
 
@@ -787,7 +570,7 @@
 (use-package helpful
   :ensure t
   :demand t
-  :bind (:map evil-help-map
+  :bind (:map zeds/help-map
               ("c" . helpful-command)
               ("f" . helpful-callable)
               ("h" . helpful-at-point)
@@ -796,7 +579,7 @@
               ("m" . helpful-mode)
               ("M" . helpful-macro)
               ("s" . helpful-symbol)
-              ("K" . helful-kill-buffer)
+              ("K" . helpful-kill-buffers)
               ("k" . helpful-key))
   )
 
@@ -811,11 +594,10 @@
   (fset #'jsonrpc--log-event #'ignore)
   (setq eglot-events-buffer-size 0)
   (setq eglot-autoshutdown t)
-  ;; (setq eglot-workspace-configuration #'zeds/eglot-python-workspace-config)
    :commands eglot
   :bind (:map eglot-mode-map
               ("<f6>" . eglot-format-buffer)
-              :map evil-code-map
+              :map zeds/code-map
               ("?" . eldoc)
               ("r" . eglot-rename)
               ("a" . eglot-code-actions)
@@ -823,41 +605,7 @@
               ("sr" . xref-find-references)))
 
 
-;;; OCAML
-;; (use-package tuareg
-;;     :ensure t
-;;     :init
-;;  (add-hook 'tuareg-mode-hook
-;;             (lambda() (setq tuareg-mode-name "🐫")))
-;;  (add-hook 'tuareg-mode-hook
-;;             (lambda()
-;;               (setq-local comment-style 'multi-line)
-;;               (setq-local comment-continue "   ")))
-;; (add-hook 'tuareg-mode-hook
-;;             (lambda()
-;;               (when (functionp 'prettify-symbols-mode)
-;;                 (prettify-symbols-mode))))
-;; )
-
-;; (use-package merlin
-;;     :ensure t
-;;     :init
-;;     (let ((opam-share (ignore-errors (car (process-lines "opam" "var" "share")))))
-;;       (when (and opam-share (file-directory-p opam-share))
-;;         ;; Register Merlin
-;;         (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
-;;         (autoload 'merlin-mode "merlin" nil t nil)
-;;         ;; Automatically start it in OCaml buffers
-;;         (add-hook 'tuareg-mode-hook 'merlin-mode t)
-;;         ;; Use opam switch to lookup ocamlmerlin binary
-;;         (setq merlin-command 'opam)
-;;         ;; To easily change opam switches within a given Emacs session, you can
-;;         ;; install the minor mode https://github.com/ProofGeneral/opam-switch-mode
-;;         ;; and use one of its "OPSW" menus.
-;;         ))
-;;     )
-
-;; ;;; C LANG
+;;; C LANG
 (use-package c-ts-mode
     :ensure nil
     :after (eglot)
@@ -875,7 +623,7 @@
                         (inlambda              . 0) ;; better indentation for lambda
                         (innamespace           . 0) ;; no indentation after namespace
                          (arglist-cont-nonempty . +)))
-      :bind (:map evil-code-map
+      :bind (:map zeds/code-map
                   ("c" . compile))
     :config
     (setq c-default-style "linux"
@@ -898,25 +646,12 @@
 (use-package rmsbolt
     :ensure t
     :after (c-ts-mode)
-    :bind (:map evil-code-map
+    :bind (:map zeds/code-map
                 ("D" . rmsbolt)
                 ))
 
 
 
-
-;;; WEB
-;; (use-package web-mode
-;;   :mode (("\\.html?\\'" . web-mode)
-;;          ("\\.css\\'"   . web-mode)
-;;          ("\\.jsx?\\'"  . web-mode)
-;;          ("\\.tsx?\\'"  . web-mode)
-;;          ("\\.json\\'"  . web-mode))
-;;   :config
-;;   (setq web-mode-markup-indent-offset 2)
-;;   (setq web-mode-code-indent-offset 2)
-;;   (setq web-mode-css-indent-offset 2)
-;;   (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
 
 ;;; JavaScript
 (use-package js2-mode
@@ -987,24 +722,14 @@
   :custom
   (vterm-toggle-fullscreen-p nil "Open a vterm in another window.")
   (vterm-toggle-scope 'project)
-  :bind (:map evil-application-map
+  :bind (:map zeds/application-map
               ("t" . vterm-toggle)
               ("T" . vterm))
   )
 
 ;;; RegEX
 (use-package re-builder
-  ;; :general (zeds/leader-keys
-             ;; "se" '(regexp-builder :wk "regex builder"))
   :config (setq reb-re-syntax 'rx))
-
-;;; SEARCHING
-;; (use-package deadgrep
-;;   :ensure t
-;;   :demand t
-;;   :general
-;;   (zeds/leader-keys
-;;    "sd" '(deadgrep :wk "deadgrep")))
 
 ;;; HTTP SERVER
 (use-package simple-httpd
@@ -1012,11 +737,7 @@
   :commands httpd-serve-directory)
 
 ;;; ESHELL
-(use-package eshell
-  ;; :general
-  ;; (zeds/leader-keys
-  ;;   "oe" '(eshell :wk "eshell"))
-    )
+(use-package eshell)
 
 ;;; COLORS
 (use-package rainbow-mode :ensure t)
@@ -1036,7 +757,7 @@
 ;;; Builtin Flymake over flycheck
 (use-package flymake
   :ensure t
-  :bind (:map evil-code-map
+  :bind (:map zeds/code-map
               ("f" . consult-flymake))
   ;; depends on consult
   :hook
@@ -1044,11 +765,7 @@
   (emacs-lisp-mode . flymake-mode)
   (prog-mode . flymake-mode)
   :config
-  (setq flymake-no-changes-timeout 1)
-  ;; :general
-  ;; (general-nmap "] !" 'flymake-goto-next-error)
-  ;; (general-nmap "[ !" 'flymake-goto-prev-error)
-  )
+  (setq flymake-no-changes-timeout 1))
 
 (use-package recursion-indicator
   :ensure t
@@ -1059,18 +776,18 @@
 ;;; PROJECT.EL
 (use-package project
     :init
-    (set-keymap-parent evil-project-map project-prefix-map)
+    (set-keymap-parent zeds/project-map project-prefix-map)
     )
 
 ;;; DIRED
 (use-package dired
-    :bind (:map evil-dir-map
+    :bind (:map zeds/dir-map
            ("d" . dired)
            ("j" . dired-jump)
            :map dired-mode-map
            ("<normal-state> h" . dired-up-directory)
            ("<normal-state> q" . kill-current-buffer)
-           ("<normal-state> l" . dirend-find-file))
+           ("<normal-state> l" . dired-find-file))
   :hook
   (dired-mode . dired-hide-details-mode))
 
@@ -1106,7 +823,7 @@
 ;;; MAGIT
 (use-package magit
     :ensure t
-    :bind (:map evil-git-map ("g" . magit-status))
+    :bind (:map zeds/git-map ("g" . magit-status))
   )
 
 ;;; PDF SUPPORT
@@ -1138,60 +855,6 @@
   (when buffer-file-name
     (kill-new buffer-file-name)
     (message "Copied file path: %s" buffer-file-name)))
-
-;; (use-package pdf-tools
-;;   :ensure t
-;;   :hook (TeX-after-compilation-finished . TeX-revert-document-buffer)
-;;   :mode ("\\.pdf\\'" . pdf-view-mode)
-;;  :config
-;;    (pdf-tools-install)
-;;    (require 'pdf-info)
-;;   (require 'pdf-view)
-;;   (require 'pdf-misc)
-;;   (require 'pdf-occur)
-;;   (require 'pdf-util)
-;;   (require 'pdf-annot)
-;;   (require 'pdf-isearch)
-;;   (require 'pdf-history)
-;;   (require 'pdf-links)
-;;   (require 'pdf-outline)
-;;   (require 'pdf-sync)
-;;   (setq pdf-view-use-scaling t)
-;;   (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1))))
-
-
-;; (use-package pdf-view-restore
-;;   :ensure t
-;;   :after pdf-tools
-;;   :config
-;;   (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
-;;   :init
-;;   (setq pdf-view-restore-filename "~/.pdf-view-restore"))
-
-;;; JINX
-;; (use-package jinx
-;;   :ensure t
-;;   :demand t
-;;   ;; :init
-;;   ;; (setenv "PKG_CONFIG_PATH" (concat "/opt/homebrew/opt/glib/lib/pkgconfig/" (getenv "PKG_CONFIG_PATH")))
-;;   :hook (emacs-startup . global-jinx-mode)
-;;   ;; :general
-;;   ;; ("M-$" 'jinx-correct
-;;   ;;  "C-M-$" 'jinx-languages)
-;;   )
-
-
-;;; Benchmarking
-;; (use-package benchmark-init
-;;   :ensure t
-;;   :config
-;;   ;; To disable collection of benchmark data after init is done.
-;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
-
-;; ;; Emacs startup profiler to identify slow-loading packages
-;; (use-package esup
-;;   :ensure t
-;;   :commands (esup))
 
 ;; Jinja2 support
 (use-package jinja2-mode
