@@ -108,5 +108,73 @@
   (keymap-set evil-insert-state-map "M-SPC" zeds/leader-map)
   (keymap-set evil-replace-state-map "M-SPC" zeds/leader-map))
 
+;;; which-key hints
+
+(with-eval-after-load 'which-key
+  ;; Leader root labels
+  (which-key-add-keymap-based-replacements zeds/leader-map
+    "SPC" "M-x"
+    "u"   "universal arg"
+    "a"   "applications"
+    "b"   "buffers"
+    "c"   "code/LSP"
+    "d"   "directories"
+    "f"   "files"
+    "g"   "git"
+    "h"   "help"
+    "j"   "jump"
+    "n"   "notes"
+    "o"   "options/toggles"
+    "p"   "project"
+    "s"   "search"
+    "w"   "windows")
+
+  ;; Buffer map
+  (which-key-add-keymap-based-replacements zeds/buffer-map
+    "b" "switch buffer"
+    "p" "prev buffer"
+    "n" "next buffer"
+    "B" "bury buffer"
+    "k" "kill buffer"
+    "e" "eval buffer"
+    "m" "messages"
+    "s" "scratch"
+    "x" "kill buf+win")
+
+  ;; File map
+  (which-key-add-keymap-based-replacements zeds/file-map
+    "a" "save as…"
+    "c" "copy file"
+    "f" "find file"
+    "n" "next match"
+    "r" "recent files"
+    "R" "reload init"
+    "i" "open init"
+    "s" "save file")
+
+  ;; Jump map
+  (which-key-add-keymap-based-replacements zeds/jump-map
+    "f" "find function"
+    "v" "find variable")
+
+  ;; Option/toggle map
+  (which-key-add-keymap-based-replacements zeds/option-map
+    "f" "fill-column indicator"
+    "s" "side windows"
+    "l" "truncate lines"
+    "n" "line numbers"
+    "d" "debug on error"
+    "D" "debug on quit")
+
+  ;; Search map
+  (which-key-add-keymap-based-replacements zeds/search-map
+    "c" "clear highlights")
+
+  ;; Window maximize map
+  (which-key-add-keymap-based-replacements zeds/window-maximize-map
+    "m" "maximize buffer"
+    "s" "maximize horiz"
+    "v" "maximize vert"))
+
 (provide 'keybinds)
 ;;; keybinds.el ends here
