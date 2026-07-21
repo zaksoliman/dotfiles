@@ -384,8 +384,11 @@
   (setq org-adapt-indentation nil) ;; interacts poorly with 'evil-open-below'
 
   :custom
-  (org-agenda-files (mapcar (lambda (f) (expand-file-name f zeds/org-path))
-                            '("todo.org" "teaching.org" "projects.org")))
+  (org-agenda-files (append
+                     (mapcar (lambda (f) (expand-file-name f zeds/org-path))
+                             '("agenda/work.org" "agenda/personal.org"))
+                     (mapcar (lambda (f) (expand-file-name f zeds/notes-path))
+                             '("ops/ops.org" "ops/clients/" "ops/projects/"))))
 
   :hook
   (org-mode . (lambda () (electric-indent-local-mode -1)
@@ -431,6 +434,11 @@
 (use-package org-modern
   :ensure t
   :after org
+  :custom
+  (org-modern-star 'replace) ;; To fix the missing triangle glyph from fonts
+  ;; I could also use this, manually choose the right glyphs:
+  ;;(org-modern-fold-stars
+  ;; '(("▶" . "▼") ("▷" . "▽") ("▸" . "▾") ("▹" . "▿") ("»" . "«")))
   :config (global-org-modern-mode))
 
 ;;; ORG ROAM
