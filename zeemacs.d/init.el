@@ -384,11 +384,11 @@
   (setq org-adapt-indentation nil) ;; interacts poorly with 'evil-open-below'
 
   :custom
-  (org-agenda-files (append
-                     (mapcar (lambda (f) (expand-file-name f zeds/org-path))
-                             '("agenda/work.org" "agenda/personal.org"))
-                     (mapcar (lambda (f) (expand-file-name f zeds/notes-path))
-                             '("ops/ops.org" "ops/clients/" "ops/projects/"))))
+  ;; org/agenda/ was an artifact of an old flow and has been removed. ops/ is
+  ;; the whole agenda now. The two directory entries are what let a new client
+  ;; or project file join the agenda without another config edit.
+  (org-agenda-files (mapcar (lambda (f) (expand-file-name f zeds/notes-path))
+                            '("ops/ops.org" "ops/clients/" "ops/projects/")))
 
   :hook
   (org-mode . (lambda () (electric-indent-local-mode -1)
