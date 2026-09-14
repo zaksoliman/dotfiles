@@ -348,6 +348,8 @@
 ;;; ORG MODE CONFIG
 (use-package org
   :demand t
+  :bind (:map zeds/notes-map
+              ("c" . org-capture))
   :init
   ;; edit settings
   (setq org-auto-align-tags nil
@@ -403,7 +405,19 @@
      (awk . t)))
   ;; set up org paths
   (setq org-directory zeds/org-path)
-  (setq org-default-notes-file (concat org-directory "/notes.org")))
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+
+  ;; Fleeting real-time capture. Lands under ops.org's "* Inbox" heading, so
+  ;; it is already inside org-agenda-files with no extra wiring, and it is
+  ;; triaged (promoted to a task, logged, capture as a zettel by hand, or
+  ;; deleted) as part of the Weekly ops review's Inbox step. This is not the
+  ;; insight/friction log: that is for structured facts/frictions logged via
+  ;; ops-log; this is for whatever you want to jot in the moment.
+  (setq org-capture-templates
+        '(("i" "Inbox" entry
+           (file+headline (expand-file-name "ops/ops.org" zeds/notes-path) "Inbox")
+           "* %?\n  %U"
+           :empty-lines 1))))
 
 (use-package evil-org
   :ensure t
