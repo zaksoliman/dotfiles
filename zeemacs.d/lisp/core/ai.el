@@ -17,39 +17,40 @@
   (aidermacs-default-model "openai/gemini-2.5-pro"))
 
 
+;;; I DON'T HAVE COPILOT ANYMORE
 ;;; Co-Pilot (copilot)
-(use-package copilot
-  ;; :init (zeds/vc-install :fetcher "github" :repo "copilot-emacs/copilot.el")
-  :ensure t
-  :after evil
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("C-l" . copilot-accept-completion)
-              ("C-j" . copilot-next-completion)
-              ("C-k" . copilot-previous-completion)
-              ("M-l" . copilot-accept-completion-by-line))
-  :init
-    (setq copilot-backend 'copilot-node) ;; Use the NodeJS backend for better performance
-    (setq copilot-indent-offset-warning-disable t)
-    ;; (setq copilot-node-command "/opt/homebrew/bin/node") ;; If the command is not in your exec-path
-  :config
-    (setq copilot-completion-at-point-functions '(copilot-completion-at-point))
-    (add-to-list 'copilot-indentation-alist '(js-json-mode . 2))
-    (add-to-list 'copilot-indentation-alist '(prog-mode . 4))
-    (add-to-list 'copilot-indentation-alist '(org-mode . 4))
-    (add-to-list 'copilot-indentation-alist '(text-mode . 4))
-    (add-to-list 'copilot-indentation-alist '(closure-mode . 4))
-    (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . 4)))
+;; (use-package copilot
+;;   ;; :init (zeds/vc-install :fetcher "github" :repo "copilot-emacs/copilot.el")
+;;   :ensure t
+;;   :after evil
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;               ("C-l" . copilot-accept-completion)
+;;               ("C-j" . copilot-next-completion)
+;;               ("C-k" . copilot-previous-completion)
+;;               ("M-l" . copilot-accept-completion-by-line))
+;;   :init
+;;     (setq copilot-backend 'copilot-node) ;; Use the NodeJS backend for better performance
+;;     (setq copilot-indent-offset-warning-disable t)
+;;     ;; (setq copilot-node-command "/opt/homebrew/bin/node") ;; If the command is not in your exec-path
+;;   :config
+;;     (setq copilot-completion-at-point-functions '(copilot-completion-at-point))
+;;     (add-to-list 'copilot-indentation-alist '(js-json-mode . 2))
+;;     (add-to-list 'copilot-indentation-alist '(prog-mode . 4))
+;;     (add-to-list 'copilot-indentation-alist '(org-mode . 4))
+;;     (add-to-list 'copilot-indentation-alist '(text-mode . 4))
+;;     (add-to-list 'copilot-indentation-alist '(closure-mode . 4))
+;;     (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . 4)))
 
-(use-package copilot-chat
-  ;; :init (zeds/vc-install :fetcher "github" :repo "chep/copilot-chat.el")
-  :ensure t
-  :after copilot
-  :bind (:map global-map
-              ("C-c C-y" . copilot-chat-yank)
-              ("C-c C-m" . copilot-chat-yank-pop)
-              ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
-  :config (setq copilot-chat-model "claude-3.7-sonnet-thought"))
+;; (use-package copilot-chat
+;;   ;; :init (zeds/vc-install :fetcher "github" :repo "chep/copilot-chat.el")
+;;   :ensure t
+;;   :after copilot
+;;   :bind (:map global-map
+;;               ("C-c C-y" . copilot-chat-yank)
+;;               ("C-c C-m" . copilot-chat-yank-pop)
+;;               ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
+;;   :config (setq copilot-chat-model "claude-3.7-sonnet-thought"))
 
 
 (provide 'ai)
