@@ -422,9 +422,18 @@
 (use-package evil-org
   :ensure t
   :after org
-  :hook (org-mode . (lambda () evil-org-mode))
+  :hook (org-mode . evil-org-mode)
   :config
   (setq evil-org-retain-visual-state-on-shift t)
+  ;; evil-org only binds RET in insert/emacs state, so normal-state RET is
+  ;; `evil-ret' and never follows links; follow them when point is on one.
+  (defun zeds/org-ret-dwim ()
+    "Follow the link at point, otherwise fall back to `evil-ret'."
+    (interactive)
+    (if (eq (org-element-type (org-element-context)) 'link)
+        (org-open-at-point)
+      (call-interactively #'evil-ret)))
+  (evil-define-key 'normal org-mode-map (kbd "RET") #'zeds/org-ret-dwim)
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
