@@ -13,7 +13,7 @@ Checks in order:
 2. Legacy .venv directory
 3. pyenv virtualenv from .python-version
 Returns the path to the Python executable or nil."
- (when-let ((proj (project-current)))
+ (when-let* ((proj (project-current)))
    (let* ((root (project-root proj))
           (venv-dir (expand-file-name ".venv" root))
           (uv-lock (expand-file-name "uv.lock" root))
@@ -55,7 +55,7 @@ Returns the path to the Python executable or nil."
 
 (defun zeds/python-venv-path ()
  "Return the virtual environment directory for the current project."
- (when-let ((proj (project-current)))
+ (when-let* ((proj (project-current)))
    (let* ((root (project-root proj))
           (venv-dir (expand-file-name ".venv" root)))
      (when (file-directory-p venv-dir)
@@ -107,7 +107,7 @@ Uses 'uv run' for uv projects, otherwise direct pyright-langserver."
 (defun zeds/python-activate-venv ()
  "Activate the appropriate virtual environment for the current buffer."
  (interactive)
- (when-let ((venv-path (zeds/python-venv-path)))
+ (when-let* ((venv-path (zeds/python-venv-path)))
    (pyvenv-activate venv-path)
    (message "Activated venv: %s" venv-path)))
 

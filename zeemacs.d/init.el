@@ -297,7 +297,7 @@
   ; use project.el to retrieve the project root
   (setq consult-project-root-function
         (lambda ()
-          (when-let (project (project-current))
+          (when-let* ((project (project-current)))
             (car (project-roots project)))))
   :hook (completion-list-mode . consult-preview-at-point-mode)
 
